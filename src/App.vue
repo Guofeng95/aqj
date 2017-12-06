@@ -54,7 +54,7 @@
         </div>
         <div class="ahref">
           <p>已有账号？</p>
-          <a href="#" @click="login(2)">登录</a><a class="forgot" href="#">忘记密码</a>
+          <a href="#" @click="login(2)">登录</a><a @click="reset" class="forgot" href="#/forget">忘记密码</a>
         </div>
       </div>
       </div>
@@ -77,7 +77,7 @@
           </div>
           <div class="ahref">
             <p>还没有账号？</p>
-            <a href="#" @click="reset(2 )">注册</a><a class="forgot" href="#">忘记密码</a>
+            <a href="#" @click="reset(2)">注册</a><a @click="login" class="forgot" href="#/forget">忘记密码</a>
           </div>
       </div>
 

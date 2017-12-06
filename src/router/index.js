@@ -8,6 +8,7 @@ import comment from "@/components/usercenter/comment"
 import download from "@/components/usercenter/download"
 import level from "@/components/usercenter/level"
 import reset from "@/components/reset/reset"
+import forget from "@/components/forget"
 Vue.use(Router)
 
 export default new Router({
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
+    },
+    {
+      path: '/forget',
+      name: 'forget',
+      component: forget
     },
     {
       path: '/reset',

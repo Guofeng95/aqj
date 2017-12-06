@@ -9,6 +9,9 @@ import download from "@/components/usercenter/download"
 import level from "@/components/usercenter/level"
 import reset from "@/components/reset/reset"
 import forget from "@/components/forget"
+import manenger from "@/components/manenger/manenger"
+import manger from "@/components/manenger/manger"
+import submit from "@/components/manenger/submit"
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +20,20 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
+    },
+    {
+      path: '/manenger',
+      component: manenger,
+      children: [
+        {
+          path: '',
+          component: manger
+        },
+        {
+          path: '/submit',
+          component: submit
+        },
+       ]
     },
     {
       path: '/forget',

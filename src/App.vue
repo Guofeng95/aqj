@@ -17,7 +17,7 @@
         <span @click="reset(1)">注册</span>
       </div>
       <div class="loginno" v-show="loginis">
-        <a href="#"><img src="/static/img/messenger.png"/>管理</a>
+        <a href="#/manenger"><img src="/static/img/messenger.png"/>管理</a>
         <a href="#/usercenter"><img src="/static/img/user.png"/>用户中心</a>
         <a style="margin-right:130px;" href="#"><img src="/static/img/ding.png"/></a>
         <div class="userimg">
@@ -108,6 +108,9 @@ export default {
       username:'',
       password:''
     }
+  },
+  mounted(){
+    this.$store.state.loginis=true;
   },
   methods:{
     reset(index){

@@ -2,7 +2,7 @@
   <div id="app">
     <div class="head">
       <img class="logo" src="/static/img/logo.png" title="logo">
-      <router-link class="tj" to="/foo">推荐</router-link>
+      <router-link class="tj" to="/recommend">推荐</router-link>
       <router-link to="/">安全头条</router-link>
       <router-link class="know" to="/bar">安全知识</router-link>
       <div class="search">

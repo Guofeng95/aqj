@@ -1,7 +1,6 @@
 <template>
   <div class="usercenter">
   	<div class="table">
-  		<h4>发布</h4>
       <div class="demo-input-suffix">
         <span>活动标题:</span>
         <el-input class="input" v-model="title" placeholder="请填写活动标签"></el-input>

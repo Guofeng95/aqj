@@ -12,6 +12,7 @@ import forget from "@/components/forget"
 import manenger from "@/components/manenger/manenger"
 import manger from "@/components/manenger/manger"
 import submit from "@/components/manenger/submit"
+import recommend from '@/components/recommend'
 Vue.use(Router)
 
 export default new Router({
@@ -20,6 +21,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
+    },
+    {
+      path: '/recommend',
+      name: 'recommend',
+      component: recommend
     },
     {
       path: '/manenger',

@@ -22,7 +22,7 @@
       </div>
       <div>
         <img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
-        <a href="#">退出登录</a>
+        <a href="#" @click="removelogin">退出登录</a>
       </div> 
     </div>
   
@@ -119,7 +119,13 @@
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex"
 export default {
+  computed:{
+    ...mapGetters({
+      loginis:'loginnow'
+    })
+  },
   data () {
     return {
       table:1,
@@ -197,6 +203,10 @@ export default {
         this.table=1;
       }
 
+    },
+    removelogin(){
+      this.$store.state.loginis=false;
+      window.location.href="#/"
     }
 
   }

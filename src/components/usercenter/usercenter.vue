@@ -32,14 +32,20 @@
   		</div>
   		<div>
   			<img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
-  			<a href="#">退出登录</a>
+  			<a href="#" @click="removein">退出登录</a>
   		</div> 
   	</div>
   	<router-view class="content"></router-view>
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex"
 export default {
+  computed:{
+    ...mapGetters({
+      loginis:'loginnow'
+    })
+  },
   data () {
     return {
     }
@@ -62,7 +68,11 @@ export default {
   			var id6 = document.getElementById(id);
   			id6.style.color="#008000";
 
-  		}
+  		},
+      removein(){
+        this.$store.state.loginis=false;
+        window.location.href="#/"
+      }
   }
 }
 </script>

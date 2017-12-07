@@ -110,7 +110,7 @@ export default {
     }
   },
   mounted(){
-    this.$store.state.loginis=true;
+    this.$store.state.loginis=false;
   },
   methods:{
     reset(index){

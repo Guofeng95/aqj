@@ -50,17 +50,24 @@
       <div class="aside" v-show="loginis">
           <h4>热门推荐</h4>
           <div v-for="(item,index) in hotdata" :key='index'>
-            <span style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
-            <span style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
-            <span style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
-            <span v-else>{{index}}</span>
+            <span class="span" style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
+            <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
+            <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
+            <span class="span" v-else>{{index}}</span>
             <p class="hotp">{{item.content}}</p>
           </div>
       </div>
       <div class="aside" v-show="loginis==false">
         <h4>快速登录</h4>
-        <el-input class='form' v-model="username" placeholder="请填写手机号或邮箱"></el-input>
-        <el-input class='form' v-model="password" placeholder="请输入密码"></el-input>
+        <div class="inputcheck">
+            <el-input class='form' v-model="username" placeholder="请填写手机号或邮箱"></el-input>
+            <span  v-show="usernameis" >手机号或邮箱不存在</span>
+          </div>
+          <div class="inputcheck" style="margin-bottom:10px;">
+           <el-input class='form' v-model="password" placeholder="请输入密码"></el-input>
+           <span  v-show="passwordis" >密码错误请重新输入</span>
+          </div>
+          <div style="clear:both"></div>
         <a class="btn" @click="sublogin"><img src="/static/img/btn.png" />立即登录</a>
         <div class="btna">
           <a style="background:#00cc33">
@@ -98,13 +105,24 @@
       <div class="aside" id="reset" v-show="resetis">
         <h4>快速注册 <img class="cha" @click="login" src="/static/img/cha.png"></h4>
         <div class="demo-input-suffix">
-          <el-input class="verify" v-model="remail" placeholder="请填写邮箱地址"></el-input>
-           <el-button class="btn1" type="success">验证码</el-button>
+          <el-input class="verify" @change="check('remail')" v-model="remail" placeholder="请填写邮箱地址"></el-input>
+           <el-button class="btn1"  type="success" @click="emalicode">验证码</el-button>
+           <span  v-show="remailis" style="display:block;margin-top:6px;font-size: 12px;margin-left: 20px;color: red;">请填写正确的邮箱格式，不能为空</span>
         </div>
-        <el-input class='form' v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
-        <el-input class='form' v-model="rpassword" placeholder="请设置密码,不得少于8个字符"></el-input>
-        <el-input class='form' v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
-        <a class="btn">立即注册</a>
+        <div class="inputcheck" style="padding-top:10px;">
+          <el-input class='form' @change="check('rverify')" v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
+          <span v-show="rverifyis">请填写验证码</span>
+        </div>
+        <div class="inputcheck">
+          <el-input class='form' @change="check('rpassword')" v-model="rpassword" placeholder="请设置密码,6-14位字符"></el-input>
+          <span  v-show="rpasswordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
+        </div>
+        <div class="inputcheck" style="margin-bottom:10px;">
+           <el-input class='form' @change="check('rtwopwd')" v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
+           <span  v-show="rtwopwdis" >两次密码不统一</span>
+        </div>
+        <div style="clear:both"></div>
+        <a class="btn" @click="resetgo">立即注册</a>
         <div class="btna">
           <a style="background:#00cc33">
             <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
@@ -137,6 +155,13 @@ export default {
   },
   data () {
     return {
+      emalicodeis:false,
+      rpasswordis:false,
+      rtwopwdis:false,
+      remailis:false,
+      rverifyis:false,
+      usernameis:false,
+      passwordis:false,
       adata:[
           {"name":"勒索病毒","url":"www.baidu.com"},
           {"name":"勒索病毒","url":"www.baidu.com"},
@@ -246,15 +271,91 @@ export default {
           this.resetis=false;
         }
       },
-      sublogin(){
-        this.$store.state.loginis=true;
+     sublogin(){
+      
+      if(this.username!='' && this.password!=""){
+          this.login();
+          this.$store.state.loginis=true;
+
+      }else{
+        this.$message.error('请填写信息');
       }
+      
+    },
+    check(style){
+      if(style=="remail"){
+        var isok=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.remail);
+        if(isok){
+          this.remailis=false;
+        }else{
+          this.remailis=true;
+          this.emalicodeis=false;
+        }
+      }
+      if(style=="rverify"){
+        if( this.rverify==''){
+          this.rverifyis=true;
+        }else{
+          this.rverifyis=false;
+        }
+      }
+
+      if(style=="rpassword"){
+        var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.rpassword);
+        if(isok){
+          this.rpasswordis=false;
+        }else{
+          this.rpasswordis=true;
+        }
+      }
+      if(style=="rtwopwd"){
+        if(this.rtwopwd==this.rpassword){
+          this.rtwopwdis=false;
+        }else{
+          this.rtwopwdis=true;
+        }
+      }
+    },
+    resetgo(){
+      if(this.rpasswordis==false && this.rverifyis==false && this.remailis==false && this.rtwopwdis==false){
+        if(this.rpassword!="" && this.rverify!='' && this.remail!='' && this.rtwopwd!=''){
+            if(this.emalicodeis==true){
+              alert(1)
+            }else{
+              this.$message.warning('请获取验证码');
+            }
+        }else{
+          this.$message.error('请填写信息');
+        }
+      }
+    },
+    emalicode(){
+
+      if(this.remail !='' && this.remailis==false){
+         this.$message.success('验证码已发送');
+         this.emalicodeis=true;
+      }else{
+        this.check('remail');
+
+      }
+
+    },
   }
 
 }
 </script>
 
 <style scoped>
+.aside .inputcheck{
+  position: relative;
+  margin-bottom: 40px;
+}
+.aside .inputcheck span{
+  display: block;
+  font-size: 12px;
+  margin-left: 0px;
+  color: red;
+}
 .index{
   margin-top: 10px;
   width: 1300px;
@@ -351,7 +452,7 @@ export default {
     margin-left: 10px;
     font-size: 18px;
   }
-  .aside span{
+  .aside .span{
     width: 20px;
     display: block;
     float: left;

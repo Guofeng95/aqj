@@ -34,13 +34,24 @@
       <div class="aside" id="reset" v-show="resetis">
         <h4>快速注册 <img class="cha" @click="reset" src="/static/img/cha.png"></h4>
         <div class="demo-input-suffix">
-          <el-input class="verify" v-model="remail" placeholder="请填写邮箱地址"></el-input>
-           <el-button class="btn1" type="success">验证码</el-button>
+          <el-input class="verify" @change="check('remail')" v-model="remail" placeholder="请填写邮箱地址"></el-input>
+           <el-button class="btn1"  type="success" @click="emalicode">验证码</el-button>
+           <span  v-show="remailis" style="display:block;margin-top:6px;font-size: 12px;margin-left: 20px;color: red;">请填写正确的邮箱格式，不能为空</span>
         </div>
-        <el-input class='form' v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
-        <el-input class='form' v-model="rpassword" placeholder="请设置密码,不得少于8个字符"></el-input>
-        <el-input class='form' v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
-        <a class="btn">立即注册</a>
+        <div class="inputcheck" style="padding-top:10px;">
+          <el-input class='form' @change="check('rverify')" v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
+          <span v-show="rverifyis">请填写验证码</span>
+        </div>
+        <div class="inputcheck">
+          <el-input class='form' @change="check('rpassword')" v-model="rpassword" placeholder="请设置密码,6-14位字符"></el-input>
+          <span  v-show="rpasswordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
+        </div>
+        <div class="inputcheck" style="margin-bottom:10px;">
+           <el-input class='form' @change="check('rtwopwd')" v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
+           <span  v-show="rtwopwdis" >两次密码不统一</span>
+        </div>
+        <div style="clear:both"></div>
+        <a class="btn" @click="resetgo">立即注册</a>
         <div class="btna">
           <a style="background:#00cc33">
             <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
@@ -61,8 +72,15 @@
       <div class="background" v-show="logis">
         <div class="aside" id="log" v-show="logis">
           <h4>快速登录 <img class="cha" @click="login" src="/static/img/cha.png"></h4>
-          <el-input class='form' v-model="username" placeholder="请填写手机号或邮箱"></el-input>
-          <el-input class='form' v-model="password" placeholder="请输入密码"></el-input>
+          <div class="inputcheck">
+            <el-input class='form' v-model="username" placeholder="请填写手机号或邮箱"></el-input>
+            <span  v-show="usernameis" >手机号或邮箱不存在</span>
+          </div>
+          <div class="inputcheck" style="margin-bottom:10px;">
+           <el-input class='form' v-model="password" placeholder="请输入密码"></el-input>
+           <span  v-show="passwordis" >密码错误请重新输入</span>
+          </div>
+          <div style="clear:both"></div>
           <a class="btn" @click="sublogin"><img src="/static/img/btn.png" />立即登录</a>
           <div class="btna">
             <a style="background:#00cc33">
@@ -88,6 +106,9 @@
 
 <script>
 import {mapGetters} from "vuex"
+import axios from 'axios'
+import qs from 'qs'
+import * as Url from '@/components/url.js'
 export default {
   name: 'app',
   computed:{
@@ -97,6 +118,8 @@ export default {
   },
   data () {
     return {
+      emalicodeis:false,
+      baseurl:Url.baseurl,
       search: '',
       logis:false,
       userstatus:"未认证",
@@ -106,13 +129,84 @@ export default {
       rpassword:'',
       rtwopwd:'',
       username:'',
-      password:''
+      password:'',
+      rpasswordis:false,
+      rtwopwdis:false,
+      remailis:false,
+      rverifyis:false,
+      usernameis:false,
+      passwordis:false,
     }
   },
   mounted(){
+
     this.$store.state.loginis=false;
+    var vm=this;
+    //console.log(axios)
+    axios({
+        method:'post',
+        url:vm.baseurl + '/user/ping',
+    }).then(function(response){
+        if(response.data.status==1){
+          vm.$store.state.loginis=true;
+        }else{
+          vm.$store.state.loginis=false;
+        }
+    });
+  
+
   },
   methods:{
+    emalicode(){
+      var vm=this;
+      if(this.remail !='' && this.remailis==false){
+          var date= {};
+          date.email=this.remail;
+          date.for="register"
+          var vm=this;
+              var date= {};
+              date.email=this.remail;
+              date.for="query"
+              axios({
+                method:'post',
+                  data:qs.stringify(date),
+                  url:vm.baseurl + '/user/verify_email',
+                 headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+              }).then(function(response){
+                  if(response.data.status==1){
+                      axios({
+                          method:'post',
+                          data:qs.stringify(date),
+                          url:vm.baseurl + '/user/verify_email',
+                         headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                      }).then(function(response){
+                          if(response.data.status==1){
+                            vm.$message.success('验证码已发送');
+                            vm.emalicodeis=true;
+                          }else if(response.data.status==0){
+                            vm.$message.success(response.data.msg);
+                            vm.emalicodeis=true;
+                          }else{
+                            vm.$message.warning(response.data.msg);
+                          }
+                      });
+
+
+                  }else{
+                    vm.$message.warning("此邮箱已经注册");
+                  }
+              });
+      // console.log(date) 
+      }else{
+        this.check('remail');
+
+      }
+
+    },
     reset(index){
       if(index==1){
         this.resetis=true;
@@ -140,14 +234,91 @@ export default {
       }
     },
     sublogin(){
-      this.login();
-      this.$store.state.loginis=true;
+      
+      if(this.username!='' && this.password!=""){
+          this.login();
+          this.$store.state.loginis=true;
+
+      }else{
+        this.$message.error('请填写信息');
+      }
+      
+    },
+    check(style){
+      if(style=="remail"){
+        var isok=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.remail);
+        if(isok){
+          this.remailis=false;
+        }else{
+          this.remailis=true;
+          this.emalicodeis=false;
+        }
+      }
+      if(style=="rverify"){
+        if( this.rverify==''){
+          this.rverifyis=true;
+        }else{
+          this.rverifyis=false;
+        }
+      }
+
+      if(style=="rpassword"){
+        var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.rpassword);
+        if(isok){
+          this.rpasswordis=false;
+        }else{
+          this.rpasswordis=true;
+        }
+      }
+      if(style=="rtwopwd"){
+        if(this.rtwopwd==this.rpassword){
+          this.rtwopwdis=false;
+        }else{
+          this.rtwopwdis=true;
+        }
+      }
+    },
+    resetgo(){
+      var vm=this;
+      if(this.rpasswordis==false && this.rverifyis==false && this.remailis==false && this.rtwopwdis==false){
+        if(this.rpassword!="" && this.rverify!='' && this.remail!='' && this.rtwopwd!=''){
+            if(this.emalicodeis==true){
+              var nickname="社区用户";
+              axios({
+                  method:'post',
+                  data:qs.stringify({"verification_code":this.rverify,"username":this.remail,"password":this.rpassword,"password1":this.rtwopwd,"nickname":nickname}),
+                  url:vm.baseurl + '/user/register',
+              }).then(function(response){
+                  if(response.data.status==1){
+                    vm.$message.warning('注册成功');
+                    //vm.login(2);
+                  }else{
+                    alert(response.data.msg);
+                  }
+              });
+            }else{
+              this.$message.warning('请获取验证码');
+            }
+        }else{
+          this.$message.error('请填写信息');
+        }
+      }
     }
   }
 }
 </script>
 
 <style>
+.aside .inputcheck{
+  position: relative;
+  margin-bottom: 40px;
+}
+.aside .inputcheck span{
+  display: block;
+  font-size: 12px;
+  margin-left: 0px;
+  color: red;
+}
 *{padding: 0;margin: 0;font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;}
 html body{
   width: 100%;

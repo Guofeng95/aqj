@@ -175,7 +175,7 @@ export default {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
               }).then(function(response){
-                  if(response.data.status==1){
+                  if(response.data.status!=1){
                       axios({
                           method:'post',
                           data:qs.stringify(date),
@@ -234,10 +234,29 @@ export default {
       }
     },
     sublogin(){
-      
+      var vm=this;
       if(this.username!='' && this.password!=""){
-          this.login();
-          this.$store.state.loginis=true;
+          var date={};
+          date.username=this.username;
+          date.password=this.password;
+          axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/user/login',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                
+                console.log(response.data)
+                this.login();
+                vm.$store.state.loginis=true;
+              }else{
+                vm.$message.warning(response.data.msg);
+              }
+          });
+          
 
       }else{
         this.$message.error('请填写信息');
@@ -291,7 +310,7 @@ export default {
               }).then(function(response){
                   if(response.data.status==1){
                     vm.$message.warning('注册成功');
-                    //vm.login(2);
+                    vm.login(2);
                   }else{
                     alert(response.data.msg);
                   }

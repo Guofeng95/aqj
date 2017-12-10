@@ -1,9 +1,10 @@
 <template>
   <div class="level">
   	<h4>重置密码</h4>
-    <div v-show="status">
-      <el-input class="input" v-model="eamil" placeholder="请输入注册时填写的邮箱地址"></el-input>
-      <el-button class="input" type="success" @click="eamilgo">发送邮件</el-button>
+    <div  class="password">
+      <el-input class="input" v-model="password" placeholder="请输入新密码"></el-input>
+      <el-input class="input" v-model="newpwd" placeholder="请再输入一遍"></el-input>
+      <el-button class="input" type="success" @click="subgo">提交</el-button>
     </div>
   </div>
 </template>
@@ -14,7 +15,6 @@ import * as Url from '@/components/url.js'
 export default {
   data () {
     return {
-      eamil:'',
       password:'',
       newpwd:'',
       status:true,
@@ -22,7 +22,7 @@ export default {
     }
   },
   methods:{
-    eamilgo(){
+    subgo(){
       var vm=this;
       var date={};
       date.email=this.remail;
@@ -36,11 +36,12 @@ export default {
         }
       }).then(function(response){
           if(response.data.status==1){
+            vm.emalicodeis=true;
           }else{
             vm.$message.success(response.data.msg)
           }
       });
-      
+      window.location.href="#/"
     }
   }
 }

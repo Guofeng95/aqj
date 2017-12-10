@@ -9,6 +9,7 @@ import download from "@/components/usercenter/download"
 import level from "@/components/usercenter/level"
 import reset from "@/components/reset/reset"
 import forget from "@/components/forget"
+import resetnewpwd from "@/components/resetnewpwd"
 import manenger from "@/components/manenger/manenger"
 import manger from "@/components/manenger/manger"
 import submit from "@/components/manenger/submit"
@@ -26,6 +27,11 @@ export default new Router({
       path: '/recommend',
       name: 'recommend',
       component: recommend
+    },
+    {
+      path: '/resetnewpwd',
+      name: 'resetnewpwd',
+      component: resetnewpwd
     },
     {
       path: '/manenger',

@@ -40,6 +40,9 @@
 </template>
 <script>
 import {mapGetters} from "vuex"
+import axios from 'axios'
+import qs from 'qs'
+import * as Url from '@/components/url.js'
 export default {
   computed:{
     ...mapGetters({
@@ -48,6 +51,7 @@ export default {
   },
   data () {
     return {
+      baseurl:Url.baseurl,
     }
   },
   mounted(){
@@ -70,8 +74,24 @@ export default {
 
   		},
       removein(){
-        this.$store.state.loginis=false;
-        window.location.href="#/"
+        var vm=this;
+        axios({
+              method:'post',
+              url:vm.baseurl + '/user/logout',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                
+                console.log(response.data)
+                vm.$store.state.loginis=false;
+                window.location.href="#/"
+              }else{
+                vm.$message.warning(response.data.msg);
+              }
+          });
+        
       }
   }
 }

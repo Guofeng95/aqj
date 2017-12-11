@@ -1,10 +1,20 @@
 <template>
   <div class="level">
   	<h4>重置密码</h4>
-    <div  class="password">
-      <el-input class="input" v-model="password" placeholder="请输入新密码"></el-input>
-      <el-input class="input" v-model="newpwd" placeholder="请再输入一遍"></el-input>
+    <div  class="password" v-show="status">
+      <div class="inputcheck">
+          <el-input class='form' @change="check('rpassword')" v-model="password" placeholder="请设置密码,6-14位字符"></el-input>
+          <span  v-show="passwordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
+        </div>
+        <div class="inputcheck" >
+           <el-input class='form' @change="check('rtwopwd')" v-model="newpwd" placeholder="请再次输入刚才的密码"></el-input>
+           <span  v-show="newpwdis" >两次密码不统一</span>
+        </div>
       <el-button class="input" type="success" @click="subgo">提交</el-button>
+    </div>
+    <div v-show="status==false">
+      <h3 class="input" style="text-align:center">恭喜您，密码重置成功！</h3>
+      <el-button class="input" type="success" @click="goback">返回首页并登录</el-button>
     </div>
   </div>
 </template>
@@ -16,6 +26,8 @@ export default {
   data () {
     return {
       password:'',
+      passwordis:false,
+      newpwdis:false,
       newpwd:'',
       status:true,
       baseurl:Url.baseurl,
@@ -24,29 +36,69 @@ export default {
   methods:{
     subgo(){
       var vm=this;
-      var date={};
-      date.email=this.remail;
-      date.for="reset_password"
-      axios({
-          method:'post',
-          data:qs.stringify(date),
-          url:vm.baseurl + '/user/verify_email',
-         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }).then(function(response){
-          if(response.data.status==1){
-            vm.emalicodeis=true;
-          }else{
-            vm.$message.success(response.data.msg)
+      if(this.password!='' && this.newpwd !=""){
+        if(this.passwordis==false && this.newpwdis==false){
+            var date={};
+            date.new_password=this.password;
+            axios({
+                method:'post',
+                data:qs.stringify(date),
+                url:vm.baseurl + '/user/reset_password',
+               headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }).then(function(response){
+                if(response.data.status==1){
+                  vm.$message.success("修改成功");
+                  vm.status=false;
+                }else{
+                  vm.$message.success(response.data.msg)
+                }
+            });
+            
           }
-      });
+      }else{
+        vm.$message.error("请填写信息")
+      }
+      
+    },
+     check(style){
+      if(style=="rpassword"){
+        var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.password);
+        if(isok){
+          this.passwordis=false;
+        }else{
+          this.passwordis=true;
+        }
+      }
+      if(style=="rtwopwd"){
+        if(this.newpwd==this.password){
+          this.newpwdis=false;
+        }else{
+          this.newpwdis=true;
+        }
+      }
+    },
+    goback(){
       window.location.href="#/"
     }
   }
 }
 </script>
 <style scoped>
+ .inputcheck{
+  width: 280px;
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 40px;
+}
+.inputcheck span{
+  position: absolute;
+  font-size: 12px;
+  margin-left: 0px;
+  color: red;
+  top: 50px;
+}
   .level{
     width: 790px;
     height: 432px;
@@ -65,10 +117,7 @@ export default {
     width: 280px;
     display: block;
     margin:20px auto;
-    margin-bottom: 60px;
-  }
-  .level .password .input{
-    margin-top: 0;
     margin-bottom: 40px;
   }
+
 </style>

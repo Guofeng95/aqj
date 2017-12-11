@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="munugo(1)">
     <div class="head">
       <img class="logo" src="/static/img/logo.png" title="logo">
       <router-link class="tj" to="/recommend">推荐</router-link>
@@ -20,11 +20,42 @@
         <a href="#/manenger"><img src="/static/img/messenger.png"/>管理</a>
         <a href="#/usercenter"><img src="/static/img/user.png"/>用户中心</a>
         <a style="margin-right:130px;" href="#"><img src="/static/img/ding.png"/></a>
-        <div class="userimg">
-          <img src="http://img1.imgtn.bdimg.com/it/u=2365282747,3105404302&fm=27&gp=0.jpg">
+        <div class="userimg" @click.stop="munugo(2)">
+          <img :src="userurl">
         </div>
         <div class="userstatus">
           {{userstatus}}
+        </div>
+        <div class="munu1" v-show="munuis">
+          <div class="one">
+            <img style="margin-top:4px;margin-left:-4px;margin-right:2px" src=" /static/img/level.png">
+            <a  href="#/level">{{userstatus}}</a>
+          </div>
+          <div>
+            <img style="margin-top:2px" src=" /static/img/star.png">
+            <a   href="#/usercenter">我的收藏</a>
+          </div>
+          <div>
+            <img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
+            <a  href="#/subscripe">我的订阅</a>
+          </div>
+          <div>
+            <img style="margin-top:2px;" src=" /static/img/mail.png">
+            <a  id="mail" href="#/comment">我的评论</a>
+          </div>
+          <div class="one">
+            <img style="margin-top:6px;margin-left:2px;margin-right:2px" src=" /static/img/download.png">
+            <a  href="#/download">我上传的</a>
+          </div>
+
+          <div class="one">
+            <img style="margin-top:4px;margin-right:5px" src=" /static/img/shezhi.png">
+            <a href="#/reset">设置</a>
+          </div>
+          <div >
+            <img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
+            <a href="#" @click="removein">退出登录</a>
+          </div> 
         </div>
       </div>
     </div>
@@ -113,16 +144,18 @@ export default {
   name: 'app',
   computed:{
     ...mapGetters({
-      loginis:'loginnow'
+      loginis:'loginnow',
+      userurl:'urlnow',
+      userstatus:'statusnow'
     })
   },
   data () {
     return {
+      munuis:false,
       emalicodeis:false,
       baseurl:Url.baseurl,
       search: '',
       logis:false,
-      userstatus:"未认证",
       resetis:false,
       remail:'',
       rverify:'',
@@ -149,6 +182,7 @@ export default {
     }).then(function(response){
         if(response.data.status==1){
           vm.$store.state.loginis=true;
+          //vm.$store.state.userurl=response.data.status;
         }else{
           vm.$store.state.loginis=false;
         }
@@ -157,19 +191,51 @@ export default {
 
   },
   methods:{
+    munugo(index){
+      if(index==2){
+        if(this.munuis){
+          this.munuis=false;
+        }else{
+           this.munuis=true;
+        }
+      }else{
+        this.munuis=false;
+      }
+      
+     
+    },
+    removein(){
+        var vm=this;
+        axios({
+              method:'post',
+              url:vm.baseurl + '/user/logout',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                
+                console.log(response.data)
+                vm.$store.state.loginis=false;
+                window.location.href="#/"
+              }else{
+                vm.$message.warning(response.data.msg);
+              }
+          });
+        
+      },
     emalicode(){
       var vm=this;
       if(this.remail !='' && this.remailis==false){
           var date= {};
           date.email=this.remail;
           date.for="register"
-          var vm=this;
-              var date= {};
-              date.email=this.remail;
-              date.for="query"
+              var date1= {};
+              date1.email=this.remail;
+              date1.for="query"
               axios({
                 method:'post',
-                  data:qs.stringify(date),
+                  data:qs.stringify(date1),
                   url:vm.baseurl + '/user/verify_email',
                  headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -250,10 +316,10 @@ export default {
               if(response.data.status==1){
                 
                 console.log(response.data)
-                this.login();
+                vm.login();
                 vm.$store.state.loginis=true;
               }else{
-                vm.$message.warning(response.data.msg);
+                vm.$message.warning("账号密码错误");
               }
           });
           
@@ -614,5 +680,39 @@ a{text-decoration: none; color: #333;}
   }
   .background .aside .btn{
     margin-top: 20px;
+  }
+  .munu1{
+    float: left;
+    top: 54px;
+    right: 50px;
+    width: 130px;
+    border-radius: 4px;
+    box-shadow:2px 2px 7px #ccc;
+    padding-left: 3px;
+    padding-right: 3px;
+     position: absolute;
+     background: #fff;
+     z-index: 1000;
+  }
+  .munu1 div{
+    width: 120px;
+    margin:0 auto;
+    height: 28px;
+    line-height: 28px;
+    margin-top: 4px;
+  }
+  .munu1 div img{
+    display: block;
+    float: left;
+  }
+  .munu1 .one{
+    border-bottom:1px solid #f2f2f2; 
+  }
+  .munu1 div a{
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    margin: 0;
+    font-weight: normal;
   }
 </style>

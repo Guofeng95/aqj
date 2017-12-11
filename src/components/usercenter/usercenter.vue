@@ -16,7 +16,7 @@
   		</div>
   		<div>
   			<img style="margin-top:2px;" src=" /static/img/mail.png">
-  			<a @click="light('mail')" id="mail" href="#/comment">我的评论</a>
+  			<a @click="light('amail')" id="amail" href="#/comment">我的评论</a>
   		</div>
   		<div>
   			<img style="margin-top:6px;margin-left:2px;margin-right:2px" src=" /static/img/download.png">
@@ -61,7 +61,7 @@ export default {
   		light(id){
   			var id1 = document.getElementById('usercenter');
   			id1.style.color="#333";
-  			var id2 = document.getElementById('mail');
+  			var id2 = document.getElementById('amail');
   			id2.style.color="#333";
   			var id3 = document.getElementById('download');
   			id3.style.color="#333";

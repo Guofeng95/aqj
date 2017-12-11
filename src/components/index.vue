@@ -146,15 +146,21 @@
 
 <script>
 import {mapGetters} from "vuex"
+import axios from 'axios'
+import qs from 'qs'
+import * as Url from '@/components/url.js'
 export default {
   name: 'index',
   computed:{
     ...mapGetters({
-      loginis:'loginnow'
+      loginis:'loginnow',
+      userurl:'urlnow',
+      userstatus:'statusnow'
     })
   },
   data () {
     return {
+      baseurl:Url.baseurl,
       emalicodeis:false,
       rpasswordis:false,
       rtwopwdis:false,
@@ -272,10 +278,29 @@ export default {
         }
       },
      sublogin(){
-      
+      var vm=this;
       if(this.username!='' && this.password!=""){
-          this.login();
-          this.$store.state.loginis=true;
+          var date={};
+          date.username=this.username;
+          date.password=this.password;
+          axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/user/login',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                
+                console.log(response.data)
+                vm.login();
+                vm.$store.state.loginis=true;
+              }else{
+                vm.$message.warning("账号密码错误");
+              }
+          });
+          
 
       }else{
         this.$message.error('请填写信息');
@@ -320,7 +345,19 @@ export default {
       if(this.rpasswordis==false && this.rverifyis==false && this.remailis==false && this.rtwopwdis==false){
         if(this.rpassword!="" && this.rverify!='' && this.remail!='' && this.rtwopwd!=''){
             if(this.emalicodeis==true){
-              alert(1)
+             var nickname="社区用户";
+              axios({
+                  method:'post',
+                  data:qs.stringify({"verification_code":this.rverify,"username":this.remail,"password":this.rpassword,"password1":this.rtwopwd,"nickname":nickname}),
+                  url:vm.baseurl + '/user/register',
+              }).then(function(response){
+                  if(response.data.status==1){
+                    vm.$message.warning('注册成功');
+                    vm.login();
+                  }else{
+                    alert(response.data.msg);
+                  }
+              });
             }else{
               this.$message.warning('请获取验证码');
             }
@@ -330,14 +367,52 @@ export default {
       }
     },
     emalicode(){
+          var vm=this;
+                if(this.remail !='' && this.remailis==false){
+                    var date= {};
+                    date.email=this.remail;
+                    date.for="register"
+                        var date1= {};
+                        date1.email=this.remail;
+                        date1.for="query"
+                        axios({
+                          method:'post',
+                            data:qs.stringify(date1),
+                            url:vm.baseurl + '/user/verify_email',
+                           headers: {
+                              'Content-Type': 'application/x-www-form-urlencoded'
+                          }
+                        }).then(function(response){
+                            if(response.data.status!=1){
+                                axios({
+                                    method:'post',
+                                    data:qs.stringify(date),
+                                    url:vm.baseurl + '/user/verify_email',
+                                   headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded'
+                                  }
+                                }).then(function(response){
+                                    if(response.data.status==1){
+                                      vm.$message.success('验证码已发送');
+                                      vm.emalicodeis=true;
+                                    }else if(response.data.status==0){
+                                      vm.$message.success(response.data.msg);
+                                      vm.emalicodeis=true;
+                                    }else{
+                                      vm.$message.warning(response.data.msg);
+                                    }
+                                });
 
-      if(this.remail !='' && this.remailis==false){
-         this.$message.success('验证码已发送');
-         this.emalicodeis=true;
-      }else{
-        this.check('remail');
 
-      }
+                            }else{
+                              vm.$message.warning("此邮箱已经注册");
+                            }
+                        });
+                // console.log(date) 
+                }else{
+                  this.check('remail');
+
+     }
 
     },
   }

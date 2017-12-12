@@ -104,21 +104,27 @@
     <div class="level" v-show="table==2">
       <div class="demo-input-suffix">
         <span>旧密码</span>
-        <el-input class="input" v-model="oldpwd"></el-input>
+        <el-input class="input" v-model="oldpwd" @change="check('oldpwd')"></el-input>
+        <p v-show="oldpwdis">密码错误</p>
       </div>
       <div class="demo-input-suffix">
         <span>新密码</span>
-        <el-input class="input" v-model="newpwd" ></el-input>
+        <el-input class="input" v-model="newpwd" @change="check('newpwd')"></el-input>
+        <p v-show="newpwdis">密码应为数字、字母、英文标点符号，长度为6-14位</p>
       </div>
       <div class="demo-input-suffix">
         <span>再输一次</span>
-        <el-input class="input" v-model="nextpwd"></el-input>
+        <el-input class="input" v-model="nextpwd" @change="check('nextpwd')"></el-input>
+        <p v-show="nextpwdis">两次密码不统一</p>
       </div>
-      <el-button class="submit" type="success">提交</el-button>
+      <el-button class="submit" type="success" @click="resetpwd">提交</el-button>
     </div>
   </div>
 </template>
 <script>
+import axios from 'axios'
+import qs from 'qs'
+import * as Url from '@/components/url.js'
 import {mapGetters} from "vuex"
 export default {
   computed:{
@@ -128,6 +134,7 @@ export default {
   },
   data () {
     return {
+      baseurl:Url.baseurl,
       table:1,
     	nickname:'',
       female:1,
@@ -146,6 +153,9 @@ export default {
       oldpwd:'',
       newpwd:'',
       nextpwd:'',
+      oldpwdis:false,
+      newpwdis:false,
+      nextpwdis:false,
       options: [{
           value: '选项1',
           label: '黄金糕'
@@ -205,8 +215,73 @@ export default {
 
     },
     removelogin(){
-      this.$store.state.loginis=false;
-      window.location.href="#/"
+      var vm=this;
+      axios({
+            method:'post',
+            url:vm.baseurl + '/user/logout',
+           headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then(function(response){
+            if(response.data.status==1){
+              
+              console.log(response.data)
+              vm.$store.state.loginis=false;
+              window.location.href="#/"
+            }else{
+              vm.$message.warning(response.data.msg);
+            }
+        });
+    },
+    check(style){
+      if(style=="newpwd"){
+        var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.newpwd);
+        if(isok){
+          this.newpwdis=false;
+        }else{
+          this.newpwdis=true;
+        }
+      }
+      if(style=="nextpwd"){
+        if(this.newpwd==this.nextpwd){
+          this.nextpwdis=false;
+        }else{
+          this.nextpwdis=true;
+        }
+      }
+      if(style=="oldpwd"){
+        var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.oldpwd);
+        if(isok){
+          this.oldpwdis=false;
+        }else{
+          this.oldpwdis=true;
+        }
+      }
+    },
+    resetpwd(){
+      var vm=this;
+      if(this.newpwd!="" && this.oldpwd!='' && this.nextpwd!=''){
+          var date={};
+            date.new_password=this.newpwd;
+            date.old_password=this.oldpwd;
+            axios({
+                method:'post',
+                data:qs.stringify(date),
+                url:vm.baseurl + '/user/modify_password',
+               headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }).then(function(response){
+                if(response.data.status==1){
+                  vm.$message.success("修改成功");
+                  vm.removelogin();
+                }else{
+                  vm.$message.success(response.data.msg)
+                }
+            });
+      }else{
+          vm.$message.error("请填写信息");
+      }
     }
 
   }
@@ -311,12 +386,17 @@ export default {
     height: 40px;
     line-height: 40px;
     margin-top: 26px;
-    padding-bottom: 2px;
+    padding-bottom: 12px;
   }
   .demo-input-suffix span{
     width: 140px;
     display: block;
     float: left;
+  }
+  .demo-input-suffix p{
+    color: red;
+    padding-left: 140px;
+    font-size: 14px;
   }
   .input{
     width: 260px;

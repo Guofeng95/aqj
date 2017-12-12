@@ -295,6 +295,14 @@ export default {
                 
                 console.log(response.data)
                 vm.login();
+              if(response.data.verified==1){
+                  vm.$store.state.userstatus="未认证"
+                }else if(response.data.verified==2){
+                  vm.$store.state.userstatus="待确认"
+                }else if(response.data.verified==3){
+                  vm.$store.state.userstatus="已认证"
+                }
+                vm.$store.state.userurl=vm.baseurl+'/static/'+response.data.avatar;
                 vm.$store.state.loginis=true;
               }else{
                 vm.$message.warning("账号密码错误");
@@ -352,10 +360,10 @@ export default {
                   url:vm.baseurl + '/user/register',
               }).then(function(response){
                   if(response.data.status==1){
-                    vm.$message.warning('注册成功');
+                    vm.$message.success('注册成功');
                     vm.login();
                   }else{
-                    alert(response.data.msg);
+                    vm.$message.error(response.data.msg);
                   }
               });
             }else{

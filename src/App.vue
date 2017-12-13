@@ -1,7 +1,9 @@
 <template>
   <div id="app" @click="munugo(1)">
     <div class="head">
-      <img class="logo" src="/static/img/logo.png" title="logo">
+      <img class="logo" style="margin-top:14px;" src="/static/img/logo.png" title="logo">
+      <span class="logofont">安全加</span>
+      <span class="logobeat">beta</span>
       <router-link class="tj" to="/recommend">推荐</router-link>
       <router-link to="/">安全头条</router-link>
       <router-link class="know" to="/bar">安全知识</router-link>
@@ -17,8 +19,8 @@
         <span @click="reset(1)">注册</span>
       </div>
       <div class="loginno" v-show="loginis">
-        <a href="#/manenger"><img src="/static/img/messenger.png"/>管理</a>
-        <a href="#/usercenter"><img src="/static/img/user.png"/>用户中心</a>
+        <a href="#/manenger"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
+        <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
         <a style="margin-right:130px;" href="#"><img src="/static/img/ding.png"/></a>
         <div class="userimg" @click.stop="munugo(2)">
           <img :src="userurl">
@@ -176,7 +178,7 @@ export default {
     this.$store.state.loginis=false;
     var vm=this;
     //console.log(axios)
-    axios({
+   axios({
         method:'post',
         url:vm.baseurl + '/user/ping',
     }).then(function(response){
@@ -435,11 +437,30 @@ a{text-decoration: none; color: #333;}
 .head{
   border-bottom: 1px solid #e4e4e4;
   height: 60px;
+  background: #f5f5f5;
 }
 .head .logo{
   display: block;
   float: left;
   margin-top: 10px;
+}
+
+.head .logofont,.head .logobeat {
+  display: block;
+  float: left;
+}
+.head .logofont{
+  font-size: 28px;
+  color: #6fba2c;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.head .logobeat{
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 4px;
 }
 .head a{
   display: block;
@@ -450,12 +471,12 @@ a{text-decoration: none; color: #333;}
   font-weight: bold;
   margin-top: 20px;
   margin-left: 40px;
-  color: #6fba2c
+  color: #fda861;
 }
 .head .tj{
   width: 44px;
   height: 24px;
-  border: 1px solid #ffd6eb;
+  border: 1px solid #fda861;
   text-align: center;
   line-height: 24px;
   border-radius: 4px;
@@ -494,9 +515,12 @@ a{text-decoration: none; color: #333;}
 .line{
   position: absolute;
   width: 100%;
+  height: 60px;
+  background: #f5f5f5;
   border-bottom: 1px solid #e4e4e4;
-  top: 60px;
+  top: 0px;
   left: 0;
+  z-index: -1;
 }
 .loginno img{
   display: block;

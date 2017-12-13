@@ -2,7 +2,7 @@
   <div class="index">
     <div class="left">
       <div class="newcontent" v-show="newcontentis">
-        <span @click="newcon">有新的文章发布啦,<span style="color:#52a4fb;">刷新一下</span>,查看新内容！</span>
+        <span @click="newcon">有新的文章发布啦,刷新一下,查看新内容！</span>
       </div>
       <div class="news" v-for="(item,index) in indexdata" :key="index">
         <div class="newsone" v-if="item.form==1">
@@ -22,7 +22,6 @@
             <img style="margin-left:0;" :src="item.url[0]">
             <img :src="item.url[1]">
             <img :src="item.url[2]">
-            <img :src="item.url[3]">
           </div>
           <div class="icon">
             <span><i class="el-icon-time"></i>{{item.time}}</span>
@@ -42,7 +41,8 @@
           </div>
         </div>
       </div>
-      <div class="conbot">
+      <div class="dashline"></div>
+      <div class="conbot" v-show="conbotis" @click="indexdataget(10)">
         查看更多 精彩文章
       </div>
     </div>
@@ -160,6 +160,10 @@ export default {
   },
   data () {
     return {
+      nextnotice:'',
+      timer:'',
+      conbotis:false,
+      notice:'',
       baseurl:Url.baseurl,
       emalicodeis:false,
       rpasswordis:false,
@@ -184,61 +188,8 @@ export default {
       username:'',
       resetis:false,
       password:'',
-      newcontentis:true,
-      indexdata:[
-          {"title":"CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报",
-           "url":["http://img1.imgtn.bdimg.com/it/u=2365282747,3105404302&fm=27&gp=0.jpg"],
-           "form":1,
-           "content":"在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。",
-           "time":"2017-08-06",
-           "good":"1507",
-           "read":"1507",
-           "comment":"507"
-         },
-         {"title":"CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报",
-           "url":[
-            "http://img1.imgtn.bdimg.com/it/u=2365282747,3105404302&fm=27&gp=0.jpg",
-            "http://h.hiphotos.baidu.com/image/pic/item/aec379310a55b3193c60aeec48a98226cefc1789.jpg",
-            "http://c.hiphotos.baidu.com/image/pic/item/b8389b504fc2d562d7a1cc74ec1190ef77c66cf9.jpg",
-            "http://image.tianjimedia.com/uploadImages/2013/197/89BS201JB4RR_1000x500.jpg"
-           ],
-           "form":2,
-           "content":"在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。",
-           "time":"2017-08-06",
-           "good":"1507",
-           "read":"1507",
-           "comment":"507"
-         },
-         {"title":"CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报",
-           "url":["http://img1.imgtn.bdimg.com/it/u=2365282747,3105404302&fm=27&gp=0.jpg"],
-           "form":3,
-           "content":"在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。",
-           "time":"2017-08-06",
-           "good":"1507",
-           "read":"1507",
-           "comment":"507"
-         },
-         {"title":"CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报",
-           "url":["http://img1.imgtn.bdimg.com/it/u=2365282747,3105404302&fm=27&gp=0.jpg"],
-           "form":1,
-           "content":"在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。",
-           "time":"2017-08-06",
-           "good":"1507",
-           "read":"1507",
-           "comment":"507"
-         },
-         {"title":"CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报CNNVD关于Windows SMBLoris关键词1情况的通报",
-           "url":["http://img1.imgtn.bdimg.com/it/u=2365282747,3105404302&fm=27&gp=0.jpg"],
-           "form":1,
-           "content":"在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。",
-           "time":"2017-08-06",
-           "good":"1507",
-           "read":"1507",
-           "comment":"507"
-         },
-
-
-      ],
+      newcontentis:false,
+      indexdata:[],
       hotdata:[
             {
               "content":"转移战场”的暗网市场继续繁荣"
@@ -266,8 +217,85 @@ export default {
 
     }
   },
+  beforeDestroy: function () {
+    console.log('清除')
+    clearInterval(this.timer)
+  },
+  mounted(){
+    var vm=this;
+    this.indexdata=[];
+    this.indexdataget(7,"first");
+    this.timer=setInterval(function(){
+          var date={};
+          date.notice=vm.nextnotice;
+          axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/article/news_check_new',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+            if(response.data.status==1){
+              vm.newcontentis=true;
+            }else{
+              vm.newcontentis=false;
+            }
+          })
+    },10000)
+  },
   methods:{
+      indexdataget(limit,times){
+        var vm=this;
+        var date={};
+          date.limit=limit;
+          date.notice=this.notice;
+          axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/article/news_list',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                  if(times=="first"){
+                    vm.nextnotice=response.data.next_notice;
+                  }
+                  vm.notice=response.data.prev_notice;
+                  if(limit==response.data.data.length){
+                    vm.conbotis=true;
+                  }else{
+                    vm.conbotis=false;
+                  }
+                  response.data.data.forEach( function(element, index) {
+                    var obj={};
+                    obj.title=element.title;
+                    obj.id=element.id;
+                    obj.content = element.summary;
+                    obj.good=element.like_count;
+                    obj.read=element.read_count;
+                    obj.comment=element.comment_count;
+                    obj.time=element.publish_time;
+                    obj.url=element.images;
+                    var l=element.images.length;
+                    if(l==0){
+                      obj.form=3
+                    }else if(l==1){
+                      obj.form=1;
+                    }else{
+                      obj.form=2;
+                    };
+                    vm.indexdata.push(obj);
+                  });
+              }else{
+                vm.$message.warning('拉取失败!');
+              }
+          });
+      },
       newcon(){
+        this.indexdata=[];
+        this.indexdataget(7,"first");
         this.newcontentis=false;
       },
       login(num){
@@ -445,32 +473,34 @@ export default {
   overflow: hidden;
 }
 .left{
-  width: 985px;
+  width: 903px;
   float: left;
-  margin-right:13px;
+  padding-right: 20px;
+  margin-right:20px;
+  border-right: 1px solid #d3d3d3;
 }
 .right{
   float: left;
-  width: 302px;
+  width: 352px;
 }
 .newcontent{
-  width: 983px;
-  height: 24px;
-  background: #ffeeee;
-  border:1px solid #fec2e0;
-  font-size: 14px;
+  width: 903px;
+  height: 34px;
+  background: #fff9ed;
   text-align: center;
-  line-height: 24px;
+  line-height: 34px;
+  margin-bottom: 18px;
 }
 .newcontent span{
-  color: #ff6633;
+  color: #ff8a00;
+  font-size: 14px;
   cursor: pointer;
 }
 .news {
-  border-bottom: 2px dashed #f2f2f2;
+  border-top: 1px dashed #d3d3d3;
   overflow: hidden;
-  padding-top: 5px;
-  padding-bottom: 10px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   position: relative;
 }
 .news h4{
@@ -478,11 +508,12 @@ export default {
 }
 .news p{
   font-size: 14px;
+  color: #777777;
 }
 .newsone img{
   display: block;
   width: 320px;
-  height: 180px;
+  height: 200px;
   float: left;
   margin-right:10px; 
 }
@@ -493,21 +524,25 @@ export default {
 .icon{
   position: absolute;
   right: 0;
-  bottom: 10px;
-  color: #aeaeae;
+  bottom: 24px;
+  color: #aaaaaa;
+  font-size: 12px;
 }
 .newstwo img{
   display: block;
-  width: 220px;
-  height: 120px;
+  width: 288px;
+  height: 180px;
   float: left;
-  margin-left: 28px;
+  margin-left: 14px;
   margin-top: 12px;
   margin-bottom: 40px;
 }
 .newsthree p{
   margin-top: 40px;
   margin-bottom: 40px;
+}
+.dashline{
+  border-top: 1px dashed #d3d3d3;
 }
 .conbot{
   color: #fff;
@@ -516,18 +551,17 @@ export default {
   font-size: 14px;
   line-height: 30px;
   margin: 10px 0;
-  border-radius: 6px;
+  border-radius: 0px;
   background:rgba(111, 186, 44, 1);
   cursor: pointer;
 }
 .aside{
-    width: 270px;
+    width: 100%;
     background:rgba(251, 251, 251, 1);
     border:1px solid  rgba(242, 242, 242, 1);
-    border-radius: 4px;
+    border-radius: 0px;
     padding:0 15px;
     padding-top: 26px;
-    padding-right: 10px;
     overflow: hidden;
   }
   .aside h4{

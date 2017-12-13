@@ -11,7 +11,8 @@ import axios from 'axios'
 axios.defaults.withCredentials = true;
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
-Vue.use(Vuex)
+Vue.use(Vuex);
+Vue.use(axios);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

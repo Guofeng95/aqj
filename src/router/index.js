@@ -14,6 +14,7 @@ import manenger from "@/components/manenger/manenger"
 import manger from "@/components/manenger/manger"
 import submit from "@/components/manenger/submit"
 import recommend from '@/components/recommend'
+import article from '@/components/article'
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +23,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
+    },
+    {
+      path: '/article',
+      name: 'article',
+      component: article
     },
     {
       path: '/recommend',

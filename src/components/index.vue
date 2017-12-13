@@ -4,10 +4,10 @@
       <div class="newcontent" v-show="newcontentis">
         <span @click="newcon">有新的文章发布啦,刷新一下,查看新内容！</span>
       </div>
-      <div class="news" v-for="(item,index) in indexdata" :key="index">
+      <div class="news" v-for="(item,index) in indexdata" :key="index" >
         <div class="newsone" v-if="item.form==1">
-          <img :src="item.url[0]">
-          <h4>{{item.title}}</h4>
+          <img :src="item.url[0]" @click="article(item.id)">
+          <h4  @click="article(item.id)" >{{item.title}}</h4>
           <p>{{item.content}}</p>
           <div class="icon">
             <span><i class="el-icon-time"></i>{{item.time}}</span>
@@ -17,11 +17,11 @@
           </div>
         </div>
         <div class="newstwo" v-else-if="item.form==2">
-          <h4>{{item.title}}</h4>
+          <h4  @click="article(item.id)">{{item.title}}</h4>
           <div>
-            <img style="margin-left:0;" :src="item.url[0]">
-            <img :src="item.url[1]">
-            <img :src="item.url[2]">
+            <img  @click="article(item.id)" style="margin-left:0;" :src="item.url[0]">
+            <img  @click="article(item.id)" :src="item.url[1]">
+            <img  @click="article(item.id)" :src="item.url[2]">
           </div>
           <div class="icon">
             <span><i class="el-icon-time"></i>{{item.time}}</span>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="newsthree" v-else-if="item.form==3">
-          <h4>{{item.title}}</h4>
+          <h4  @click="article(item.id)">{{item.title}}</h4>
           <p>{{item.content}}</p>
           <div class="icon">
             <span><i class="el-icon-time"></i>{{item.time}}</span>
@@ -245,6 +245,9 @@ export default {
     },10000)
   },
   methods:{
+      article(id){
+        window.location.href="#/article?topid="+id;
+      },
       indexdataget(limit,times){
         var vm=this;
         var date={};
@@ -335,7 +338,9 @@ export default {
               }else{
                 vm.$message.warning("账号密码错误");
               }
-          });
+          }).catch(function(error){
+            console.log(error)
+          })
           
 
       }else{
@@ -505,6 +510,7 @@ export default {
 }
 .news h4{
   font-size: 18px;
+  cursor: pointer;
 }
 .news p{
   font-size: 14px;
@@ -516,6 +522,7 @@ export default {
   height: 200px;
   float: left;
   margin-right:10px; 
+  cursor: pointer;
 }
 .newsone p{
   margin-top: 20px;
@@ -536,6 +543,7 @@ export default {
   margin-left: 14px;
   margin-top: 12px;
   margin-bottom: 40px;
+  cursor: pointer;
 }
 .newsthree p{
   margin-top: 40px;

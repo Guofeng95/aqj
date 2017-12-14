@@ -709,6 +709,8 @@ export default {
     left: 50%;
     top: 180px;
     margin-left: -145px;
+    width: 260px;
+    border-radius: 4px;
   }
   .background{
     width: 100%;

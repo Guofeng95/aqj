@@ -234,6 +234,7 @@ export default {
         });
     },
     check(style){
+      alert(1)
       if(style=="newpwd"){
         var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.newpwd);
         if(isok){

@@ -191,7 +191,7 @@ export default {
           }else if(response.data.verified==3){
             vm.$store.state.userstatus="已认证"
           }
-          vm.$store.state.userurl=vm.baseurl+'/static/'+response.data.avatar;
+          vm.$store.state.userurl=vm.baseurl+'/static'+response.data.avatar;
         }else{
           vm.$store.state.loginis=false;
         }

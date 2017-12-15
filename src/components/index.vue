@@ -246,7 +246,7 @@ export default {
   },
   methods:{
       article(id){
-        window.location.href="#/article?topid="+id;
+        window.location.href='/#/article?topid='+id;
       },
       indexdataget(limit,times){
         var vm=this;

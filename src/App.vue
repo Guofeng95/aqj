@@ -4,9 +4,9 @@
       <img class="logo" style="margin-top:14px;" src="/static/img/logo.png" title="logo">
       <span class="logofont">安全加</span>
       <span class="logobeat">beta</span>
-      <router-link class="tj" to="/recommend">推荐</router-link>
-      <router-link to="/">安全头条</router-link>
-      <router-link class="know" to="/bar">安全知识</router-link>
+      <router-link id="recommend" class="tj" to="/recommend">推荐</router-link>
+      <router-link id="inde" to="/">安全头条</router-link>
+      <router-link id="konw" class="know" to="/bar">安全知识</router-link>
       <div class="search">
         <el-input
           placeholder="搜索安全信息"
@@ -191,7 +191,7 @@ export default {
           }else if(response.data.verified==3){
             vm.$store.state.userstatus="已认证"
           }
-          vm.$store.state.userurl=vm.baseurl+'/static'+response.data.avatar;
+          vm.$store.state.userurl=response.data.avatar;
         }else{
           vm.$store.state.loginis=false;
         }
@@ -471,7 +471,8 @@ a{text-decoration: none; color: #333;}
   font-weight: bold;
   margin-top: 20px;
   margin-left: 40px;
-  color: #fda861;
+  
+  /*color: #fda861;*/
 }
 .head .tj{
   width: 44px;
@@ -511,6 +512,9 @@ a{text-decoration: none; color: #333;}
   display: block;
   float: left;
   cursor: pointer;
+}
+.head .loginno  a{
+  color: #6fba2c;
 }
 .line{
   position: absolute;

@@ -14,7 +14,7 @@
         <span style="position:absolute;right:0;">
           <span>{{'阅读('+readnum+')'}}</span>
           <span>{{'评论('+comnum+')'}}</span>
-           <img src="/static/img/hdp.png">
+           <img style="cursor:pointer;" @click='hdpout' src="/static/img/hdp.png">
         </span>
         
       </p>
@@ -49,8 +49,10 @@
       <span class="aurnum">为大家奉献了 2 篇文章</span>
     </div>
     <div class="btn">
-      <button><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
-      <button><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
+      <button @click="like" v-if="likeis"><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
+      <button @click="like('ok')" v-else><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
+      <button @click="mark" v-if="markis"><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
+      <button @click="mark('ok')" v-else><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
       <button><img src="/static/img/awx.png">分享到微信</button>
       <button><img src="/static/img/awb.png">分享到微博</button>
       <button><img src="/static/img/aqq.png">分享到QQ</button>
@@ -86,7 +88,8 @@
         @change="compleng">
       </el-input>
       <span class="num">{{conleng+"/300"}}</span>
-      <span class="tbtn">发表评论</span>
+      <span class="tbtn" v-if="loginis" @click="newcomment">发表评论</span>
+      <span class="tbtn" v-else style="background:#ccc;">发表评论</span>
       <span class="topt" @click="gotop"><img src="/static/img/atopgo.png"></span>
      </div>
     <div class="comment">
@@ -96,13 +99,14 @@
         
         <p class="comcontent">{{item.content}}</p>
       </div>
-     <el-button class="combtn" type="success" plain :loading="false">查看更多评论</el-button>
+     <el-button class="combtn" type="success" v-show="combtnis" @click="comment" plain :loading="false">查看更多评论</el-button>
     </div>
     <div class="bigimg" v-show="bigimgis">
       <div>
         <img class="imges" :src="nowbig">
-        <span><img src="/static/img/imgleft.png"></span>
-        <span style="left:820px;"><img src="/static/img/imgright.png"></span>
+        <span @click="bigchange('left')"><img src="/static/img/imgleft.png"></span>
+        <span style="left:820px;" @click="bigchange('right')"><img src="/static/img/imgright.png"></span>
+        <span class="imgno"  @click="hdpout('no')"><img src="/static/img/imgno.png"></span>
       </div>
     </div>
 
@@ -110,19 +114,37 @@
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex"
 import axios from 'axios'
 import qs from 'qs'
 import * as Url from '@/components/url.js'
 export default {
   name:'article',
+  computed:{
+    ...mapGetters({
+      loginis:'loginnow',
+      userurl:'urlnow',
+      userstatus:'statusnow'
+    })
+  },
   data () {
     return {
+      markis:true,
+      likeis:true,
+      combtnis:false,
+      offset:0,
       nowbig:'',
+      nowbignum:0,
       bigimgis:false,
       zannum:0,
       scnum:0,
       baseurl:Url.baseurl,
-      hdpurl:[],
+      hdpurl:[
+      	// "http://7xkk1o.com1.z0.glb.clouddn.com/92a72a4647d1d3fa5f59189020641f4b.jpg",
+      	// "http://7xkk1o.com1.z0.glb.clouddn.com/defaultAttachmentURL2.PNG",
+      	// "http://7xkk1o.com1.z0.glb.clouddn.com/bf33c8b485d93a3b61fbe11420042d70.jpg",
+      	// "http://7xkk1o.com1.z0.glb.clouddn.com/c895952e7031e7444a4c9fcd7afeb041.jpg"
+      ],
       arttime:'',
       comnum:5454,
       readnum:4,
@@ -144,14 +166,14 @@ export default {
       // 	"num":"6071"
       // }
       ],
-      tagdata:["焦点科技","绝对可靠"],
+      tagdata:[],
       comdata:[
-              {
-                "url":"/static/img/userurl.png",
-                "time":"11xiaoshi",
-                "name":"线板吗就是",
-                "content":"hgwhjgjheg今年上看到黄金客户就是肯定会查看回复等级考试继父回家"
-              }
+              // {
+              //   "url":"/static/img/userurl.png",
+              //   "time":"11xiaoshi",
+              //   "name":"线板吗就是",
+              //   "content":"hgwhjgjheg今年上看到黄金客户就是肯定会查看回复等级考试继父回家"
+              // }
       ]
     }
   },
@@ -185,14 +207,133 @@ export default {
           vm.zannum=obj.like_count;
           vm.hdpurl=obj.images;
           vm.nowbig=obj.thumbnail;
-          vm.scnum=response.data.mark_count
+          vm.scnum=response.data.extra_data.mark_count;
+          if(response.data.extra_data.liked==1){
+          	vm.likeis=false;
+          }
+          if(response.data.extra_data.marked==1){
+          	vm.markis=false;
+          }
+          vm.tagdata=response.data.keywords;
         }else{
-          vm.$message.success(response.data.msg)
+          vm.$message.error(response.data.msg)
         }
     });
     this.comment()
   },
   methods:{
+  	bigchange(lr){
+  		if(lr=='left'){
+  			if(this.nowbignum>0){
+  				
+  				this.nowbignum=this.nowbignum-1;
+  				//alert(this.nowbignum)
+  				this.nowbig=this.hdpurl[this.nowbignum];
+  			}
+  		}else{
+  			var l=this.hdpurl.length-1;
+  			if(this.nowbignum<l){
+  				this.nowbignum=this.nowbignum+1;
+  				//alert(this.nowbignum)
+  				this.nowbig=this.hdpurl[this.nowbignum];
+  			}
+  		}
+
+  	},
+  	hdpout(no){
+  		if(no=="no"){
+  			this.bigimgis=false;
+  			this.nowbignum=0;
+  			this.nowbig=this.hdpurl[0];
+  		}else{
+  			this.bigimgis=true;
+  		}
+  		
+  	},
+  	like(ab){
+  		var vm=this;
+  		if(ab!="ok"){
+  			  
+		      var date={};
+		      date.news_id=this.id;
+			  axios({
+		        method:'post',
+		        data:qs.stringify(date),
+		        url:vm.baseurl + '/article/news_like',
+		       headers: {
+		          'Content-Type': 'application/x-www-form-urlencoded'
+		        }
+		   		 }).then(function(response){
+		        if(response.data.status==1){
+		        	vm.zannum=vm.zannum+1;
+		   	        vm.likeis=true;
+		        }else{
+		          vm.$message.warning(response.data.msg)
+		        }
+			   });
+   		}else{
+   			vm.$message.warning("您已经点赞了哦！")
+   		}
+  	  
+  	},
+  	mark(ab){
+  	 var vm=this;
+      var date={};
+      if(ab=="ok"){
+      	date.do_cancel=1
+      }else{
+      	date.do_cancel=0
+      }
+      date.news_id=this.id;
+	  axios({
+        method:'post',
+        data:qs.stringify(date),
+        url:vm.baseurl + '/article/news_mark',
+       headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+   		 }).then(function(response){
+        if(response.data.status==1){
+        	if(ab=="ok"){
+        		vm.scnum=vm.scnum-1;
+   	        	vm.markis=true;
+        	}else{
+        		vm.scnum=vm.scnum+1;
+   	        	vm.markis=false;
+        	}
+        	
+        }else{
+          vm.$message.warning(response.data.msg)
+        }
+	   });
+  	},
+  	newcomment(){
+  	  var vm=this;
+      var date={};
+      date.news_id=this.id;
+      date.content=this.textarea;
+      if(this.textarea!="" && this.textarea.length<=300){
+      		axios({
+	        method:'post',
+	        data:qs.stringify(date),
+	        url:vm.baseurl + '/article/news_new_comment',
+	       headers: {
+	          'Content-Type': 'application/x-www-form-urlencoded'
+	      }
+	    }).then(function(response){
+	        if(response.data.status==1){
+	        	vm.$message.success("发送成功！")
+	   	        vm.textarea='';
+	   	        vm.comment("new");
+	        }else{
+	          vm.$message.error(response.data.msg)
+	        }
+	    });
+      }else{
+      		vm.$message.error("请输入1-300个字！")
+      }
+      
+  	},
     compleng(){
       console.log(this.textarea)
       this.conleng=this.textarea.length;
@@ -201,25 +342,48 @@ export default {
       document.body.scrollTop = 0
       document.documentElement.scrollTop = 0
     },
-    comment(){
+    comment(ab){
       var vm=this;
       var date={};
-      date.id=this.id;
-    //   axios({
-    //     method:'post',
-    //     data:qs.stringify(date),
-    //     url:vm.baseurl + '/article/news_comments',
-    //    headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //   }
-    // }).then(function(response){
-    //     if(response.data.status==1){
-          
+      date.news_id=this.id;
+      if(ab="new"){
+      	this.comdata=[];
+      	this.offset=0;
+      }
+      date.offset=this.offset;
+      date.limit=10;
+      axios({
+	        method:'post',
+	        data:qs.stringify(date),
+	        url:vm.baseurl + '/article/news_comments',
+	       headers: {
+	          'Content-Type': 'application/x-www-form-urlencoded'
+	      }
+	    }).then(function(response){
+	        if(response.data.status==1){
+	        	
+	          	var arr = response.data.data;
+	          	if(arr.length<10){
+	          		vm.combtnis=false;
+	          	}else{
+	          		vm.combtnis=true;
+	          		vm.offset=vm.offset+1;
+	          	}
+	          	arr.forEach( function(element, index) {
+	          		var obj={};
+	          		obj.url=element.user_url;
+	          		obj.time=element.user_name;
+	          		obj.time=element.comment_time;
+	          		obj.content=element.comment_content;
+	          		obj.id=element.comment_id;
+	          		vm.comdata.push(obj)
+	          	});
+	          	
 
-    //     }else{
-    //       vm.$message.success(response.data.msg)
-    //     }
-    // });
+	        }else{
+	          vm.$message.success(response.data.msg)
+	        }
+	    });
      }
   },
 
@@ -337,6 +501,7 @@ export default {
   line-height: 40px;
   margin-left: 20px;
   font-size: 14px;
+  cursor: pointer;
 }
 .btn button img{
   display: block;
@@ -508,10 +673,20 @@ export default {
   display: block;
   width: 50px;
   height: 50px;
+  padding: 2px;
+  cursor: pointer;
   border-radius: 100%;
   background: #ccc;
   position: absolute;
   left: 20px;
   top: 220px;
+}
+.bigimg .imgno{
+	top: -40px;
+	left: 910px;
+	width: 30px;
+   height: 30px;
+   padding-top: 10px;
+   padding-left: 10px;
 }
 </style>

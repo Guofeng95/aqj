@@ -4,7 +4,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state:{
 		loginis:false,
-		userurl:'/static/img/userurl.png',
+		userurl:'',
 		userstatus:"未认证"
 	},
 	getters:{

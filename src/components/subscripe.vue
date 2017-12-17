@@ -150,7 +150,7 @@ import axios from 'axios'
 import qs from 'qs'
 import * as Url from '@/components/url.js'
 export default {
-  name: 'index',
+  name: 'subscripe',
   computed:{
     ...mapGetters({
       loginis:'loginnow',

@@ -4,9 +4,9 @@
       <img class="logo" style="margin-top:14px;" src="/static/img/logo.png" title="logo">
       <span class="logofont">安全加</span>
       <span class="logobeat">beta</span>
-      <router-link id="recommend" class="tj" to="/recommend">推荐</router-link>
-      <router-link id="inde" to="/">安全头条</router-link>
-      <router-link id="konw" class="know" to="/bar">安全知识</router-link>
+      <span  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></span>
+      <span  @click="hlight('inde')"><router-link id="inde" to="/">安全头条</router-link></span>
+      <span @click="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span>
       <div class="search">
         <el-input
           placeholder="搜索安全信息"
@@ -62,9 +62,12 @@
       </div>
     </div>
     <router-view/>
+<!--     <div class="indexbottom">
+      © 2017 安全加 社区. All Rights Reserved.
+    </div> -->
     <span class="line"></span>
     <div class="background" v-show="resetis">
-      <div class="aside" id="reset" v-show="resetis">
+      <div class="aside1" id="reset" v-show="resetis">
         <h4>快速注册 <img class="cha" @click="reset" src="/static/img/cha.png"></h4>
         <div class="demo-input-suffix">
           <el-input class="verify" @change="check('remail')" v-model="remail" placeholder="请填写邮箱地址"></el-input>
@@ -103,7 +106,7 @@
       </div>
       </div>
       <div class="background" v-show="logis">
-        <div class="aside" id="log" v-show="logis">
+        <div class="aside1" id="log" v-show="logis">
           <h4>快速登录 <img class="cha" @click="login" src="/static/img/cha.png"></h4>
           <div class="inputcheck">
             <el-input class='form' v-model="username" placeholder="请填写手机号或邮箱"></el-input>
@@ -174,7 +177,8 @@ export default {
     }
   },
   mounted(){
-
+     var id2 = document.getElementById('inde');
+     id2.style.color="#fda861";
     this.$store.state.loginis=false;
     var vm=this;
     //console.log(axios)
@@ -200,6 +204,16 @@ export default {
 
   },
   methods:{
+    hlight(name){
+      var id1 = document.getElementById('recommend');
+        id1.style.color="#ababab";
+        var id2 = document.getElementById('inde');
+        id2.style.color="#333";
+        var id3 = document.getElementById('know');
+        id3.style.color="#333";
+        var id6 = document.getElementById(name);
+        id6.style.color="#fda861";
+    },
     munugo(index){
       if(index==2){
         if(this.munuis){
@@ -410,11 +424,11 @@ export default {
 </script>
 
 <style>
-.aside .inputcheck{
+.aside1 .inputcheck{
   position: relative;
   margin-bottom: 40px;
 }
-.aside .inputcheck span{
+.aside1 .inputcheck span{
   display: block;
   font-size: 12px;
   margin-left: 0px;
@@ -433,6 +447,15 @@ a{text-decoration: none; color: #333;}
   margin: 0 auto;
   background: white;
   overflow: auto;
+}
+.indexbottom{
+  height: 60px;
+  line-height: 60px;
+  border-top: 1px solid #d3d3d3;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 20px;
 }
 .head{
   border-bottom: 1px solid #e4e4e4;
@@ -560,12 +583,12 @@ a{text-decoration: none; color: #333;}
   right: 10px;
   top: 20px;
 }
- .aside h4{
+.aside1 h4{
     margin-bottom: 30px;
     margin-left: 10px;
     font-size: 18px;
   }
-.aside{
+.aside1{
     width: 270px;
     background:rgba(251, 251, 251, 1);
     border:1px solid  rgba(242, 242, 242, 1);
@@ -575,14 +598,14 @@ a{text-decoration: none; color: #333;}
     padding-right: 10px;
     overflow: hidden;
   }
-.aside div{
+.aside1 div{
     width: 290px;
     height: 30px;
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 10px;
   }
-  .aside div p{
+  .aside1 div p{
     width: 210px;
     height: 30px;
     line-height: 30px;
@@ -591,12 +614,12 @@ a{text-decoration: none; color: #333;}
     white-space: nowrap;
     float: left;
   }
-  .aside .form{
+  .aside1 .form{
     height: 34px;
     width: 260px;
     margin-top: 4px;
   }
-  .aside .btn{
+  .aside1 .btn{
     display: block;
     height: 36px;
     width: 260px;
@@ -610,12 +633,12 @@ a{text-decoration: none; color: #333;}
     margin-top: 10px;
     font-size: 14px;
   }
-  .aside .btn img{
+  .aside1 .btn img{
     position: absolute;
     left: 60px;
     top: 4px;
   }
-  .aside .btna a{
+  .aside1 .btna a{
     width: 80px;
     height: 32px;
     border-radius: 6px;
@@ -625,21 +648,21 @@ a{text-decoration: none; color: #333;}
     color: #fff;
     line-height: 32px;
   }
-  .aside div a img{
+  .aside1 div a img{
     display: block;
     float: left;
   }
-  .aside div{
+  .aside1 div{
     clear: both;
   }
-  .aside div p{
+  .aside1 div p{
     width: 90px;
     float: left;
   }
-  .aside .ahref{
+  .aside1 .ahref{
     padding-top: 10px;
   }
-  .aside .ahref a{
+  .aside1 .ahref a{
     display: block;
     float:left;
     color: #3399d6;
@@ -648,7 +671,7 @@ a{text-decoration: none; color: #333;}
     line-height: 30px;
     margin-left: 10px;
   }
-  .aside .ahref .forgot{
+  .aside1 .ahref .forgot{
     margin-left: 70px;
   }
   .app{
@@ -658,29 +681,14 @@ a{text-decoration: none; color: #333;}
   .more{
     position: relative;
   }
-  .more span{
-    display: block;
-    width: 40px;
-    height: 20px;
-    position: absolute;
-    right: 20px;
-    top: 50px;
-    cursor: pointer;
-  }
-  .more .tu{
-    cursor: pointer;
-    width: 90px;
-    height: 90px;
-    left: 24px;
-    top: 80px;
-  }
-   .aside .diva{
+  
+   .aside1 .diva{
     width: 120px;
     float: left;
     clear: none;
     margin-left: 10px;
   }
-  .aside .diva a{
+  .aside1 .diva a{
     text-decoration: none;
     color: #333;
   }
@@ -713,7 +721,7 @@ a{text-decoration: none; color: #333;}
     padding-left:0;
     padding-right:0;
   }
- .aside .verify{
+ .aside1 .verify{
     width: 196px;
   }
   .background .aside  .form{

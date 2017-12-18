@@ -3,42 +3,73 @@
   	<div class="collect" v-for="(item,index) in collectdata" :key="index">
       <h4>{{item.title}}</h4>
       <div>{{item.time}}</div>
-      <p>{{item.content}}</p>
+      <p> 来自文章：<a href="#">{{item.content}}</a></p>
   	</div>
-  	<div class="conbot">
+  	<div class="conbot" v-show="conbotis" @click="searchdata">
         加载更多
      </div>
   </div>
 </template>
 <script>
+import axios from 'axios'
+import qs from 'qs'
+import * as Url from '@/components/url.js'
 export default {
   data () {
     return {
+      baseurl:Url.baseurl,
+      notice:'',
+      conbotis:true,
     	collectdata:[
     		{
           "title":"其实没看懂什么意思",
           "time":"19秒前",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看看数据库，会听吗！"
+          "content":"就啥都看见啊哈几点开始加快看看数据库，会听吗！"
         },
-        {
-          "title":"希望自费与外来语便宜",
-          "time":"2分钟前",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看看数据库，会听吗充电接口恐龙快打离开了离苦得乐？"
-        },
-        {
-          "title":"其实没看懂什么意思",
-          "time":"19秒前",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看看数据库，会听吗！"
-        },
-        {
-          "title":"希望自费与外来语便宜",
-          "time":"2分钟前",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看看数据库，会听吗充电接口恐龙快打离开了离苦得乐？"
-        }
-
     	],
     }
+  },
+  mounted(){
+    this.collectdata=[];
+    this.searchdata()
+  },
+  methods:{
+    searchdata(){
+        var vm=this;
+        var date={};
+          date.limit=10;
+          date.notice=this.notice;
+          axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/article/news_list_my_comments',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+            console.log(response)
+              if(response.data.status==1){
+                vm.notice=response.data.prev_notice;
+                if(response.data.data.length == 10){
+                  vm.conbotis=true;
+                }else{
+                  vm.conbotis=false;
+                }
+                  response.data.data.forEach( function(element, index) {
+                    var obj={};
+                    obj.title=element.content;
+                    obj.id=element.id;
+                    obj.time='19秒前';
+                    obj.content = '就啥都看见啊哈几点开始加快看看数据库，会听吗！';
+                    vm.collectdata.push(obj);
+                  });
+              }else{
+                vm.$message.warning(response.data.msg);
+              }
+          });
+    }
   }
+
 }
 </script>
 <style scoped>
@@ -65,6 +96,11 @@ export default {
     float: left;
     overflow: hidden;
     color: #cecece;
+    margin-left: 10px;
+  }
+  .collect p a{
+    color: #cecece;
+    text-decoration: none;
   }
 	.conbot{
 	  color: #fff;

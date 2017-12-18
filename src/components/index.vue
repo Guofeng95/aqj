@@ -50,7 +50,7 @@
       <div class="aside" v-show="loginis">
           <h4>热门推荐</h4>
           <div v-for="(item,index) in hotdata" :key='index'>
-            <span class="span" style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
+            <span class="span" style="background:#3a9e00;"  v-if="index==0">{{index+1}}</span>
             <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
             <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
             <span class="span" v-else>{{index}}</span>
@@ -89,9 +89,7 @@
         <img class="app" src="/static/img/app.png">
       </div>
       <div class="more">
-        <img style="margin-top:10px" src="/static/img/qun.png">
-        <span ></span>
-        <span class="tu"></span>
+        <qun></qun>
       </div>
       <div class="aside" style="margin-top:20px;">
         <h4>友情链接</h4>
@@ -99,7 +97,10 @@
           <a :href="item.url">{{item.name}}</a>
         </div>
       </div>
-      <img style="margin-top:20px" src="/static/img/bottom.png">
+      <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px;">
+        <img style="margin-top:20px" src="/static/img/bottom.png">
+      </div>
+      
     </div>
     <div class="background" v-show="resetis">
       <div class="aside" id="reset" v-show="resetis">
@@ -145,12 +146,16 @@
 </template>
 
 <script>
+import qun from '@/components/common/qun'
 import {mapGetters} from "vuex"
 import axios from 'axios'
 import qs from 'qs'
 import * as Url from '@/components/url.js'
 export default {
   name: 'index',
+   components: {
+    qun
+   },
   computed:{
     ...mapGetters({
       loginis:'loginnow',
@@ -173,13 +178,13 @@ export default {
       usernameis:false,
       passwordis:false,
       adata:[
-          {"name":"勒索病毒","url":"www.baidu.com"},
-          {"name":"勒索病毒","url":"www.baidu.com"},
-          {"name":"美国科学家将恶","url":"www.baidu.com"},
-          {"name":"美国科学家将恶","url":"www.baidu.com"},
-          {"name":"美国科学家将恶","url":"www.baidu.com"},
-          {"name":"转移战场的","url":"www.baidu.com"},
-          {"name":"转移战场的","url":"www.baidu.com"}
+          {"name":"安全知识","url":"http://zhishi.secjia.com"},
+          {"name":"黑客街","url":"http://www.hackjie.com"},
+          {"name":"东轩'sBLOG","url":"http://www.dxblog.cn"},
+          {"name":"即刻安全","url":"http://www.secist.com"},
+          {"name":"Luan's Blog ","url":"http://lu4n.com"},
+          {"name":"被黑站点统计","url":"http://www.hacked.com.cn"},
+          {"name":"指尖安全","url":"http://www.secfree.com"}
       ],
       remail:'',
       rverify:'',
@@ -564,13 +569,14 @@ export default {
   cursor: pointer;
 }
 .aside{
-    width: 100%;
+    width:312px;
     background:rgba(251, 251, 251, 1);
     border:1px solid  rgba(242, 242, 242, 1);
     border-radius: 0px;
-    padding:0 15px;
-    padding-top: 26px;
+    
     overflow: hidden;
+    padding: 0 20px;
+    padding-top: 26px;
   }
   .aside h4{
     margin-bottom: 30px;
@@ -678,22 +684,7 @@ export default {
   .more{
     position: relative;
   }
-  .more span{
-    display: block;
-    width: 40px;
-    height: 20px;
-    position: absolute;
-    right: 20px;
-    top: 50px;
-    cursor: pointer;
-  }
-  .more .tu{
-    cursor: pointer;
-    width: 90px;
-    height: 90px;
-    left: 24px;
-    top: 80px;
-  }
+  
    .aside .diva{
     width: 120px;
     float: left;

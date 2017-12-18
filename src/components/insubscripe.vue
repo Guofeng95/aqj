@@ -1,8 +1,26 @@
 <template>
   <div class="index">
     <div class="left">
-      <div class="newcontent" v-show="newcontentis">
-        <span @click="newcon">有新的文章发布啦,刷新一下,查看新内容！</span>
+      <div class="news tablenew"> 
+        <div class="demo-input-suffix">
+          <label>Title:</label>
+          <el-input
+            v-model="seotitle">
+          </el-input>
+        </div>
+        <div class="demo-input-suffix">
+          <label>Keywords:</label>
+          <el-input
+            v-model="seokeywords">
+          </el-input>
+        </div>
+        <div class="demo-input-suffix">
+          <label>Description:</label>
+          <el-input
+            v-model="seodescription">
+          </el-input>
+        </div>
+        <el-button type="success" style="margin-left:30px;" @click="seogo" round>保存seo设置</el-button>
       </div>
       <div class="news" v-for="(item,index) in indexdata" :key="index" >
         <div class="newsone" v-if="item.form==1">
@@ -47,6 +65,11 @@
       </div>
     </div>
     <div class="right">
+      <div class="aside">
+          <h3 class="h3">订阅该关键词可以在第一时间获得相关信息</h3>
+          <el-button class="dybtn" type="success" @click="subscr('new')" v-show="subis">我要订阅</el-button>
+          <el-button class="dybtn" type="success" @click="subscr('old')" v-show="subis==false">已订阅</el-button>
+      </div>
       <div class="aside" v-show="loginis">
           <h4>热门推荐</h4>
           <div v-for="(item,index) in hotdata" :key='index'>
@@ -57,87 +80,12 @@
             <p class="hotp">{{item.content}}</p>
           </div>
       </div>
-      <div class="aside" v-show="loginis==false">
-        <h4>快速登录</h4>
-        <div class="inputcheck">
-            <el-input class='form' v-model="username" placeholder="请填写手机号或邮箱"></el-input>
-            <span  v-show="usernameis" >手机号或邮箱不存在</span>
-          </div>
-          <div class="inputcheck" style="margin-bottom:10px;">
-           <el-input class='form' v-model="password" placeholder="请输入密码"></el-input>
-           <span  v-show="passwordis" >密码错误请重新输入</span>
-          </div>
-          <div style="clear:both"></div>
-        <a class="btn" @click="sublogin"><img src="/static/img/btn.png" />立即登录</a>
-        <div class="btna">
-          <a style="background:#00cc33">
-            <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
-          </a>
-          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
-            <img style="margin-left:6px;" src="/static/img/wb.png">微博
-          </a>
-          <a style="background:#00ccff;line-height:34px;">
-            <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
-          </a>
-        </div>
-        <div class="ahref">
-          <p>还没有账号？</p>
-          <a href="#" @click="login(1)">注册</a><a class="forgot" href="#/forget">忘记密码</a>
-        </div>
-      </div>
-      <div class="aside">
-        <img class="app" src="/static/img/app.png">
-      </div>
       <div class="more">
         <img style="margin-top:10px" src="/static/img/qun.png">
         <span ></span>
         <span class="tu"></span>
       </div>
-      <div class="aside" style="margin-top:20px;">
-        <h4>友情链接</h4>
-        <div class="diva" v-for="(item,index) in adata" :key="index">
-          <a :href="item.url">{{item.name}}</a>
-        </div>
-      </div>
       <img style="margin-top:20px" src="/static/img/bottom.png">
-    </div>
-    <div class="background" v-show="resetis">
-      <div class="aside" id="reset" v-show="resetis">
-        <h4>快速注册 <img class="cha" @click="login" src="/static/img/cha.png"></h4>
-        <div class="demo-input-suffix">
-          <el-input class="verify" @change="check('remail')" v-model="remail" placeholder="请填写邮箱地址"></el-input>
-           <el-button class="btn1"  type="success" @click="emalicode">验证码</el-button>
-           <span  v-show="remailis" style="display:block;margin-top:6px;font-size: 12px;margin-left: 20px;color: red;">请填写正确的邮箱格式，不能为空</span>
-        </div>
-        <div class="inputcheck" style="padding-top:10px;">
-          <el-input class='form' @change="check('rverify')" v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
-          <span v-show="rverifyis">请填写验证码</span>
-        </div>
-        <div class="inputcheck">
-          <el-input class='form' @change="check('rpassword')" v-model="rpassword" placeholder="请设置密码,6-14位字符"></el-input>
-          <span  v-show="rpasswordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
-        </div>
-        <div class="inputcheck" style="margin-bottom:10px;">
-           <el-input class='form' @change="check('rtwopwd')" v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
-           <span  v-show="rtwopwdis" >两次密码不统一</span>
-        </div>
-        <div style="clear:both"></div>
-        <a class="btn" @click="resetgo">立即注册</a>
-        <div class="btna">
-          <a style="background:#00cc33">
-            <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
-          </a>
-          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
-            <img style="margin-left:6px;" src="/static/img/wb.png">微博
-          </a>
-          <a style="background:#00ccff;line-height:34px;">
-            <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
-          </a>
-        </div>
-        <div class="ahref">
-          <p>已有账号？</p>
-          <a href="#" @click="login">登录</a><a class="forgot" href="#">忘记密码</a>
-        </div>
     </div>
     </div>
     
@@ -160,6 +108,11 @@ export default {
   },
   data () {
     return {
+      seokeywords:'',
+      seodescription:'',
+      seotitle:'',
+      subis:true,
+      subscripe:'',
       nextnotice:'',
       timer:'',
       conbotis:false,
@@ -217,34 +170,82 @@ export default {
 
     }
   },
-  beforeDestroy: function () {
-    console.log('清除')
-    clearInterval(this.timer)
-  },
   mounted(){
     var vm=this;
     this.indexdata=[];
-    this.indexdataget(7,"first");
-    this.timer=setInterval(function(){
-          var date={};
-          date.notice=vm.nextnotice;
-          axios({
+    this.subscripe=sessionStorage.getItem("subscripe");
+    this.indexdataget(10,"first");
+    var date={};
+    date.keyword=this.subscripe;
+    axios({
+        method:'post',
+        data:qs.stringify(date),
+        url:vm.baseurl + '/article/news_get_keyword_seo_data',
+       headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).then(function(response){
+        if(response.data.status==1){
+          vm.seotitle=response.data.title;
+          vm.seokeywords=response.data.keywords;
+          vm.seodescription=response.data.description;
+        }else{
+          vm.$message.warning(response.data.msg);
+        }
+
+    })
+  },
+  methods:{
+      seogo(){
+        var vm=this;
+        var data={};
+        data.keyword=this.subscripe;
+        data.title=vm.seotitle;
+        data.keywords=vm.seokeywords;
+        data.description=vm.seodescription;
+        axios({
+            method:'post',
+            data:qs.stringify(data),
+            url:vm.baseurl + '/article/news_update_keyword_seo_data',
+           headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then(function(response){
+            if(response.data.status==1){
+              vm.$message.success("保存成功！");
+            }else{
+              vm.$message.warning(response.data.msg);
+            }
+
+        })
+      },
+      subscr(name){
+        var vm=this;
+        var date={};
+        date.keyword=this.subscripe;
+
+        if(name=="new"){
+           date.do_cancel=0;
+        }else{
+          date.do_cancel=1;
+        }
+        axios({
               method:'post',
               data:qs.stringify(date),
-              url:vm.baseurl + '/article/news_check_new',
+              url:vm.baseurl + '/article/news_subscribe_keyword',
              headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
           }).then(function(response){
-            if(response.data.status==1){
-              vm.newcontentis=true;
-            }else{
-              vm.newcontentis=false;
-            }
+              if(response.data.status==1){
+                vm.subis=!vm.subis;
+              }else{
+                vm.$message.warning(response.data.msg);
+              }
+
           })
-    },10000)
-  },
-  methods:{
+
+      },
       article(id){
         window.location.href='/#/article?topid='+id;
       },
@@ -253,6 +254,7 @@ export default {
         var date={};
           date.limit=limit;
           date.notice=this.notice;
+          date.keyword=this.subscripe;
           axios({
               method:'post',
               data:qs.stringify(date),
@@ -270,6 +272,11 @@ export default {
                     vm.conbotis=true;
                   }else{
                     vm.conbotis=false;
+                  }
+                  if(response.data.subscribed==0){
+                    vm.subis=true;
+                  }else{
+                     vm.subis=false;
                   }
                   response.data.data.forEach( function(element, index) {
                     var obj={};
@@ -308,160 +315,33 @@ export default {
           this.resetis=false;
         }
       },
-     sublogin(){
-      var vm=this;
-      if(this.username!='' && this.password!=""){
-          var date={};
-          date.username=this.username;
-          date.password=this.password;
-          axios({
-              method:'post',
-              data:qs.stringify(date),
-              url:vm.baseurl + '/user/login',
-             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          }).then(function(response){
-              if(response.data.status==1){
-                
-                console.log(response.data)
-                vm.login();
-              if(response.data.verified==1){
-                  vm.$store.state.userstatus="未认证"
-                }else if(response.data.verified==2){
-                  vm.$store.state.userstatus="待确认"
-                }else if(response.data.verified==3){
-                  vm.$store.state.userstatus="已认证"
-                }
-                vm.$store.state.userurl=response.data.avatar;
-                vm.$store.state.loginis=true;
-              }else{
-                vm.$message.warning("账号密码错误");
-              }
-          }).catch(function(error){
-            console.log(error)
-          })
-          
-
-      }else{
-        this.$message.error('请填写信息');
-      }
-      
-    },
-    check(style){
-      if(style=="remail"){
-        var isok=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.remail);
-        if(isok){
-          this.remailis=false;
-        }else{
-          this.remailis=true;
-          this.emalicodeis=false;
-        }
-      }
-      if(style=="rverify"){
-        if( this.rverify==''){
-          this.rverifyis=true;
-        }else{
-          this.rverifyis=false;
-        }
-      }
-
-      if(style=="rpassword"){
-        var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.rpassword);
-        if(isok){
-          this.rpasswordis=false;
-        }else{
-          this.rpasswordis=true;
-        }
-      }
-      if(style=="rtwopwd"){
-        if(this.rtwopwd==this.rpassword){
-          this.rtwopwdis=false;
-        }else{
-          this.rtwopwdis=true;
-        }
-      }
-    },
-    resetgo(){
-      if(this.rpasswordis==false && this.rverifyis==false && this.remailis==false && this.rtwopwdis==false){
-        if(this.rpassword!="" && this.rverify!='' && this.remail!='' && this.rtwopwd!=''){
-            if(this.emalicodeis==true){
-             var nickname="社区用户";
-              axios({
-                  method:'post',
-                  data:qs.stringify({"verification_code":this.rverify,"username":this.remail,"password":this.rpassword,"password1":this.rtwopwd,"nickname":nickname}),
-                  url:vm.baseurl + '/user/register',
-              }).then(function(response){
-                  if(response.data.status==1){
-                    vm.$message.success('注册成功');
-                    vm.login();
-                  }else{
-                    vm.$message.error(response.data.msg);
-                  }
-              });
-            }else{
-              this.$message.warning('请获取验证码');
-            }
-        }else{
-          this.$message.error('请填写信息');
-        }
-      }
-    },
-    emalicode(){
-          var vm=this;
-                if(this.remail !='' && this.remailis==false){
-                    var date= {};
-                    date.email=this.remail;
-                    date.for="register"
-                        var date1= {};
-                        date1.email=this.remail;
-                        date1.for="query"
-                        axios({
-                          method:'post',
-                            data:qs.stringify(date1),
-                            url:vm.baseurl + '/user/verify_email',
-                           headers: {
-                              'Content-Type': 'application/x-www-form-urlencoded'
-                          }
-                        }).then(function(response){
-                            if(response.data.status!=1){
-                                axios({
-                                    method:'post',
-                                    data:qs.stringify(date),
-                                    url:vm.baseurl + '/user/verify_email',
-                                   headers: {
-                                      'Content-Type': 'application/x-www-form-urlencoded'
-                                  }
-                                }).then(function(response){
-                                    if(response.data.status==1){
-                                      vm.$message.success('验证码已发送');
-                                      vm.emalicodeis=true;
-                                    }else if(response.data.status==0){
-                                      vm.$message.success(response.data.msg);
-                                      vm.emalicodeis=true;
-                                    }else{
-                                      vm.$message.warning(response.data.msg);
-                                    }
-                                });
-
-
-                            }else{
-                              vm.$message.warning("此邮箱已经注册");
-                            }
-                        });
-                // console.log(date) 
-                }else{
-                  this.check('remail');
-
-     }
-
-    },
   }
 
 }
 </script>
 
 <style scoped>
+.demo-input-suffix {
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
+.demo-input-suffix .el-input{
+  width: 740px;
+} 
+.demo-input-suffix label{
+  width: 100px;
+  display: block;
+  float: left;
+}
+.h3{
+  width: 280px;
+  margin: 0 auto;
+  font-weight: normal;
+}
+.dybtn{
+  display: block;
+  margin:20px auto;
+}
 .aside .inputcheck{
   position: relative;
   margin-bottom: 40px;
@@ -507,6 +387,10 @@ export default {
   padding-top: 24px;
   padding-bottom: 24px;
   position: relative;
+}
+.tablenew{
+  border: 1px dashed #d3d3d3;
+  border-bottom: none;
 }
 .news h4{
   font-size: 18px;
@@ -564,11 +448,11 @@ export default {
   cursor: pointer;
 }
 .aside{
-    width: 100%;
+    width: 312px;
     background:rgba(251, 251, 251, 1);
     border:1px solid  rgba(242, 242, 242, 1);
     border-radius: 0px;
-    padding:0 15px;
+    padding: 0 20px;
     padding-top: 26px;
     overflow: hidden;
   }

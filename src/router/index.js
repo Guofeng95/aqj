@@ -15,7 +15,7 @@ import manger from "@/components/manenger/manger"
 import submit from "@/components/manenger/submit"
 import recommend from '@/components/recommend'
 import article from '@/components/article'
-import subscripe from '@/components/subscripe'
+import insubscripe from '@/components/insubscripe'
 Vue.use(Router)
 
 export default new Router({
@@ -31,9 +31,9 @@ export default new Router({
       component: article
     },
     {
-      path: '/subscripe',
-      name: 'subscripe',
-      component: subscripe
+      path: '/insubscripe',
+      name: 'insubscripe',
+      component: insubscripe
     },
     {
       path: '/recommend',

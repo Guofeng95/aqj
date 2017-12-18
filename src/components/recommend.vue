@@ -60,9 +60,7 @@
         </div>
       </div>
       <div class="more">
-        <img style="margin-top:10px" src="/static/img/qun.png">
-        <span ></span>
-        <span class="tu"></span>
+        <qun></qun>
       </div>
     </div>
     <div class="background" v-show="resetis">
@@ -99,8 +97,12 @@
 
 <script>
 import {mapGetters} from "vuex"
+import qun from '@/components/common/qun'
 export default {
   name: 'recommend',
+  components: {
+    qun
+   },
   computed:{
     ...mapGetters({
       loginis:'loginnow'

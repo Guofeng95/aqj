@@ -63,7 +63,7 @@
         <li v-for="(item,index) in tagdata">
           <span style="color:#a1a1a1;" v-if="index!=0">/</span>
           <img src="/static/img/uno.png">
-          <span>{{item}}</span>
+          <span @click="scripe(item)">{{item}}</span>
         </li>
       </ul>
     </div>
@@ -222,6 +222,10 @@ export default {
     this.comment()
   },
   methods:{
+    scripe(name){
+      sessionStorage.setItem("subscripe", name);
+      window.location.href="#/insubscripe"
+    },
   	bigchange(lr){
   		if(lr=='left'){
   			if(this.nowbignum>0){

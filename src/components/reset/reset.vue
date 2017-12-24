@@ -1,5 +1,5 @@
 <template>
-  <div class="usercenter">
+  <div class="levelcenter">
     <div class="aside">
       <h4>热门推荐</h4>
       <div v-for="(item,index) in hotdata" :key='index'>
@@ -289,7 +289,7 @@ export default {
 }
 </script>
 <style scoped>
-  .usercenter{
+  .levelcenter{
     width: 100%;
     position: relative;
   }
@@ -367,9 +367,11 @@ export default {
     cursor: pointer;
   }
   .level{
-    width: 790px;
+    width: 720px;
     overflow: hidden;
     padding-bottom: 30px;
+     border-radius: 4px;
+    box-shadow:2px 2px 7px #ccc;
   }
   .ltop{
     width: 768px;
@@ -386,6 +388,7 @@ export default {
   .demo-input-suffix{
     height: 40px;
     line-height: 40px;
+    margin-left: 40px;
     margin-top: 26px;
     padding-bottom: 12px;
   }

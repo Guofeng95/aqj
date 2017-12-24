@@ -106,6 +106,7 @@ export default {
     height: 100vh;
     top: 0;
     left: 0;
+    z-index: 3;
     background: rgba(0,0,0,0.6);
   }
   .qqcontent{

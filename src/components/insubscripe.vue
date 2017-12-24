@@ -1,6 +1,8 @@
 <template>
   <div class="index">
     <div class="left">
+      <h4 class="top">{{subscripe}}<span>{{'共'+1+'篇文章'}}</span></h4>
+
       <div class="news tablenew"> 
         <div class="demo-input-suffix">
           <label>Title:</label>
@@ -81,9 +83,7 @@
           </div>
       </div>
       <div class="more">
-        <img style="margin-top:10px" src="/static/img/qun.png">
-        <span ></span>
-        <span class="tu"></span>
+        <qun></qun>
       </div>
       <img style="margin-top:20px" src="/static/img/bottom.png">
     </div>
@@ -93,12 +93,16 @@
 </template>
 
 <script>
+import qun from '@/components/common/qun'
 import {mapGetters} from "vuex"
 import axios from 'axios'
 import qs from 'qs'
 import * as Url from '@/components/url.js'
 export default {
   name: 'subscripe',
+  components: {
+    qun
+   },
   computed:{
     ...mapGetters({
       loginis:'loginnow',
@@ -193,7 +197,52 @@ export default {
           vm.$message.warning(response.data.msg);
         }
 
-    })
+    });
+    function getScrollTop(){
+      　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+      　　if(document.body){
+      　　　　bodyScrollTop = document.body.scrollTop;
+      　　}
+      　　if(document.documentElement){
+      　　　　documentScrollTop = document.documentElement.scrollTop;
+      　　}
+      　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+      　　return scrollTop;
+      }
+
+      //文档的总高度
+
+      function getScrollHeight(){
+      　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+      　　if(document.body){
+      　　　　bodyScrollHeight = document.body.scrollHeight;
+      　　}
+      　　if(document.documentElement){
+      　　　　documentScrollHeight = document.documentElement.scrollHeight;
+      　　}
+      　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+      　　return scrollHeight;
+      }
+
+      //浏览器视口的高度
+
+      function getWindowHeight(){
+      　　var windowHeight = 0;
+      　　if(document.compatMode == "CSS1Compat"){
+      　　　　windowHeight = document.documentElement.clientHeight;
+      　　}else{
+      　　　　windowHeight = document.body.clientHeight;
+      　　}
+      　　return windowHeight;
+      }
+
+      window.onscroll = function(){
+      　　if(getScrollTop() + getWindowHeight() == getScrollHeight()){
+      　　　 if(vm.conbotis==true){
+                vm.indexdataget(10);
+            }
+      　　}
+      };
   },
   methods:{
       seogo(){
@@ -321,6 +370,25 @@ export default {
 </script>
 
 <style scoped>
+.top{
+  font-size: 36px;
+  padding: 4px 0;
+  position: relative;
+}
+.top span{
+  position: absolute;
+  width: 117px;
+  display: block;
+  height: 26px;
+  font-size: 16px;
+  color: #a1a1a1;
+  border:1px solid #d7d7d7;
+  text-align: center;
+  border-radius: 4px;
+  line-height: 26px;
+  top: 16px;
+  left: 100px;
+}
 .demo-input-suffix {
   margin-left: 30px;
   margin-bottom: 20px;
@@ -353,7 +421,7 @@ export default {
   color: red;
 }
 .index{
-  margin-top: 10px;
+  margin-top: 20px;
   width: 1300px;
   overflow: hidden;
 }

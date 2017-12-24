@@ -1,7 +1,7 @@
 <template>
   <div class="level">
    <div v-show="status==1">
-    	<div class="ltop">完善身份认证有助于我们为您提供更好的服务</div>
+    	<div class="ltop">根据<a href="http://www.shiguai.gov.cn/information/sgq_zfhcxjsj43/msg18222215157.html">《中国人民共和国安全法》</a>要求，您需要实名认证，完善身份认证有助于我们为您提供更好的服务</div>
       <div class="demo-input-suffix">
         <span>姓名:</span>
         <el-input class="input" v-model="name" @change="check('name')" placeholder="请输入文字"></el-input>
@@ -65,12 +65,12 @@ export default {
     }
   },
   mounted(){
-    //console.log(this.userstatus)
-    if(this.userstatus=="待确认"){
-      this.status=2;
-    }else{
-      this.status=1;
-    }
+    console.log(this.userstatus)
+    // if(this.userstatus=="待确认"){
+    //   this.status=2;
+    // }else{
+    //   this.status=1;
+    // }
   },
   methods:{
     verifygo(){
@@ -152,6 +152,9 @@ export default {
   .level{
     width: 790px;
     overflow: hidden;
+     border-radius: 4px;
+     height: 526px;
+    box-shadow:2px 2px 7px #ccc;
   }
   .ltop{
     width: 768px;
@@ -163,12 +166,17 @@ export default {
     padding-left: 20px;
     line-height: 56px;
     font-size: 14px;
-
+  }
+  .ltop a{
+    text-decoration: none;
+    color: #169BD5;
   }
   .demo-input-suffix{
     height: 40px;
     line-height: 40px;
+    margin-left: 100px;
     margin-top: 26px;
+    width: 400px;
     padding-bottom: 12px;
   }
   .demo-input-suffix span{
@@ -197,6 +205,7 @@ export default {
     width: 104px;
     margin-left: 140px;
     margin-top:20px; 
+    margin-bottom: 30px;
   }
   .subok{
     text-align: center;

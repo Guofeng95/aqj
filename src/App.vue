@@ -74,7 +74,7 @@
            <el-button class="btn1"  type="success" @click="emalicode">验证码</el-button>
            <span  v-show="remailis" style="display:block;margin-top:6px;font-size: 12px;margin-left: 20px;color: red;">请填写正确的邮箱格式，不能为空</span>
         </div>
-        <div class="inputcheck" style="padding-top:10px;">
+        <div class="inputcheck" style="padding-top:20px;">
           <el-input class='form' @change="check('rverify')" v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
           <span v-show="rverifyis">请填写验证码</span>
         </div>

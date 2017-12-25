@@ -2,7 +2,7 @@
   <div class="article">
   	<div class="top">
   		<a>首页></a>
-  		<a href="#">{{secondtit+'>'}}</a>
+  		<a href="#/">{{secondtit+'>'}}</a>
   		<a href="#">{{thirdtit}}</a>
   	</div>
     <div class="sumary">
@@ -60,20 +60,34 @@
     <div class="tagzi">
       <p style="font-size:14px;color:#a1a1a1; margin-bottom:10px;">您可能对以下关键词感兴趣哟，请用鼠标滑过或点击关键词 :</p>
       <ul>
-        <li v-for="(item,index) in tagdata">
+        <li v-for="(item,index) in tagdata" @mouseover.stop="tagover(item)" @mouseout.stop="tagout(item)">
           <span style="color:#a1a1a1;" v-if="index!=0">/</span>
           <img src="/static/img/uno.png">
           <span @click="scripe(item)">{{item}}</span>
         </li>
       </ul>
     </div>
-    <h4 class="hf">相关文章</h4>
+    <h4 class="hf" id="tagh4">相关文章</h4>
     <div class="articlecot">
-      <div class="left">
-        <p>接口都是客户肯定手机客户端快捷回复数的借口环境看·电话空号·vsnmsnbmnsabmbmn</p>
+      <div class="left" id="tagleft" v-if="tagchangedata.length>0">
+        <p v-for="(item,index) in tagchangedata" v-if="(index%2)==0"> 
+         {{'('+(index+1)+')'+item.title}}
+        </p>
       </div>
-      <div class="left">
-        <p>接口都是客户肯定手机客户端快捷回复数的借口环境看·电话空号·</p>
+      <div class="left" id="tagleft" v-else>
+        <p> 
+          无数据
+        </p>
+      </div>
+      <div class="left" id="tagright" v-if="tagchangedata.length>0">
+        <p v-for="(item,index) in tagchangedata" v-if="(index%2)!=0"> 
+          {{'('+(index+1)+')'+item.title}}
+        </p>
+      </div>
+      <div class="left" id="tagright" v-else>
+        <p> 
+          无数据
+        </p>
       </div>
     </div>
      <h4 class="hf" style="clear:both;padding-top:20px;margin-bottom:40px;">参与讨论</h4>
@@ -174,15 +188,32 @@ export default {
               //   "name":"线板吗就是",
               //   "content":"hgwhjgjheg今年上看到黄金客户就是肯定会查看回复等级考试继父回家"
               // }
-      ]
+      ],
+      tagchangedata:[
+        
+      ],
+      comid:''
     }
   },
   mounted(){
-    var arr=window.location.href.split('?')[1].split("=");
-    this.id=arr[1];
-    if(arr[0]=="topid"){
-      this.secondtit="安全头条"
-    };
+    var comis=window.location.href.indexOf("comid");
+    if(comis){
+      var arr1=window.location.href.split('?')[1].split("&");
+      var arr=arr1[0].split("=");
+      this.id=arr[1];
+      if(arr[0]=="topid"){
+        this.secondtit="安全头条"
+      };
+      var arr2=arr1[1].split("=")[1];
+      this.comid=arr2;
+    }else{
+      var arr=window.location.href.split('?')[1].split("=");
+      this.id=arr[1];
+      if(arr[0]=="topid"){
+        this.secondtit="安全头条"
+      };
+    }
+    
     var vm=this;
     var date={};
     date.id=this.id;
@@ -202,7 +233,8 @@ export default {
           vm.arttime=obj.publish_time;
           vm.readnum=obj.read_count;
           vm.comnum=obj.comment_count;
-          vm.thirdtit=response.data.tag;
+          vm.thirdtit=response.data.keywords[0];
+          vm.tagdatanow(response.data.keywords[0])
           vm.article=response.data.doc;
           vm.zannum=obj.like_count;
           vm.hdpurl=obj.images;
@@ -222,6 +254,51 @@ export default {
     this.comment()
   },
   methods:{
+    tagdatanow(name){
+      var vm=this;
+      var date={};
+      date.limit=10;
+      date.notice='';
+      date.keyword=name;
+      axios({
+          method:'post',
+          data:qs.stringify(date),
+          url:vm.baseurl + '/article/news_list',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(function(response){
+        if(response.data.status==1){
+            if(response.data.data.length>0){
+              response.data.data.forEach( function(element, index) {
+                var obj={};
+                obj.title=element.summary;
+                vm.tagchangedata.push(obj);
+              });
+            }
+        }
+
+      })
+    },
+    tagover(name){
+      var vm=this;
+      vm.tagchangedata=[];
+      var h4=document.getElementById("tagh4");
+      var tl=document.getElementById("tagleft");
+      var tr=document.getElementById("tagright");
+      h4.style.color = 'rgb(0,153,0)';
+      tl.style.borderColor = 'rgb(0,153,0)';
+      tr.style.borderColor = 'rgb(0,153,0)'; 
+      vm.tagdatanow(name);
+    },
+    tagout(name){
+      var h4=document.getElementById("tagh4");
+      var tl=document.getElementById("tagleft");
+      var tr=document.getElementById("tagright");
+      h4.style.color = '#a1a1a1';
+      tl.style.borderColor = '#d7d7d7';
+      tr.style.borderColor = '#d7d7d7' 
+    },
     scripe(name){
       sessionStorage.setItem("subscripe", name);
       window.location.href="#/insubscripe"
@@ -542,6 +619,7 @@ export default {
 }
 .articlecot .left{
   margin-right: 10px;
+  height: 157px;
 }
 .articlecot div p{
   width: 400px;

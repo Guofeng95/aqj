@@ -16,6 +16,7 @@ import submit from "@/components/manenger/submit"
 import recommend from '@/components/recommend'
 import article from '@/components/article'
 import insubscripe from '@/components/insubscripe'
+import myinformation from "@/components/usercenter/myinformation"
 Vue.use(Router)
 
 export default new Router({
@@ -74,7 +75,11 @@ export default new Router({
       component: usercenter,
       children: [
         {
-    			path: '',
+          path: '/',
+          component: myinformation
+        },
+        {
+    			path: '/collection',
     			component: collection
     		},
         {

@@ -4,11 +4,11 @@
   	<div class="munu">
   		<div class="one">
   			<img style="margin-top:8px;margin-right:4px;margin-left:2px;" src=" /static/img/message.png">
-  			<a href="#">我的消息</a>
+  			<a @click="light('myifor')" style="color:#ff8a00;" id="myifor" href="#/usercenter">我的消息</a>
   		</div>
   		<div>
   			<img style="margin-top:2px" src=" /static/img/star.png">
-  			<a @click="light('usercenter')" style="color:#008000;" id="usercenter" href="#/usercenter">我的收藏</a>
+  			<a @click="light('usercenter')"  id="usercenter" href="#/collection">我的收藏</a>
   		</div>
   		<div>
   			<img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
@@ -69,8 +69,10 @@ export default {
   			id4.style.color="#333";
   			var id5 = document.getElementById('level');
   			id5.style.color="#333";
+        var id7 = document.getElementById('myifor');
+        id7.style.color="#333";
   			var id6 = document.getElementById(id);
-  			id6.style.color="#008000";
+  			id6.style.color="#ff8a00";
 
   		},
       removein(){
@@ -99,6 +101,7 @@ export default {
 <style scoped>
 	.usercenter{
 		width: 100%;
+    padding-bottom: 20px;
 	}
 	h2{
 		font-size:30px;
@@ -110,7 +113,7 @@ export default {
 	  width: 160px;
 	  height: 300px;
 	  border-radius: 4px;
-	  box-shadow:2px 2px 7px #ccc;
+    box-shadow:2px 2px 7px #ccc;
 	  margin-bottom: 10px;
 	  margin-left: 3px;
 	  margin-right: 30px;
@@ -133,4 +136,7 @@ export default {
 		text-decoration: none;
 		color: #333;
 	}
+  .content{
+    padding: 10px;
+  }
 </style>

@@ -21,7 +21,7 @@
       <div class="loginno" v-show="loginis">
         <a href="#/manenger"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
         <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
-        <a style="margin-right:130px;" href="#"><img src="/static/img/ding.png"/></a>
+        <a style="margin-right:130px;" href="#/usercenter"><img src="/static/img/ding.png"/></a>
         <div class="userimg" @click.stop="munugo(2)">
           <img :src="userurl">
         </div>
@@ -35,7 +35,7 @@
           </div>
           <div>
             <img style="margin-top:2px" src=" /static/img/star.png">
-            <a   href="#/usercenter">我的收藏</a>
+            <a   href="#/collection">我的收藏</a>
           </div>
           <div>
             <img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
@@ -61,6 +61,7 @@
         </div>
       </div>
     </div>
+    <div style="height:60px;"></div>
     <router-view/>
 <!--     <div class="indexbottom">
       © 2017 安全加 社区. All Rights Reserved.
@@ -460,6 +461,11 @@ a{text-decoration: none; color: #333;}
 .head{
   border-bottom: 1px solid #e4e4e4;
   height: 60px;
+  position: fixed;
+  top: 0;
+  width: 1300px;
+  z-index: 3;
+  left:calc(50% - 650px);
   background: #f5f5f5;
 }
 .head .logo{
@@ -539,15 +545,18 @@ a{text-decoration: none; color: #333;}
 .head .loginno  a{
   color: #6fba2c;
 }
+.head .loginno  .munu1 a{
+  color: #a1a1a1;
+}
 .line{
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 60px;
   background: #f5f5f5;
   border-bottom: 1px solid #e4e4e4;
   top: 0px;
   left: 0;
-  z-index: -1;
+  z-index: 1;
 }
 .loginno img{
   display: block;

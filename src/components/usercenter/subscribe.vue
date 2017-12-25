@@ -4,7 +4,7 @@
       <h3>您订阅的文章：</h3>
     	<div class="collect" v-for="(item,index) in collectdata" :key="index">
     		<img class="img" :src="item.url">
-    		<h4>{{item.title}}</h4>
+    		<h4 @click="article(item.id)">{{item.title}}</h4>
     		<div><i class="el-icon-edit"></i><span style="margin-right:20px;">{{item.editor}}</span><i class="el-icon-time"></i><span>{{item.time}}</span></div>
     		<p>{{item.content}}</p>
     		<div class="cobottom">
@@ -13,14 +13,14 @@
     			<span>阅读（{{item.read}}）</span>
     		</div>
     	</div>
-    	<div class="conbot" v-show="conbotis">
+    	<div class="conbot" v-show="conbotis" @click="searchdata">
           加载更多
        </div>
      </div>
     <div class="subscripe">
       <h4>您订阅了以下关键词：</h4>
       <div class="stag" v-for="(item,index) in subtag">
-        <img class="imgl" src="/static/img/tagnow.png">{{item}}<img class="imgr" src="/static/img/no.png">
+        <img class="imgl" src="/static/img/tagnow.png">{{item}}<img @click="deleate(item)" class="imgr" src="/static/img/no.png">
       </div>
     </div>
   </div>
@@ -51,11 +51,55 @@ export default {
     	],
     }
   },
-  mounted(){
+  mounted(){  
+    this.subtag=[];
     this.collectdata=[];
     this.searchdata()
   },
   methods:{
+    deleate(id){
+      var vm=this;
+        this.$confirm('你确定要删除该收藏吗, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+
+          var date={};
+          date.keyword=id;
+          date.do_cancel=1;
+          axios({
+                method:'post',
+                data:qs.stringify(date),
+                url:vm.baseurl + '/article/news_subscribe_keyword',
+               headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }).then(function(response){
+                if(response.data.status==1){
+                  vm.subtag=[];
+                  vm.collectdata=[];
+                  vm.searchdata()
+                  vm.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                  });
+                }else{
+                  vm.$message.warning(response.data.msg);
+                }
+
+            })
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    },
+    article(id){
+        window.location.href='/#/article?topid='+id;
+    },
     searchdata(){
         var vm=this;
         var date={};
@@ -81,16 +125,16 @@ export default {
                     var obj={};
                     obj.title=element.title;
                     obj.id=element.id;
-                    obj.content ="在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。";
-                    obj.read=1507;
-                    obj.comment=601;
-                    obj.time="2017-08-06";
+                    obj.content =element.summary;
+                    obj.read=element.read_count;
+                    obj.comment=element.comment_count;
+                    obj.time=element.publish_time;
                     obj.url='http://img2.imgtn.bdimg.com/it/u=4178531770,3008072672&fm=27&gp=0.jpg';
-                    obj.word=["关键词1","关键词2","关键词3"];
-                    obj.editor="马化腾";
-                    vm.collectdata.push(obj);
+                    obj.word=element.keywords;
+                    obj.editor=element.author_name;
                     vm.collectdata.push(obj);
                   });
+                   vm.subtag=response.data.keywords;
               }else{
                 vm.$message.warning(response.data.msg);
               }
@@ -101,7 +145,7 @@ export default {
 </script>
 <style scoped>
   .sub{
-    width: 1100px;
+    width: 1080px;
     min-height:calc( 100vh - 184px);
     position: relative;
     overflow: hidden;
@@ -109,10 +153,15 @@ export default {
 	.collection{
 		width: 790px;
     float: left;
+    padding: 20px 10px;
+     border-radius: 4px;
+    box-shadow:2px 2px 7px #ccc;
 	}
 	.collect{
 		width: 790px;
     overflow: hidden;
+    padding: 10px 0;
+    border-bottom: 1px dashed #d7d7d7;
 		margin-bottom: 10px;
 
 	}
@@ -127,8 +176,12 @@ export default {
 		height: 60px;
 		line-height: 26px;
 		font-size:24px; 
+    cursor: pointer;
 		overflow: hidden;
 	}
+  .collect h4:hover{
+    color: #ff8a00;
+  }
 	
 	.collect div {
 		color: #aeaeae;
@@ -171,7 +224,7 @@ export default {
     .subscripe{
       position: absolute;
       width: 260px;
-      top: 0;
+      top: 20px;
       right:0px;
       overflow: hidden;
     }

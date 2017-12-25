@@ -3,7 +3,7 @@
   	<div class="collect" v-for="(item,index) in collectdata" :key="index">
       <h4>{{item.title}}</h4>
       <div>{{item.time}}</div>
-      <p> 来自文章：<a href="#">{{item.content}}</a></p>
+      <p> 来自文章：<a style="cursor:pointer" @click="article(item.news_id,item.id)">{{item.content}}</a></p>
   	</div>
   	<div class="conbot" v-show="conbotis" @click="searchdata">
         加载更多
@@ -59,14 +59,18 @@ export default {
                     var obj={};
                     obj.title=element.content;
                     obj.id=element.id;
-                    obj.time='19秒前';
-                    obj.content = '就啥都看见啊哈几点开始加快看看数据库，会听吗！';
+                    obj.news_id=element.news_id;
+                    obj.time=element.time;
+                    obj.content =element.news_title;
                     vm.collectdata.push(obj);
                   });
               }else{
                 vm.$message.warning(response.data.msg);
               }
           });
+    },
+    article(id,name){
+      window.location.href='/#/article?topid='+id+'&comid='+name;
     }
   }
 
@@ -76,12 +80,14 @@ export default {
 	.comment{
 		width: 790px;
 		overflow: hidden;
+    border-radius: 4px;
+    box-shadow:2px 2px 7px #ccc;
 	}
 	.collect{
 		width: 790px;
 		padding: 30px 0;
     overflow: hidden;
-    border-bottom:1px solid #f6f6f6;
+    border-bottom:1px dashed #d7d7d7;
 	}
   .collect h4{
     font-size: 16px;
@@ -89,17 +95,17 @@ export default {
   }
   .collect div{
     float: left;
-    color: #cecece;
+    color: #a1a1a1;
     margin-right: 16p;
   }
   .collect p{
     float: left;
     overflow: hidden;
-    color: #cecece;
+    color: #a1a1a1;
     margin-left: 10px;
   }
   .collect p a{
-    color: #cecece;
+    color: #a1a1a1;
     text-decoration: none;
   }
 	.conbot{

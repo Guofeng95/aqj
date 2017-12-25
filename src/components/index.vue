@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="index" id="indexanqu">
     <div class="left">
       <div class="newcontent" v-show="newcontentis">
         <span @click="newcon">有新的文章发布啦,刷新一下,查看新内容！</span>
@@ -247,7 +247,54 @@ export default {
               vm.newcontentis=false;
             }
           })
-    },10000)
+    },10000);
+     
+     function getScrollTop(){
+      　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+      　　if(document.body){
+      　　　　bodyScrollTop = document.body.scrollTop;
+      　　}
+      　　if(document.documentElement){
+      　　　　documentScrollTop = document.documentElement.scrollTop;
+      　　}
+      　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+      　　return scrollTop;
+      }
+
+      //文档的总高度
+
+      function getScrollHeight(){
+      　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+      　　if(document.body){
+      　　　　bodyScrollHeight = document.body.scrollHeight;
+      　　}
+      　　if(document.documentElement){
+      　　　　documentScrollHeight = document.documentElement.scrollHeight;
+      　　}
+      　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+      　　return scrollHeight;
+      }
+
+      //浏览器视口的高度
+
+      function getWindowHeight(){
+      　　var windowHeight = 0;
+      　　if(document.compatMode == "CSS1Compat"){
+      　　　　windowHeight = document.documentElement.clientHeight;
+      　　}else{
+      　　　　windowHeight = document.body.clientHeight;
+      　　}
+      　　return windowHeight;
+      }
+
+      window.onscroll = function(){
+      　　if(getScrollTop() + getWindowHeight() == getScrollHeight()){
+      　　　 if(vm.conbotis==true){
+                vm.indexdataget(10);
+            }
+      　　}
+      };
+    
   },
   methods:{
       article(id){
@@ -478,7 +525,7 @@ export default {
   color: red;
 }
 .index{
-  margin-top: 10px;
+  margin-top: 20px;
   width: 1300px;
   overflow: hidden;
 }
@@ -514,9 +561,19 @@ export default {
   position: relative;
 }
 .news h4{
+  width: 543px;
   font-size: 18px;
   cursor: pointer;
+  height: 50px;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+  -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+  -webkit-line-clamp: 2; /** 显示的行数 **/
+  overflow: hidden;  /** 隐藏超出的内容 **/
 }
+
 .news p{
   font-size: 14px;
   color: #777777;

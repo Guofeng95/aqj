@@ -2,13 +2,17 @@
   <div class="collection">
   	<div class="collect" v-for="(item,index) in collectdata" :key="index">
   		<img class="img" :src="item.url">
-  		<h4>{{item.title}}</h4>
+  		<h4 @click="article(item.id)">{{item.title}}</h4>
   		<div><i class="el-icon-edit"></i><span style="margin-right:20px;">{{item.editor}}</span><i class="el-icon-time"></i><span>{{item.time}}</span></div>
   		<p>{{item.content}}</p>
   		<div class="cobottom">
-  			<img src="/static/img/tag.png" />{{item.word[0]+"/"+item.word[1]+"/"+item.word[2]}}
+  			<img v-if="item.word.length>0" src="/static/img/tag.png" />
+        <i v-if="item.word[0]">{{item.word[0]}}</i>
+        <i v-if="item.word[1]">{{"/"+item.word[1]}}</i>
+        <i v-if="item.word[2]">{{"/"+item.word[2]}}</i>
   			<span>评论（{{item.comment}}）</span>
   			<span>阅读（{{item.read}}）</span>
+        <i class="el-icon-delete" @click="deleate(item.id)"></i>
   		</div>
   	</div>
   	<div class="conbot" v-show="conbotis">
@@ -46,6 +50,26 @@ export default {
     this.searchdata()
   },
   methods:{
+    deleate(id){
+        this.$confirm('你确定要删除该收藏吗, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    },
+    article(id){
+        window.location.href='/#/article?topid='+id;
+    },
     searchdata(){
         var vm=this;
         var date={};
@@ -71,13 +95,13 @@ export default {
                     var obj={};
                     obj.title=element.title;
                     obj.id=element.id;
-                    obj.content ="在刚刚落幕的第20届Blackhat大会上，“机器学习”被反复提及，人工智能在网络安全各个领域得到广泛探索和应用尝试。";
-                    obj.read=1507;
-                    obj.comment=601;
-                    obj.time="2017-08-06";
+                    obj.content =element.summary;
+                    obj.read=element.read_count;
+                    obj.comment=element.comment_count;
+                    obj.time=element.publish_time;
                     obj.url='http://img2.imgtn.bdimg.com/it/u=4178531770,3008072672&fm=27&gp=0.jpg';
-                    obj.word=["关键词1","关键词2","关键词3"];
-                    obj.editor="马化腾";
+                    obj.word=element.keywords;
+                    obj.editor=element.author_name;
                     vm.collectdata.push(obj);
                   });
               }else{
@@ -92,10 +116,13 @@ export default {
 	.collection{
 		width: 790px;
 		overflow: hidden;
+     border-radius: 4px;
+    box-shadow:2px 2px 7px #ccc;
 	}
 	.collect{
 		width: 790px;
     margin-top: 10px; 
+    position: relative;
 		padding-bottom: 10px;
     border-bottom: 1px dashed #ebebeb;
 	}
@@ -111,8 +138,11 @@ export default {
 		line-height: 26px;
 		font-size:24px; 
 		overflow: hidden;
+    cursor: pointer;
 	}
-	
+	.collect h4:hover{
+    color: #ff8a00;
+  }
 	.collect div {
 		color: #aeaeae;
 		font-size:14px; 
@@ -120,6 +150,7 @@ export default {
 	.collect i{
 		color: #888888;
 		margin-right: 6px;
+    font-style: normal;
 	}
 	.collect p{
 		height: 60px;
@@ -150,5 +181,13 @@ export default {
 	  border-radius: 6px;
  	  background:rgba(111, 186, 44, 1);
  	  cursor: pointer;
+    }
+    .collect .el-icon-delete{
+      color: red;
+      right: 0;
+      top: 0;
+      font-size: 20px;
+      position: absolute;
+      cursor: pointer;
     }
 </style>

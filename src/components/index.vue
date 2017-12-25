@@ -615,7 +615,7 @@ export default {
     float: left;
   }
   .aside div .hotp{
-    width: 200px;
+    width: 240px;
   }
   .aside .form{
     height: 34px;

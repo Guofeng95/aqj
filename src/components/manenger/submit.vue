@@ -113,6 +113,7 @@
           <el-input class="input" v-model="mail5" ></el-input>
         </div>
       </div>
+       <el-button class="btngo" type="success" @click="submitgo">发布</el-button>
   	</div>
   </div>
 </template>
@@ -169,6 +170,9 @@ export default {
       },
       handlePreview(file) {
         console.log(file);
+      },
+      submitgo(){
+        alert(1)
       }
 
   }
@@ -215,5 +219,9 @@ export default {
     width: 104px;
     margin-left: 140px;
     margin-top:20px; 
+  }
+  .btngo{
+    margin-top: 20px;
+    margin-left: 140px;
   }
 </style>

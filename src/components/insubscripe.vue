@@ -3,7 +3,7 @@
     <div class="left">
       <h4 class="top">{{subscripe}}<span>{{'共'+1+'篇文章'}}</span></h4>
 
-      <div class="news tablenew"> 
+      <div class="news tablenew" v-show="userlevel==1"> 
         <div class="demo-input-suffix">
           <label>Title:</label>
           <el-input
@@ -107,7 +107,8 @@ export default {
     ...mapGetters({
       loginis:'loginnow',
       userurl:'urlnow',
-      userstatus:'statusnow'
+      userstatus:'statusnow',
+      userlevel:'userlevelnow'
     })
   },
   data () {
@@ -296,7 +297,7 @@ export default {
 
       },
       article(id){
-        window.location.href='/#/article?topid='+id;
+        window.location.href='/article?topid='+id;
       },
       indexdataget(limit,times){
         var vm=this;

@@ -91,10 +91,10 @@
       <div class="aside" v-show="loginis">
           <h4>热门推荐</h4>
           <div v-for="(item,index) in hotdata" :key='index'>
-            <span style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
-            <span style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
-            <span style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
-            <span v-else>{{index}}</span>
+            <span class="span" style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
+            <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
+            <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
+            <span class="span" v-else>{{index}}</span>
             <p class="hotp">{{item.content}}</p>
           </div>
       </div>
@@ -105,7 +105,7 @@
             <span  v-show="usernameis" >手机号或邮箱不存在</span>
           </div>
           <div class="inputcheck" style="margin-bottom:10px;">
-           <el-input class='form' v-model="password" placeholder="请输入密码"></el-input>
+           <el-input class='form' type="password" v-model="password" placeholder="请输入密码"></el-input>
            <span  v-show="passwordis" >密码错误请重新输入</span>
           </div>
           <div style="clear:both"></div>
@@ -123,7 +123,7 @@
         </div>
         <div class="ahref">
           <p>还没有账号？</p>
-          <a href="#" @click="login(1)">注册</a><a class="forgot" href="#/forget">忘记密码</a>
+          <a href="#" @click="login(1)">注册</a><a class="forgot" href="/forget">忘记密码</a>
         </div>
       </div>
       <div class="aside">
@@ -152,15 +152,15 @@
            <span  v-show="remailis" style="display:block;margin-top:6px;font-size: 12px;margin-left: 20px;color: red;">请填写正确的邮箱格式，不能为空</span>
         </div>
         <div class="inputcheck" style="padding-top:10px;">
-          <el-input class='form' @change="check('rverify')" v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
+          <el-input class='form'  @change="check('rverify')" v-model="rverify" placeholder="请填写邮箱收到的验证码"></el-input>
           <span v-show="rverifyis">请填写验证码</span>
         </div>
         <div class="inputcheck">
-          <el-input class='form' @change="check('rpassword')" v-model="rpassword" placeholder="请设置密码,6-14位字符"></el-input>
+          <el-input class='form' type="password" @change="check('rpassword')" v-model="rpassword" placeholder="请设置密码,6-14位字符"></el-input>
           <span  v-show="rpasswordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
         </div>
         <div class="inputcheck" style="margin-bottom:10px;">
-           <el-input class='form' @change="check('rtwopwd')" v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
+           <el-input class='form' type="password" @change="check('rtwopwd')" v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
            <span  v-show="rtwopwdis" >两次密码不统一</span>
         </div>
         <div style="clear:both"></div>
@@ -178,7 +178,7 @@
         </div>
         <div class="ahref">
           <p>已有账号？</p>
-          <a href="#" @click="login">登录</a><a class="forgot" href="#">忘记密码</a>
+          <a href="#" @click="login">登录</a><a class="forgot" href="/forget">忘记密码</a>
         </div>
     </div>
     </div>
@@ -280,10 +280,10 @@ export default {
   methods:{
       scripe(name){
         sessionStorage.setItem("subscripe", name);
-        window.location.href="#/insubscripe"
+        window.location.href="/insubscripe"
       },
      article(id){
-        window.location.href='/#/article?topid='+id;
+        window.location.href='/article?topid='+id;
       },
       userdataget(){
         var vm=this;
@@ -354,6 +354,7 @@ export default {
                   vm.$store.state.userstatus="已认证"
                 }
                 vm.$store.state.userurl=response.data.avatar;
+                vm.$store.state.userlevel=response.data.is_admin;
                 vm.$store.state.loginis=true;
               }else{
                 vm.$message.warning("账号密码错误");
@@ -665,7 +666,7 @@ export default {
     margin-left: 10px;
     font-size: 18px;
   }
-  .aside span{
+  .aside .span{
     width: 20px;
     display: block;
     float: left;

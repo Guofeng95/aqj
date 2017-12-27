@@ -11,6 +11,7 @@ import reset from "@/components/reset/reset"
 import forget from "@/components/forget"
 import resetnewpwd from "@/components/resetnewpwd"
 import manenger from "@/components/manenger/manenger"
+import activeinfor from "@/components/manenger/activeinfor"
 import manger from "@/components/manenger/manger"
 import submit from "@/components/manenger/submit"
 import recommend from '@/components/recommend'
@@ -20,6 +21,7 @@ import myinformation from "@/components/usercenter/myinformation"
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -57,6 +59,10 @@ export default new Router({
         {
           path: '/submit',
           component: submit
+        },
+        {
+          path: '/activeinfor',
+          component: activeinfor
         },
        ]
     },

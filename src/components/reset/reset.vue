@@ -227,7 +227,7 @@ export default {
               
               console.log(response.data)
               vm.$store.state.loginis=false;
-              window.location.href="#/"
+              window.location.href="/"
             }else{
               vm.$message.warning(response.data.msg);
             }

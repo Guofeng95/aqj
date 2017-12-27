@@ -2,8 +2,8 @@
   <div class="article">
   	<div class="top">
   		<a>首页></a>
-  		<a href="#/">{{secondtit+'>'}}</a>
-  		<a href="#">{{thirdtit}}</a>
+  		<a href="/">{{secondtit+'>'}}</a>
+  		<a>{{thirdtit}}</a>
   	</div>
     <div class="sumary">
       <h4>{{artitle}}</h4>
@@ -197,7 +197,7 @@ export default {
   },
   mounted(){
     var comis=window.location.href.indexOf("comid");
-    if(comis){
+    if(comis>-1){
       var arr1=window.location.href.split('?')[1].split("&");
       var arr=arr1[0].split("=");
       this.id=arr[1];
@@ -301,7 +301,7 @@ export default {
     },
     scripe(name){
       sessionStorage.setItem("subscripe", name);
-      window.location.href="#/insubscripe"
+      window.location.href="/insubscripe"
     },
   	bigchange(lr){
   		if(lr=='left'){

@@ -3,11 +3,11 @@
   	<h4>重置密码</h4>
     <div  class="password" v-show="status">
       <div class="inputcheck">
-          <el-input class='form' @change="check('rpassword')" v-model="password" placeholder="请设置密码,6-14位字符"></el-input>
+          <el-input class='form' type="password" @change="check('rpassword')" v-model="password" placeholder="请设置密码,6-14位字符"></el-input>
           <span  v-show="passwordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
         </div>
         <div class="inputcheck" >
-           <el-input class='form' @change="check('rtwopwd')" v-model="newpwd" placeholder="请再次输入刚才的密码"></el-input>
+           <el-input class='form' type="password" @change="check('rtwopwd')" v-model="newpwd" placeholder="请再次输入刚才的密码"></el-input>
            <span  v-show="newpwdis" >两次密码不统一</span>
         </div>
       <el-button class="input" type="success" @click="subgo">提交</el-button>
@@ -80,7 +80,7 @@ export default {
       }
     },
     goback(){
-      window.location.href="#/"
+      window.location.href="/"
     }
   }
 }

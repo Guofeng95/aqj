@@ -1,9 +1,30 @@
 <template>
   <div class="usercenter">
-  	<div class="table" v-show="status==1">
+    <div class="activetop">
+      <p>活动标题：<span>{{title}}</span></p>
+      <p>发布时间：<span>{{activetime}}</span><span style="margin-left:50px;"></span>活动类型：<span>{{activeclass}}</span></p>
+      <h4>转化率分析</h4>
+      <div class="inforfx">
+        <div>推荐<br/>1560</div>
+        <span>35.8%</span>
+        <div>推荐<br/>1560</div>
+        <span>35.8%</span>
+        <div>推荐<br/>1560</div>
+      </div>
+      <div style="clear:both;"></div>
+      <div class="inforfx">
+        <div>推荐<br/>1560</div>
+        <span>35.8%</span>
+        <div>推荐<br/>1560</div>
+        <span>35.8%</span>
+        <div>推荐<br/>1560</div>
+      </div>
+    </div>
+    <div style="clear:both; " ></div>
+  	<div class="table" v-show="status==1" >
       <div class="tabletop">
         <span>{{"共"+number+"项"}}</span>
-        <el-button class="btn" type="success" @click="submitgo">发布</el-button>
+        <el-button class="btn" type="success" >导出Excel</el-button>
         <el-button class="btn" @click="remove" type="danger">批量删除</el-button>
         <el-select class="selct"  v-model="search" placeholder="请选择">
           <el-option
@@ -17,6 +38,7 @@
       </div>
       <div>
         <el-table
+
           border
           ref="multipleTable"
           :data="tableData3"
@@ -29,19 +51,24 @@
           </el-table-column>
           <el-table-column
             prop="title"
-            label="标题"
+            label="姓名"
             show-overflow-tooltip>
             <template  slot-scope="scope">
                   <span class="doit">{{scope.row.title}}</span>
               </template>
           </el-table-column>
           <el-table-column
-            label="数据"
+            label="电话"
             prop="message"
-            width="120">
+            >
               <template  slot-scope="scope">
                   <span class="doit">{{scope.row.message}}</span>
               </template>
+          </el-table-column>
+          <el-table-column
+            prop="class"
+            label="公司"
+            >
           </el-table-column>
           <el-table-column
             label="日期"
@@ -50,17 +77,10 @@
             width="120">
           </el-table-column>
           <el-table-column
-            prop="class"
-            label="分类"
-            width="120">
-          </el-table-column>
-          <el-table-column
             label="操作"
-            width="150">
+            width="120">
               <template  slot-scope="scope">
                   <span class="doit" @click="remove">删除</span>
-                  <span class="doit" @click="submitgo">编辑</span>
-                  <span class="doit" @click="activego">数据</span>
               </template>
           </el-table-column>
         </el-table>
@@ -77,14 +97,15 @@
         </el-pagination>
       </div>
     </div>
-    <div class="table" v-show="status==2">
-    </div>
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
+      title:'安全漏洞',
+      activetime:'2017-8-31 20:35:34',
+      activeclass:'会议注册',
       status:1,
       nowpage:1,
       number:100,
@@ -169,13 +190,8 @@ export default {
             message: '已取消删除'
           });          
         });
-    },
-    submitgo(){
-      window.location.href="/submit";
-    },
-    activego(){
-      window.location.href="/activeinfor"
     }
+    
 
   }
 }
@@ -192,8 +208,12 @@ export default {
 	
   .table{
     width: 1100px;
+    padding-top:20px;
+    border-top: 1px dashed #ccc; 
     overflow: hidden;
     margin-left: 200px;
+    margin-top: 30px;
+    padding-bottom: 30px;
   }
   .table .btn{
     height: 36px;
@@ -218,4 +238,30 @@ export default {
   .block{
     margin-top: 20px;
   }
+  .activetop{
+    margin-left: 200px;
+  }
+  .activetop p{
+    margin-bottom: 20px;
+  }
+  .inforfx {
+    margin-top: 20px;
+  }
+  .inforfx div {
+    width: 128px;
+    height: 72px;
+    text-align: center;
+    padding-top: 26px;
+    border: 1px solid #ccc;
+    float: left;
+  }
+   .inforfx span{
+    display: block;
+    height: 40px;
+    width: 152px;
+    text-align: center;
+    margin-top: 10px;
+    float: left;
+    background: url(/static/img/arrow.png) no-repeat left bottom;
+   }
 </style>

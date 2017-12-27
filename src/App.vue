@@ -6,7 +6,7 @@
       <span class="logobeat">beta</span>
       <span  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></span>
       <span  @click="hlight('inde')"><router-link id="inde" to="/">安全头条</router-link></span>
-      <span @click="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span>
+      <!-- <span @click="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span> -->
       <div class="search">
         <el-input
           placeholder="搜索安全信息"
@@ -19,9 +19,9 @@
         <span @click="reset(1)">注册</span>
       </div>
       <div class="loginno" v-show="loginis">
-        <a href="#/manenger"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
-        <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
-        <a style="margin-right:130px;" href="#/usercenter"><img src="/static/img/ding.png"/></a>
+        <a href="/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
+        <a href="/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
+        <a style="margin-right:130px;" href="/usercenter"><img src="/static/img/ding.png"/></a>
         <div class="userimg" @click.stop="munugo(2)">
           <img :src="userurl">
         </div>
@@ -31,15 +31,15 @@
         <div class="munu1" v-show="munuis">
           <div class="one">
             <img style="margin-top:4px;margin-left:-4px;margin-right:2px" src=" /static/img/level.png">
-            <a  href="#/level">{{userstatus}}</a>
+            <a  href="/level">{{userstatus}}</a>
           </div>
           <div>
             <img style="margin-top:2px" src=" /static/img/star.png">
-            <a   href="#/collection">我的收藏</a>
+            <a   href="/collection">我的收藏</a>
           </div>
           <div>
             <img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
-            <a  href="#/subscripe">我的订阅</a>
+            <a  href="/subscripe">我的订阅</a>
           </div>
           <div>
             <img style="margin-top:2px;" src=" /static/img/mail.png">
@@ -47,12 +47,12 @@
           </div>
           <div class="one">
             <img style="margin-top:6px;margin-left:2px;margin-right:2px" src=" /static/img/download.png">
-            <a  href="#/download">我上传的</a>
+            <a  href="/download">我上传的</a>
           </div>
 
           <div class="one">
             <img style="margin-top:4px;margin-right:5px" src=" /static/img/shezhi.png">
-            <a href="#/reset">设置</a>
+            <a href="/reset">设置</a>
           </div>
           <div >
             <img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
@@ -72,7 +72,7 @@
         <h4>快速注册 <img class="cha" @click="reset" src="/static/img/cha.png"></h4>
         <div class="demo-input-suffix">
           <el-input class="verify" @change="check('remail')" v-model="remail" placeholder="请填写邮箱地址"></el-input>
-           <el-button class="btn1"  type="success" @click="emalicode">验证码</el-button>
+           <el-button class="btn1" style="padding:0;"  type="success" @click="emalicode">验证码</el-button>
            <span  v-show="remailis" style="display:block;margin-top:6px;font-size: 12px;margin-left: 20px;color: red;">请填写正确的邮箱格式，不能为空</span>
         </div>
         <div class="inputcheck" style="padding-top:20px;">
@@ -80,11 +80,11 @@
           <span v-show="rverifyis">请填写验证码</span>
         </div>
         <div class="inputcheck">
-          <el-input class='form' @change="check('rpassword')" v-model="rpassword" placeholder="请设置密码,6-14位字符"></el-input>
+          <el-input class='form' type="password" @change="check('rpassword')" v-model="rpassword" placeholder="请设置密码,6-14位字符"></el-input>
           <span  v-show="rpasswordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
         </div>
         <div class="inputcheck" style="margin-bottom:10px;">
-           <el-input class='form' @change="check('rtwopwd')" v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
+           <el-input class='form' type="password" @change="check('rtwopwd')" v-model="rtwopwd" placeholder="请再次输入刚才的密码"></el-input>
            <span  v-show="rtwopwdis" >两次密码不统一</span>
         </div>
         <div style="clear:both"></div>
@@ -102,7 +102,7 @@
         </div>
         <div class="ahref">
           <p>已有账号？</p>
-          <a href="#" @click="login(2)">登录</a><a @click="reset" class="forgot" href="#/forget">忘记密码</a>
+          <a href="#" @click="login(2)">登录</a><a @click="reset" class="forgot" href="/forget">忘记密码</a>
         </div>
       </div>
       </div>
@@ -114,7 +114,7 @@
             <span  v-show="usernameis" >手机号或邮箱不存在</span>
           </div>
           <div class="inputcheck" style="margin-bottom:10px;">
-           <el-input class='form' v-model="password" placeholder="请输入密码"></el-input>
+           <el-input class='form' type="password" v-model="password" placeholder="请输入密码"></el-input>
            <span  v-show="passwordis" >密码错误请重新输入</span>
           </div>
           <div style="clear:both"></div>
@@ -132,7 +132,7 @@
           </div>
           <div class="ahref">
             <p>还没有账号？</p>
-            <a href="#" @click="reset(2)">注册</a><a @click="login" class="forgot" href="#/forget">忘记密码</a>
+            <a href="#" @click="reset(2)">注册</a><a @click="login" class="forgot" href="/forget">忘记密码</a>
           </div>
       </div>
 
@@ -152,7 +152,8 @@ export default {
     ...mapGetters({
       loginis:'loginnow',
       userurl:'urlnow',
-      userstatus:'statusnow'
+      userstatus:'statusnow',
+      userlevel:'userlevelnow'
     })
   },
   data () {
@@ -197,6 +198,7 @@ export default {
             vm.$store.state.userstatus="已认证"
           }
           vm.$store.state.userurl=response.data.avatar;
+          vm.$store.state.userlevel=response.data.is_admin;
         }else{
           vm.$store.state.loginis=false;
         }
@@ -210,8 +212,8 @@ export default {
         id1.style.color="#ababab";
         var id2 = document.getElementById('inde');
         id2.style.color="#333";
-        var id3 = document.getElementById('know');
-        id3.style.color="#333";
+        // var id3 = document.getElementById('know');
+        // id3.style.color="#333";
         var id6 = document.getElementById(name);
         id6.style.color="#fda861";
     },
@@ -241,7 +243,7 @@ export default {
                 
                 console.log(response.data)
                 vm.$store.state.loginis=false;
-                window.location.href="#/"
+                window.location.href="/"
               }else{
                 vm.$message.warning(response.data.msg);
               }
@@ -347,7 +349,8 @@ export default {
                   }else if(response.data.verified==3){
                     vm.$store.state.userstatus="已认证"
                   }
-                  vm.$store.state.userurl=vm.baseurl+'/static/'+response.data.avatar;
+                  vm.$store.state.userurl=response.data.avatar;
+                  vm.$store.state.userlevel=response.data.is_admin;
                 vm.$store.state.loginis=true;
               }else{
                 vm.$message.warning("账号密码错误");

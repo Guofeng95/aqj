@@ -4,11 +4,11 @@
   	<div class="munu">
   		<div class="one">
   			<img  src=" /static/img/mang.png">
-  			<a href="#">运营管理</a>
+  			<a href="/manenger">运营管理</a>
   		</div>
   		<div>
   			<img  src=" /static/img/mantag.png">
-  			<a href="#" style="color:#008000">活动管理</a>
+  			<a href="/manenger" style="color:#008000">活动管理</a>
   		</div> 
   	</div>
     <router-view/>

@@ -68,7 +68,7 @@ export default {
         });
     },
     article(id){
-        window.location.href='/#/article?topid='+id;
+        window.location.href='/article?topid='+id;
     },
     searchdata(){
         var vm=this;
@@ -185,7 +185,7 @@ export default {
     .collect .el-icon-delete{
       color: red;
       right: 0;
-      top: 0;
+      top: 50px;
       font-size: 20px;
       position: absolute;
       cursor: pointer;

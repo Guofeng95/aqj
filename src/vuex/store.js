@@ -5,7 +5,8 @@ const store = new Vuex.Store({
 	state:{
 		loginis:false,
 		userurl:'',
-		userstatus:"未认证"
+		userstatus:"未认证",
+		userlevel:'0'
 	},
 	getters:{
 		loginnow(state){
@@ -17,6 +18,9 @@ const store = new Vuex.Store({
 		statusnow(state){
 			return state.userstatus
 		},
+		userlevelnow(state){
+			return state.userlevel
+		}
 
 	}
 

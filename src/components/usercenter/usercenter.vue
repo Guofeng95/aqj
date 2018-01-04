@@ -55,7 +55,22 @@ export default {
     }
   },
   mounted(){
-  	
+  	var href=window.location.href.split("/");
+    var l=href.length;
+    var hrefn=href[l-1]
+    if(hrefn=="usercenter"){
+      this.light("myifor");
+    }else if(hrefn=="collection"){
+      this.light("usercenter");
+    }else if(hrefn=="subscripe"){
+      this.light("wifi");
+    }else if(hrefn=="comment"){
+      this.light("amail");
+    }else if(hrefn=="download"){
+      this.light("download");
+    }else if(hrefn=="level"){
+      this.light("level");
+    }
   },
   methods:{
   		light(id){

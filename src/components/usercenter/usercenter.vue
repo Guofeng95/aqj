@@ -4,31 +4,31 @@
   	<div class="munu">
   		<div class="one">
   			<img style="margin-top:8px;margin-right:4px;margin-left:2px;" src=" /static/img/message.png">
-  			<a @click="light('myifor')" style="color:#ff8a00;" id="myifor" href="/usercenter">我的消息</a>
+  			<a @click="light('myifor')" style="color:#ff8a00;" id="myifor" href="#/usercenter">我的消息</a>
   		</div>
   		<div>
   			<img style="margin-top:2px" src=" /static/img/star.png">
-  			<a @click="light('usercenter')"  id="usercenter" href="/collection">我的收藏</a>
+  			<a @click="light('usercenter')"  id="usercenter" href="#/collection">我的收藏</a>
   		</div>
   		<div>
   			<img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
-  			<a @click="light('wifi')" id="wifi" href="/subscripe">我的订阅</a>
+  			<a @click="light('wifi')" id="wifi" href="#/subscripe">我的订阅</a>
   		</div>
   		<div>
   			<img style="margin-top:2px;" src=" /static/img/mail.png">
-  			<a @click="light('amail')" id="amail" href="/comment">我的评论</a>
+  			<a @click="light('amail')" id="amail" href="#/comment">我的评论</a>
   		</div>
   		<div>
   			<img style="margin-top:6px;margin-left:2px;margin-right:2px" src=" /static/img/download.png">
-  			<a @click="light('download')" id="download" href="/download">我上传的</a>
+  			<a @click="light('download')" id="download" href="#/download">上传头像</a>
   		</div>
   		<div>
   			<img style="margin-top:4px;margin-left:-4px;margin-right:2px" src=" /static/img/level.png">
-  			<a @click="light('level')" id="level" href="/level">我的认证</a>
+  			<a @click="light('level')" id="level" href="#/level">我的认证</a>
   		</div>
   		<div>
   			<img style="margin-top:4px;margin-right:5px" src=" /static/img/shezhi.png">
-  			<a href="/reset">设置</a>
+  			<a href="#/reset">设置</a>
   		</div>
   		<div>
   			<img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
@@ -55,22 +55,22 @@ export default {
     }
   },
   mounted(){
-  	var href=window.location.href.split("/");
-    var l=href.length;
-    var hrefn=href[l-1]
-    if(hrefn=="usercenter"){
-      this.light("myifor");
-    }else if(hrefn=="collection"){
-      this.light("usercenter");
-    }else if(hrefn=="subscripe"){
-      this.light("wifi");
-    }else if(hrefn=="comment"){
-      this.light("amail");
-    }else if(hrefn=="download"){
-      this.light("download");
-    }else if(hrefn=="level"){
-      this.light("level");
-    }
+  	// var href=window.location.href.split("/");
+   //  var l=href.length;
+   //  var hrefn=href[l-1]
+    // if(hrefn=="usercenter"){
+    //   this.light("myifor");
+    // }else if(hrefn=="collection"){
+    //   this.light("usercenter");
+    // }else if(hrefn=="subscripe"){
+    //   this.light("wifi");
+    // }else if(hrefn=="comment"){
+    //   this.light("amail");
+    // }else if(hrefn=="download"){
+    //   this.light("download");
+    // }else if(hrefn=="level"){
+    //   this.light("level");
+    // }
   },
   methods:{
   		light(id){
@@ -103,7 +103,7 @@ export default {
                 
                 console.log(response.data)
                 vm.$store.state.loginis=false;
-                window.location.href="/"
+                window.location.href="#/"
               }else{
                 vm.$message.warning(response.data.msg);
               }

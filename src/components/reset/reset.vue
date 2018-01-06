@@ -2,7 +2,7 @@
   <div class="levelcenter">
     <div class="aside">
       <h4>热门推荐</h4>
-      <div v-for="(item,index) in hotdata" :key='index'>
+      <div style="cursor:pointer" v-for="(item,index) in hotdata" :key='index' @click="article(item.id)">
         <span style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
         <span style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
         <span style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
@@ -173,33 +173,41 @@ export default {
           label: '北京烤鸭'
         }],
       hotdata:[
-            {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
 
       ]
       
     }
   },
+   mounted(){
+    this.hotda();
+  },
   methods:{
+    article(id){
+        window.location.href='#/article?topid='+id;
+      },
+     hotda(){
+        var vm=this;
+        vm.hotdata=[];
+        var date={};
+        date.limit=6;
+        axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/article/hot_news_list',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                response.data.data.forEach( function(element, index) {
+                  var obj={};
+                  obj.content = element.title;
+                  obj.id=element.id;
+                  vm.hotdata.push(obj)
+                });
+              }
+          })
+      },
     light(id){
       var id5 = document.getElementById('ok');
       id5.style.color="#333";
@@ -234,7 +242,6 @@ export default {
         });
     },
     check(style){
-      alert(1)
       if(style=="newpwd"){
         var isok=/^[a-zA-Z0-9,.'"]{6,14}$/.test(this.newpwd);
         if(isok){
@@ -301,6 +308,7 @@ export default {
     border-radius: 4px;
     padding:20px;
     padding-top: 26px;
+    margin-top: 80px;
   }
   .aside h4{
     margin-bottom: 30px;

@@ -68,7 +68,7 @@ export default {
         });
     },
     article(id){
-        window.location.href='/article?topid='+id;
+        window.location.href='#/article?topid='+id;
     },
     searchdata(){
         var vm=this;

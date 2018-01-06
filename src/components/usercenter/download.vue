@@ -1,63 +1,61 @@
 <template>
   <div class="comment">
-    <h3>我上传的文档</h3>
-    <div class="download">
-      <div class="collect" v-for="(item,index) in collectdata" :key="index">
-        <div>{{item.content}}</div>
-        <span style="margin-left:180px">{{item.time}}</span>
-        <span style="margin-left:20px">{{item.num}}</span>
-        <a>查看</a>
-        <a>下载</a>
-      </div>
+    <h3>我的头像</h3>
+    <div class="download" v-show="fix">
+      <img class="now" :src="baseurl+userurl">
     </div>
-  	
-  	<div class="conbot">
-        加载更多
-     </div>
+    <div class="download"  >
+      <el-upload
+        action="https://jsonplaceholder.typicode.com/posts/"
+        list-type="picture-card"
+        :on-preview="handlePictureCardPreview"
+        :on-remove="handleRemove">
+        <i class="el-icon-plus"></i>
+      </el-upload>
+      <el-dialog :visible.sync="dialogVisible" size="tiny">
+        <img width="100%" :src="dialogImageUrl" alt="">
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex"
+import axios from 'axios'
+import qs from 'qs'
+import * as Url from '@/components/url.js'
 export default {
+  computed:{
+    ...mapGetters({
+      loginis:'loginnow',
+      userurl:'urlnow',
+      userstatus:'statusnow',
+      userlevel:'userlevelnow'
+    })
+  },
   data () {
     return {
-    	collectdata:[
-    		{
-          "num":"1999",
-          "time":"2017-8-23",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看",
-          "id":"1230",
-          "url":"#"
-        },
-        {
-          "num":"1999",
-          "time":"2017-8-23",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看看数据库，会听吗充电接口恐龙快打离开了离苦得乐",
-          "id":"1230",
-          "url":"#"
-        },
-       {
-          "num":"1999",
-          "time":"2017-8-23",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看看数据",
-          "id":"1230",
-          "url":"#"
-        },
-        {
-          "num":"1999",
-          "time":"2017-8-23",
-          "content":"来自文章，就啥都看见啊哈几点开始加快看看数据库，会听吗充电接口恐龙快打离开了离苦得乐",
-          "id":"1230",
-           "url":"#"
-        }
-
-    	],
+    	dialogImageUrl: '',
+      dialogVisible: false,
+      fix:true,
+      baseurl:Url.baseurl,
     }
-  }
+  },
+  methods: {
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      }
+    }
+
 }
 </script>
 <style scoped>
 	.comment{
 		width: 790px;
+
 		overflow: hidden;
 	}
   .comment h3{
@@ -66,54 +64,18 @@ export default {
   }
   .download{
     width: 788px;
+    height: 300px;
     overflow: hidden;
     background: #fdfdfd;
     border:1px solid #f2f2f2;
     border-radius: 6px;
   }
-	.collect{
-		width: 790px;
-    height: 40px;
-	}
-  .collect div{
-    margin-left: 10px;
-    width: 340px;
-    height: 40px;
-    font-size: 14px;
-    color: #333;
-    line-height: 40px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    float: left;
+	.now{
+    width: 148px;
+    margin-left: 100px;
+    margin-top: 80px;
+    height: 148px;
+    border-radius: 6px;
+    border: 1px solid #f5f5f5;
   }
-  .collect span{
-    display: block;
-    height: 40px;
-    float: left;
-    font-size: 14px;
-    color: #bcbcc2;
-    line-height: 40px;
-    width: 80px;
-  }
-  .collect a{
-    display: block;
-    height: 40px;
-    float: left;
-    font-size: 14px;
-    color: #169bd5;
-    line-height: 40px;
-    width: 40px;
-  }
-	.conbot{
-	  color: #fff;
-	  text-align: center;
-	  height: 30px;
-	  font-size: 14px;
-	  line-height: 30px;
-	  margin: 10px 0;
-	  border-radius: 6px;
- 	  background:rgba(111, 186, 44, 1);
- 	  cursor: pointer;
-    }
 </style>

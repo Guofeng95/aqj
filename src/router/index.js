@@ -21,7 +21,6 @@ import myinformation from "@/components/usercenter/myinformation"
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   routes: [
     {
       path: '/',

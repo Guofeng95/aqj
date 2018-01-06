@@ -49,7 +49,7 @@
     <div class="right">
       <div class="aside" v-show="loginis">
           <h4>热门推荐</h4>
-          <div v-for="(item,index) in hotdata" :key='index'>
+          <div v-for="(item,index) in hotdata" :key='index' @click="article(item.id)" style="cursor:pointer">
             <span class="span" style="background:#3a9e00;"  v-if="index==0">{{index+1}}</span>
             <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
             <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
@@ -82,7 +82,7 @@
         </div>
         <div class="ahref">
           <p>还没有账号？</p>
-          <a href="#" @click="login(1)">注册</a><a class="forgot" href="/forget">忘记密码</a>
+          <a href="#" @click="login(1)">注册</a><a class="forgot" href="#/forget">忘记密码</a>
         </div>
       </div>
       <div class="aside">
@@ -137,7 +137,7 @@
         </div>
         <div class="ahref">
           <p>已有账号？</p>
-          <a href="#" @click="login">登录</a><a class="forgot" href="/forget">忘记密码</a>
+          <a href="#" @click="login">登录</a><a class="forgot" href="#/forget">忘记密码</a>
         </div>
     </div>
     </div>
@@ -198,25 +198,7 @@ export default {
       hotdata:[
             {
               "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
+            }
 
       ]
 
@@ -229,6 +211,7 @@ export default {
   mounted(){
     var vm=this;
     this.indexdata=[];
+    this.hotda();
     this.indexdataget(7,"first");
     this.timer=setInterval(function(){
           var date={};
@@ -297,8 +280,31 @@ export default {
     
   },
   methods:{
+      hotda(){
+        var vm=this;
+        vm.hotdata=[];
+        var date={};
+        date.limit=6;
+        axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/article/hot_news_list',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                response.data.data.forEach( function(element, index) {
+                  var obj={};
+                  obj.content = element.title;
+                  obj.id=element.id;
+                  vm.hotdata.push(obj)
+                });
+              }
+          })
+      },
       article(id){
-        window.location.href='/article?topid='+id;
+        window.location.href='#/article?topid='+id;
       },
       indexdataget(limit,times){
         var vm=this;

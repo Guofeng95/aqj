@@ -19,11 +19,11 @@
         <span @click="reset(1)">注册</span>
       </div>
       <div class="loginno" v-show="loginis">
-        <a href="/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
-        <a href="/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
-        <a style="margin-right:130px;" href="/usercenter"><img src="/static/img/ding.png"/></a>
+        <a href="#/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
+        <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
+        <a style="margin-right:130px;" href="#/usercenter"><img src="/static/img/ding.png"/></a>
         <div class="userimg" @click.stop="munugo(2)">
-          <img :src="userurl">
+          <img :src="baseurl+userurl">
         </div>
         <div class="userstatus">
           {{userstatus}}
@@ -31,15 +31,15 @@
         <div class="munu1" v-show="munuis">
           <div class="one">
             <img style="margin-top:4px;margin-left:-4px;margin-right:2px" src=" /static/img/level.png">
-            <a  href="/level">{{userstatus}}</a>
+            <a  href="#/level">{{userstatus}}</a>
           </div>
           <div>
             <img style="margin-top:2px" src=" /static/img/star.png">
-            <a   href="/collection">我的收藏</a>
+            <a   href="#/collection">我的收藏</a>
           </div>
           <div>
             <img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
-            <a  href="/subscripe">我的订阅</a>
+            <a  href="#/subscripe">我的订阅</a>
           </div>
           <div>
             <img style="margin-top:2px;" src=" /static/img/mail.png">
@@ -47,12 +47,12 @@
           </div>
           <div class="one">
             <img style="margin-top:6px;margin-left:2px;margin-right:2px" src=" /static/img/download.png">
-            <a  href="/download">我上传的</a>
+            <a  href="#/download">我上传的</a>
           </div>
 
           <div class="one">
             <img style="margin-top:4px;margin-right:5px" src=" /static/img/shezhi.png">
-            <a href="/reset">设置</a>
+            <a href="#/reset">设置</a>
           </div>
           <div >
             <img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
@@ -102,7 +102,7 @@
         </div>
         <div class="ahref">
           <p>已有账号？</p>
-          <a href="#" @click="login(2)">登录</a><a @click="reset" class="forgot" href="/forget">忘记密码</a>
+          <a href="#" @click="login(2)">登录</a><a @click="reset" class="forgot" href="#/forget">忘记密码</a>
         </div>
       </div>
       </div>
@@ -132,7 +132,7 @@
           </div>
           <div class="ahref">
             <p>还没有账号？</p>
-            <a href="#" @click="reset(2)">注册</a><a @click="login" class="forgot" href="/forget">忘记密码</a>
+            <a href="#" @click="reset(2)">注册</a><a @click="login" class="forgot" href="#/forget">忘记密码</a>
           </div>
       </div>
 
@@ -243,7 +243,7 @@ export default {
                 
                 console.log(response.data)
                 vm.$store.state.loginis=false;
-                window.location.href="/"
+                window.location.href="#/"
               }else{
                 vm.$message.warning(response.data.msg);
               }

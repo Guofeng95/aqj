@@ -74,7 +74,7 @@
       </div>
       <div class="aside" v-show="loginis">
           <h4>热门推荐</h4>
-          <div v-for="(item,index) in hotdata" :key='index'>
+          <div v-for="(item,index) in hotdata" :key='index' @click="article(item.id)" style="cursor:pointer">
             <span class="span" style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
             <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
             <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
@@ -178,6 +178,7 @@ export default {
   mounted(){
     var vm=this;
     this.indexdata=[];
+    vm.hotda();
     this.subscripe=sessionStorage.getItem("subscripe");
     this.indexdataget(10,"first");
     var date={};
@@ -194,9 +195,10 @@ export default {
           vm.seotitle=response.data.title;
           vm.seokeywords=response.data.keywords;
           vm.seodescription=response.data.description;
-        }else{
-          vm.$message.warning(response.data.msg);
         }
+        // else{
+        //   vm.$message.warning(response.data.msg);
+        // }
 
     });
     function getScrollTop(){
@@ -246,6 +248,29 @@ export default {
       };
   },
   methods:{
+       hotda(){
+        var vm=this;
+        vm.hotdata=[];
+        var date={};
+        date.limit=6;
+        axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/article/hot_news_list',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                response.data.data.forEach( function(element, index) {
+                  var obj={};
+                  obj.content = element.title;
+                  obj.id=element.id;
+                  vm.hotdata.push(obj)
+                });
+              }
+          })
+      },
       seogo(){
         var vm=this;
         var data={};
@@ -297,7 +322,7 @@ export default {
 
       },
       article(id){
-        window.location.href='/article?topid='+id;
+        window.location.href='#/article?topid='+id;
       },
       indexdataget(limit,times){
         var vm=this;

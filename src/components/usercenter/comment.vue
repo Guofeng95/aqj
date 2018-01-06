@@ -70,7 +70,7 @@ export default {
           });
     },
     article(id,name){
-      window.location.href='/article?topid='+id+'&comid='+name;
+      window.location.href='#/article?topid='+id+'&comid='+name;
     }
   }
 

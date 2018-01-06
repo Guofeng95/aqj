@@ -31,7 +31,7 @@
     </div>
     <div v-show="status==2" class="subok">
       <h4>认证申请提交成功，请耐心等待审核......</h4>
-      <a href="/recommend">去看推荐文章吧</a>
+      <a href="#/recommend">去看推荐文章吧</a>
     </div>
   </div>
 </template>

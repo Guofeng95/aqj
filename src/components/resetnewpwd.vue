@@ -80,7 +80,7 @@ export default {
       }
     },
     goback(){
-      window.location.href="/"
+      window.location.href="#/"
     }
   }
 }

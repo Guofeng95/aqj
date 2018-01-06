@@ -2,7 +2,7 @@
   <div class="article">
   	<div class="top">
   		<a>首页></a>
-  		<a href="/">{{secondtit+'>'}}</a>
+  		<a href="#/">{{secondtit+'>'}}</a>
   		<a>{{thirdtit}}</a>
   	</div>
     <div class="sumary">
@@ -301,7 +301,7 @@ export default {
     },
     scripe(name){
       sessionStorage.setItem("subscripe", name);
-      window.location.href="/insubscripe"
+      window.location.href="#/insubscripe"
     },
   	bigchange(lr){
   		if(lr=='left'){

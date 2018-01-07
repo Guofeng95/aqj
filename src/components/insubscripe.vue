@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="left">
-      <h4 class="top">{{subscripe}}<span>{{'共'+1+'篇文章'}}</span></h4>
+      <h4 class="top">{{subscripe}}<span>{{'共'+tota+'篇文章'}}</span></h4>
 
       <div class="news tablenew" v-show="userlevel==1"> 
         <div class="demo-input-suffix">
@@ -113,6 +113,7 @@ export default {
   },
   data () {
     return {
+      tota:'',
       seokeywords:'',
       seodescription:'',
       seotitle:'',
@@ -353,6 +354,7 @@ export default {
                   }else{
                      vm.subis=false;
                   }
+                  vm.tota=response.data.total_count;
                   response.data.data.forEach( function(element, index) {
                     var obj={};
                     obj.title=element.title;
@@ -403,7 +405,7 @@ export default {
 }
 .top span{
   position: absolute;
-  width: 117px;
+  padding:0 10px;
   display: block;
   height: 26px;
   font-size: 16px;

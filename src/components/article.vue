@@ -107,8 +107,8 @@
       <span class="topt" @click="gotop"><img src="/static/img/atopgo.png"></span>
      </div>
     <div class="comment">
-      <div class="comt" v-for="(item,index) in comdata">
-        <img :src="item.url">
+      <div class="comt" v-for="(item,index) in comdata" :id="'c'+item.id">
+        <img :src="baseurl+item.url">
         <span class="comname">{{item.name}}<span class="comtime">{{"·"+item.time}}</span></span>
         
         <p class="comcontent">{{item.content}}</p>
@@ -196,6 +196,7 @@ export default {
     }
   },
   mounted(){
+    var vm=this;
     var comis=window.location.href.indexOf("comid");
     if(comis>-1){
       var arr1=window.location.href.split('?')[1].split("&");
@@ -206,6 +207,12 @@ export default {
       };
       var arr2=arr1[1].split("=")[1];
       this.comid=arr2;
+      setTimeout(function() {
+        var com=document.getElementById('c'+vm.comid).offsetTop;
+        //console.log(com)
+        document.body.scrollTop = com;
+        document.documentElement.scrollTop = com;
+      }, 100);
     }else{
       var arr=window.location.href.split('?')[1].split("=");
       this.id=arr[1];
@@ -214,7 +221,7 @@ export default {
       };
     }
     
-    var vm=this;
+    
     var date={};
     date.id=this.id;
     vm.aurl=window.location.href;

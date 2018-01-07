@@ -5,6 +5,11 @@
       <div>{{item.time}}</div>
       <p> 来自文章：<a style="cursor:pointer" @click="article(item.news_id,item.id)">{{item.content}}</a></p>
   	</div>
+    <div v-if="collectdata.length==0" class="collect">
+        <h4></h4>
+        <div></div>
+        <p><a style="cursor:pointer">您还没有评论</a></p>
+      </div>
   	<div class="conbot" v-show="conbotis" @click="searchdata">
         加载更多
      </div>
@@ -19,7 +24,7 @@ export default {
     return {
       baseurl:Url.baseurl,
       notice:'',
-      conbotis:true,
+      conbotis:false,
     	collectdata:[
     		{
           "title":"其实没看懂什么意思",

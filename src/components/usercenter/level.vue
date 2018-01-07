@@ -66,11 +66,11 @@ export default {
   },
   mounted(){
     console.log(this.userstatus)
-    // if(this.userstatus=="待确认"){
-    //   this.status=2;
-    // }else{
-    //   this.status=1;
-    // }
+    if(this.userstatus=="待确认"){
+      this.status=2;
+    }else{
+      this.status=1;
+    }
   },
   methods:{
     verifygo(){

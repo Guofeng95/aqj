@@ -13,6 +13,11 @@
     			<span>阅读（{{item.read}}）</span>
     		</div>
     	</div>
+      <div v-if="collectdata.length==0" class="collect">
+        <h4></h4>
+        <div></div>
+        <p><a style="cursor:pointer">无订阅文章</a></p>
+      </div>
     	<div class="conbot" v-show="conbotis" @click="searchdata">
           加载更多
        </div>
@@ -34,7 +39,7 @@ export default {
     return {
       baseurl:Url.baseurl,
       notice:'',
-      conbotis:true,
+      conbotis:false,
       subtag:["关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2"],
     	collectdata:[
     		{
@@ -129,7 +134,7 @@ export default {
                     obj.read=element.read_count;
                     obj.comment=element.comment_count;
                     obj.time=element.publish_time;
-                    obj.url='http://img2.imgtn.bdimg.com/it/u=4178531770,3008072672&fm=27&gp=0.jpg';
+                    obj.url=element['images'][0];
                     obj.word=element.keywords;
                     obj.editor=element.author_name;
                     vm.collectdata.push(obj);
@@ -182,7 +187,10 @@ export default {
   .collect h4:hover{
     color: #ff8a00;
   }
-	
+  .collect p a{
+    color: #797979;
+    text-decoration: none;
+  }
 	.collect div {
 		color: #aeaeae;
 		font-size:14px; 

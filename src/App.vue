@@ -13,6 +13,7 @@
           suffix-icon="el-icon-search"
           v-model="search">
         </el-input>
+        <span class="span1" @click="gosearch"></span>
       </div>
       <div v-on:loginnow="changelog" class="loginno" v-show="loginis==false">
         <span @click="login(1)" style="margin-right:16px;">登录</span>
@@ -63,8 +64,9 @@
     </div>
     <div style="height:60px;"></div>
     <router-view/>
-<!--     <div class="indexbottom">
+    <!-- <div class="indexbottom">
       © 2017 安全加 社区. All Rights Reserved.
+      <span class="botline" ></span>
     </div> -->
     <span class="line"></span>
     <div class="background" v-show="resetis">
@@ -207,6 +209,10 @@ export default {
 
   },
   methods:{
+    gosearch(){
+      sessionStorage.setItem("search",this.search)
+      window.location.href="#/search?"+this.search;
+    },
     hlight(name){
       var id1 = document.getElementById('recommend');
         id1.style.color="#ababab";
@@ -451,6 +457,7 @@ a{text-decoration: none; color: #333;}
   margin: 0 auto;
   background: white;
   overflow: auto;
+  min-height: calc( 100vh - 81px);
 }
 .indexbottom{
   height: 60px;
@@ -459,6 +466,7 @@ a{text-decoration: none; color: #333;}
   text-align: center;
   width: 100%;
   font-size: 14px;
+  position: relative;
   margin-top: 20px;
 }
 .head{
@@ -524,6 +532,15 @@ a{text-decoration: none; color: #333;}
   height: 30px;
   margin-top: 15px;
   margin-left: 20px;
+  position: relative;
+}
+.search .span1{
+  position: absolute;
+  display: block;
+  width: 30px;
+  height: 30px;
+  right: 0;
+  top: 0;
 }
 .search input{
   height: 30px;

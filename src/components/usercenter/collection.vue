@@ -15,6 +15,11 @@
         <i class="el-icon-delete" @click="deleate(item.id)"></i>
   		</div>
   	</div>
+    <div v-if="collectdata.length==0" class="collect">
+        <h4></h4>
+        <div></div>
+        <p><a style="cursor:pointer">您还没有收藏文章</a></p>
+      </div>
   	<div class="conbot" v-show="conbotis">
         加载更多
      </div>
@@ -28,7 +33,7 @@ export default {
 
   data () {
     return {
-      conbotis:true,
+      conbotis:false,
       baseurl:Url.baseurl,
       notice:'',
     	collectdata:[
@@ -47,7 +52,7 @@ export default {
   },
   mounted(){
     this.collectdata=[];
-    this.searchdata()
+    this.searchdata();
   },
   methods:{
     deleate(id){
@@ -56,10 +61,32 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+            var vm=this;
+              var date={};
+              date.do_cancel=1
+              date.news_id=id;
+            axios({
+                method:'post',
+                data:qs.stringify(date),
+                url:vm.baseurl + '/article/news_mark',
+               headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                }
+               }).then(function(response){
+                if(response.data.status==1){
+                    vm.$message({
+                      type: 'success',
+                      message: '删除收藏成功!'
+                    });
+                    vm.collectdata=[];
+                    vm.notice='';
+                    vm.searchdata();
+                }else{
+                  vm.$message.warning(response.data.msg)
+                }
+             });
+
+          
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -99,7 +126,7 @@ export default {
                     obj.read=element.read_count;
                     obj.comment=element.comment_count;
                     obj.time=element.publish_time;
-                    obj.url='http://img2.imgtn.bdimg.com/it/u=4178531770,3008072672&fm=27&gp=0.jpg';
+                    obj.url=element['images'][0];
                     obj.word=element.keywords;
                     obj.editor=element.author_name;
                     vm.collectdata.push(obj);
@@ -120,7 +147,8 @@ export default {
     box-shadow:2px 2px 7px #ccc;
 	}
 	.collect{
-		width: 790px;
+		width: 770px;
+    padding: 0 10px;
     margin-top: 10px; 
     position: relative;
 		padding-bottom: 10px;

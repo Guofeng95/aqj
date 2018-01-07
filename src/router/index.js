@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/components/index'
+import search from '@/components/search'
 import usercenter from "@/components/usercenter/usercenter"
 import collection from "@/components/usercenter/collection"
 import subscribe from "@/components/usercenter/subscribe"
@@ -18,6 +19,7 @@ import recommend from '@/components/recommend'
 import article from '@/components/article'
 import insubscripe from '@/components/insubscripe'
 import myinformation from "@/components/usercenter/myinformation"
+
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +28,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: search
     },
     {
       path: '/article',

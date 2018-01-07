@@ -35,9 +35,9 @@
       <div class="demo-input-suffix">
         <span>性别</span>
         <el-radio-group v-model="female">
-          <el-radio :label="1">男</el-radio>
-          <el-radio :label="2">女</el-radio>
-          <el-radio :label="3">保密</el-radio>
+          <el-radio :label="'1'">男</el-radio>
+          <el-radio :label="'2'">女</el-radio>
+          <el-radio :label="'3'">保密</el-radio>
         </el-radio-group>
       </div>
       <span class="border"></span>
@@ -60,13 +60,7 @@
       <span class="border"></span>
       <div class="demo-input-suffix">
         <span>所在行业</span>
-        <el-select class="input" v-model="area" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-input class="input" v-model="area" ></el-input>
       </el-select>
       </div>
       <div class="demo-input-suffix">
@@ -98,7 +92,7 @@
         <el-input class="input" v-model="name" ></el-input>
       </div>
 
-      <el-button class="submit" type="success">提交</el-button>
+      <el-button class="submit" type="success" @click="infonow">更新信息</el-button>
     </div>
 
     <div class="level" v-show="table==2">
@@ -137,7 +131,7 @@ export default {
       baseurl:Url.baseurl,
       table:1,
     	nickname:'',
-      female:1,
+      female:'2',
       qq:'',
       wx:'',
       wb:'',
@@ -172,16 +166,75 @@ export default {
           value: '选项5',
           label: '北京烤鸭'
         }],
-      hotdata:[
-
-      ]
+      hotdata:[]
       
     }
   },
    mounted(){
     this.hotda();
+    this.getinfo();
   },
   methods:{
+    getinfo(){
+      var date=this;
+        axios({
+              method:'post',
+              url:date.baseurl + '/user/pull_user_info',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                var vm=response.data.data;
+                date.nickname=vm.nickname;
+                date.female=vm.sex;
+                date.qq=vm.qq;
+                date.wx=vm.weixin;
+                date.wb=vm.weibo;
+                date.email=vm.email
+                date.area=vm.industry;
+                date.job=vm.position;
+                date.door=vm.department;
+                date.company=vm.company;
+                date.skill=vm.special_skills;
+                date.adress=vm.address;
+                date.phone=vm.phone_number;
+                date.name=vm.real_name;
+              }
+          })
+    },
+    infonow(){
+      var vm=this;
+      var date={};
+        date.nickname=vm.nickname;
+        date.sex=vm.female;
+        date.qq=vm.qq;
+        date.weixin=vm.wx;
+        date.weibo=vm.wb;
+        date.email=vm.email
+        date.industry=vm.area;
+        date.position=vm.job;
+        date.department=vm.door;
+        date.company=vm.company;
+        date.special_skills=vm.skill;
+        date.address=vm.adress;
+        date.phone_number=vm.phone;
+        date.real_name=vm.name;
+        axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/user/push_user_info',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                vm.$message.success("更新成功");
+              }else{
+                vm.$message.warning(response.data.msg);
+              }
+          })
+    },
     article(id){
         window.location.href='#/article?topid='+id;
       },
@@ -299,6 +352,7 @@ export default {
   .levelcenter{
     width: 100%;
     position: relative;
+    padding-bottom: 10px;
   }
   .aside{
    float: right;
@@ -380,9 +434,11 @@ export default {
     padding-bottom: 30px;
      border-radius: 4px;
     box-shadow:2px 2px 7px #ccc;
+    padding:20px 10px ;
+    padding-top: 10px;
   }
   .ltop{
-    width: 768px;
+    width: 700px;
     height: 56px;
     background: #fffbf6;
     border:1px solid #fff7ff;

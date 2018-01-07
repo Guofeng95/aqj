@@ -3,11 +3,22 @@
     <h3>我的头像</h3>
     <div class="download" v-show="fix">
       <img class="now" :src="baseurl+userurl">
-      <el-button plain class="btnright"  type="success" @click="fixchange(false)">修改头像</el-button>
+      <el-upload
+        name="imagefile"
+        class="upload-demo"
+        with-credentials
+        :limit="1"
+        :file-list="fileList2"
+        :action="baseurl+'/user/upload_avatar'"
+        :on-success="handleChange">
+        <el-button size="small" class="btnright" type="primary">修改头像</el-button>
+      </el-upload>
     </div>
-    <div class="download"  v-show="fix==false">
+    <!-- <div class="download"  v-show="fix==false">
       <el-upload class="now userimg"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        with-credentials
+        name="imagefile"
+        :action="baseurl+'/user/upload_avatar'"
         list-type="picture-card"
         :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove">
@@ -16,8 +27,8 @@
       <el-dialog :visible.sync="dialogVisible" size="tiny" class="userimg" >
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
-      <el-button plain class="btnleft"  type="warning" @click="fixchange(true)">取消修改</el-button>
-    </div>
+      <el-button plain class="btnleft" :disabled="now"  type="warning" @click="fixchange(true)">取消修改</el-button>
+    </div> -->
   </div>
 </template>
 <script>
@@ -40,18 +51,23 @@ export default {
       dialogVisible: false,
       fix:true,
       baseurl:Url.baseurl,
+      now:false,
+      fileList2: []
     }
   },
   methods: {
-      fixchange(a){
-        this.fix=a;
-      },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
+      handleChange(file) {
+        console.log(file)
+        this.now=true;
+        var vm=this;
+        if(file.status==1){
+          this.fileList2=[];
+          this.$store.state.userurl=file.filename;
+          this.$message.success("修改成功");
+        }else{
+          this.$message.error(file.msg);
+        }
+        
       }
     }
 

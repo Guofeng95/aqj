@@ -22,7 +22,11 @@
       <div class="loginno" v-show="loginis">
         <a href="#/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
         <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
-        <a style="margin-right:130px;" href="#/usercenter"><img src="/static/img/ding.png"/></a>
+        <a style="margin-right:130px;" href="#/usercenter">
+          <el-badge :value="val" class="item">
+            <img src="/static/img/ding.png"/>
+          </el-badge>
+        </a>
         <div class="userimg" @click.stop="munugo(2)">
           <img :src="baseurl+userurl">
         </div>
@@ -160,6 +164,7 @@ export default {
   },
   data () {
     return {
+      val:0,
       munuis:false,
       emalicodeis:false,
       baseurl:Url.baseurl,
@@ -178,6 +183,7 @@ export default {
       rverifyis:false,
       usernameis:false,
       passwordis:false,
+      timeer:''
     }
   },
   mounted(){
@@ -205,6 +211,26 @@ export default {
           vm.$store.state.loginis=false;
         }
     });
+    axios({
+          method:'post',
+          url:vm.baseurl + '/user/message_check_new',
+      }).then(function(response){
+          if(response.data.status==1){
+            vm.val=response.data.count;
+          }
+      });
+    this.timeer=setInterval(function(){
+       axios({
+          method:'post',
+          url:vm.baseurl + '/user/message_check_new',
+      }).then(function(response){
+          if(response.data.status==1){
+            vm.val=response.data.count;
+          }
+      });
+
+    },3000)
+
   
 
   },

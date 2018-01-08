@@ -248,7 +248,10 @@ export default {
           }).then(function(response){
               if(response.data.status==1){
                   vm.total=response.data.count;
-                  vm.message="共"+vm.total+"个符合条件的结果"
+                  if( response.data.data.length!=0){
+                    vm.message="共"+vm.total+"个符合条件的结果"
+                  }
+                  
                   response.data.data.forEach( function(element, index) {
                     var obj={};
                     obj.title=element.title;

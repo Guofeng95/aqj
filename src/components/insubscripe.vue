@@ -404,9 +404,8 @@ export default {
   position: relative;
 }
 .top span{
-  position: absolute;
   padding:0 10px;
-  display: block;
+  display: inline-block;
   height: 26px;
   font-size: 16px;
   color: #a1a1a1;
@@ -414,8 +413,7 @@ export default {
   text-align: center;
   border-radius: 4px;
   line-height: 26px;
-  top: 16px;
-  left: 100px;
+  margin-left: 20px;
 }
 .demo-input-suffix {
   margin-left: 30px;

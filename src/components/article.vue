@@ -245,7 +245,7 @@ export default {
           vm.article=response.data.doc;
           vm.zannum=obj.like_count;
           vm.hdpurl=obj.images;
-          vm.nowbig=obj.thumbnail;
+          vm.nowbig=obj.images[0];
           vm.scnum=response.data.extra_data.mark_count;
           if(response.data.extra_data.liked==1){
           	vm.likeis=false;

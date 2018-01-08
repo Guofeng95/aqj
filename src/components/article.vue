@@ -10,7 +10,7 @@
       <p>
         <span style="color:#0099CC;">{{artauthor}}</span>
         <span>{{'·'+arttime}}</span>
-        <span>{{'·'+thirdtit}}</span>
+        <span v-if="thirdtit">{{'·'+thirdtit}}</span>
         <span style="position:absolute;right:0;">
           <span>{{'阅读('+readnum+')'}}</span>
           <span>{{'评论('+comnum+')'}}</span>
@@ -43,10 +43,10 @@
       </div>
     </div>
     <div class="author">
-      <img src="/static/img/aface.png">
+      <img  :src="artauthorurl">
       <span class="aur">作者</span>
       <span class="aurname">{{artauthor}}</span>
-      <span class="aurnum">为大家奉献了 2 篇文章</span>
+      <span class="aurnum">{{'为大家奉献了'+artauthornum+'篇文章'}}</span>
     </div>
     <div class="btn">
       <button @click="like" v-if="likeis"><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
@@ -143,6 +143,8 @@ export default {
   },
   data () {
     return {
+      artauthorurl:'/static/img/userurl.png',
+      artauthornum:1,
       markis:true,
       likeis:true,
       combtnis:false,
@@ -254,6 +256,9 @@ export default {
           	vm.markis=false;
           }
           vm.tagdata=response.data.keywords;
+          vm.artauthor=response.data.author_data.name;
+          vm.artauthornum=response.data.author_data.news_count;
+          vm.artauthorurl=response.data.author_data.url;
         }else{
           vm.$message.error(response.data.msg)
         }
@@ -460,7 +465,7 @@ export default {
 	          	arr.forEach( function(element, index) {
 	          		var obj={};
 	          		obj.url=element.user_url;
-	          		obj.time=element.user_name;
+	          		obj.name=element.user_name;
 	          		obj.time=element.comment_time;
 	          		obj.content=element.comment_content;
 	          		obj.id=element.comment_id;
@@ -547,6 +552,7 @@ export default {
 .author img{
   width: 80px;
   height: 80px;
+  border-radius: 100%;
 }
 .author span{
   position: absolute;
@@ -561,11 +567,11 @@ export default {
   line-height: 24px;
   font-size: 14px;
   border-radius: 4px;
-  top: 10px;
+  top: 14px;
   left: 100px;
 }
 .author .aurname{
-  font-size: 24px;
+  font-size: 22px;
   top: 12px;
   left: 176px;
 }

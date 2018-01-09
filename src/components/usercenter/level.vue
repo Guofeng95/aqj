@@ -65,7 +65,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this.userstatus)
+    //console.log(this.userstatus)
     if(this.userstatus=="待确认"){
       this.status=2;
     }else{
@@ -74,9 +74,30 @@ export default {
   },
   methods:{
     verifygo(){
+      if(this.phone==""){
+        this.phoneis=true;
+      }
       if(this.phone!="" && this.phoneis==false){
-        this.verifybtis=true;
-        this.$message.success("手机验证码已发送！");
+        var vm=this;
+        var date={};
+        date.phone_number =this.phone
+        axios({
+              method:'post',
+              data:qs.stringify(date),
+              url:vm.baseurl + '/user/verify_phone',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(function(response){
+              if(response.data.status==1){
+                   vm.verifybtis=true;
+                   vm.$message.success("手机验证码已发送！");
+              }else{
+                vm.verifybtis=false;
+                  vm.$message.warning("此手机号不可用");
+              }
+          })
+       
       }
       
     },

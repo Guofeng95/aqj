@@ -337,7 +337,7 @@ export default {
                     obj.good=element.like_count;
                     obj.read=element.read_count;
                     obj.comment=element.comment_count;
-                    obj.time=element.publish_time;
+                    obj.time=element.publish_time.split(" ")[0];
                     obj.url=element.images;
                     var l=element.images.length;
                     if(l==0){

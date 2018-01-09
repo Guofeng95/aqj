@@ -70,7 +70,7 @@
     <h4 class="hf" id="tagh4">相关文章</h4>
     <div class="articlecot">
       <div class="left" id="tagleft" v-if="tagchangedata.length>0">
-        <p v-for="(item,index) in tagchangedata" v-if="(index%2)==0"> 
+        <p v-for="(item,index) in tagchangedata" v-if="(index%2)==0" @click="narticle(item.id)"> 
          {{'('+(index+1)+')'+item.title}}
         </p>
       </div>
@@ -80,7 +80,7 @@
         </p>
       </div>
       <div class="left" id="tagright" v-if="tagchangedata.length>0">
-        <p v-for="(item,index) in tagchangedata" v-if="(index%2)!=0"> 
+        <p v-for="(item,index) in tagchangedata" v-if="(index%2)!=0"  @click="narticle(item.id)"> 
           {{'('+(index+1)+')'+item.title}}
         </p>
       </div>
@@ -102,8 +102,7 @@
         @change="compleng">
       </el-input>
       <span class="num">{{conleng+"/300"}}</span>
-      <span class="tbtn" v-if="loginis" @click="newcomment">发表评论</span>
-      <span class="tbtn" v-else style="background:#ccc;">发表评论</span>
+      <span class="tbtn"  @click="newcomment">发表评论</span>
       <span class="topt" @click="gotop"><img src="/static/img/atopgo.png"></span>
      </div>
     <div class="comment">
@@ -197,8 +196,19 @@ export default {
       comid:''
     }
   },
+  watch: {
+     "$route": "reset"
+      
+  },
   mounted(){
+    this.reset();
+  },
+  methods:{
+    reset(){
     var vm=this;
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    this.tagchangedata=[];
     var comis=window.location.href.indexOf("comid");
     if(comis>-1){
       var arr1=window.location.href.split('?')[1].split("&");
@@ -250,10 +260,10 @@ export default {
           vm.nowbig=obj.images[0];
           vm.scnum=response.data.extra_data.mark_count;
           if(response.data.extra_data.liked==1){
-          	vm.likeis=false;
+            vm.likeis=false;
           }
           if(response.data.extra_data.marked==1){
-          	vm.markis=false;
+            vm.markis=false;
           }
           vm.tagdata=response.data.keywords;
           vm.artauthor=response.data.author_data.name;
@@ -263,9 +273,11 @@ export default {
           vm.$message.error(response.data.msg)
         }
     });
-    this.comment()
-  },
-  methods:{
+      this.comment()
+    },
+     narticle(id){
+        window.location.href='#/article?topid='+id;
+      },
     tagdatanow(name){
       var vm=this;
       var date={};
@@ -284,6 +296,7 @@ export default {
             if(response.data.data.length>0){
               response.data.data.forEach( function(element, index) {
                 var obj={};
+                obj.id=element.id;
                 obj.title=element.summary;
                 vm.tagchangedata.push(obj);
               });
@@ -361,7 +374,12 @@ export default {
 		        	vm.zannum=vm.zannum+1;
 		   	        vm.likeis=true;
 		        }else{
-		          vm.$message.warning(response.data.msg)
+              if(vm.$store.state.loginis){
+                vm.$message.warning(response.data.msg)
+              }else{
+                vm.$message.warning("您还未登录哦！")
+              }
+		          
 		        }
 			   });
    		}else{
@@ -396,7 +414,11 @@ export default {
         	}
         	
         }else{
-          vm.$message.warning(response.data.msg)
+          if(vm.$store.state.loginis){
+            vm.$message.warning(response.data.msg)
+          }else{
+            vm.$message.warning("您还未登录哦！")
+          }
         }
 	   });
   	},
@@ -405,26 +427,31 @@ export default {
       var date={};
       date.news_id=this.id;
       date.content=this.textarea;
-      if(this.textarea!="" && this.textarea.length<=300){
-      		axios({
-	        method:'post',
-	        data:qs.stringify(date),
-	        url:vm.baseurl + '/article/news_new_comment',
-	       headers: {
-	          'Content-Type': 'application/x-www-form-urlencoded'
-	      }
-	    }).then(function(response){
-	        if(response.data.status==1){
-	        	vm.$message.success("发送成功！")
-	   	        vm.textarea='';
-	   	        vm.comment("new");
-	        }else{
-	          vm.$message.error(response.data.msg)
-	        }
-	    });
+      if(vm.$store.state.loginis){
+          if(this.textarea!="" && this.textarea.length<=300){
+          axios({
+          method:'post',
+          data:qs.stringify(date),
+          url:vm.baseurl + '/article/news_new_comment',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(function(response){
+          if(response.data.status==1){
+            vm.$message.success("发送成功！")
+              vm.textarea='';
+              vm.comment("newda");
+          }else{
+            vm.$message.error(response.data.msg)
+          }
+      });
       }else{
-      		vm.$message.error("请输入1-300个字！")
+          vm.$message.error("请输入1-300个字！")
       }
+      }else{
+        vm.$message.warning("您还未登录哦！")
+      }
+      
       
   	},
     compleng(){
@@ -439,7 +466,7 @@ export default {
       var vm=this;
       var date={};
       date.news_id=this.id;
-      if(ab="new"){
+      if(ab=="newda"){
       	this.comdata=[];
       	this.offset=0;
       }
@@ -458,6 +485,7 @@ export default {
 	          	var arr = response.data.data;
 	          	if(arr.length<10){
 	          		vm.combtnis=false;
+
 	          	}else{
 	          		vm.combtnis=true;
 	          		vm.offset=vm.offset+1;

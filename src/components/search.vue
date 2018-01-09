@@ -250,6 +250,8 @@ export default {
                   vm.total=response.data.count;
                   if( response.data.data.length!=0){
                     vm.message="共"+vm.total+"个符合条件的结果"
+                  }else{
+                    vm.indexdata=[];
                   }
                   
                   response.data.data.forEach( function(element, index) {
@@ -258,7 +260,7 @@ export default {
                     obj.id=element.id;
                     obj.content = element.summary;
                     obj.read=element.read_count;
-                    obj.time=element.publish_time;
+                    obj.time=element.publish_time.split(" ")[0];
                     vm.indexdata.push(obj);
                   });
               }else{

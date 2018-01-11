@@ -53,7 +53,15 @@
       <button @click="like('ok')" v-else><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
       <button @click="mark" v-if="markis"><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
       <button @click="mark('ok')" v-else><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
-      <button><img src="/static/img/awx.png">分享到微信</button>
+      <button style="position:relative;" @mouseenter="wxciew" @mouseleave="wxclose" >
+        <img src="/static/img/awx.png">分享到微信
+      </button>
+      <div class="wxfx" v-show="wxfxis">
+          <h4>微信扫一扫：分享</h4>
+          <img :src="'http://s.jiathis.com/qrcode.php?url='+wxurl">
+          <p>微信里点“发现”，扫一下</p>
+          <p> 二维码便可将本文分享至朋友圈</p>
+        </div>
       <button @click="xlwb"><img src="/static/img/awb.png">分享到微博</button>
       <button @click="qqzone"><img src="/static/img/aqq.png">分享到QQ</button>
     </div>
@@ -142,6 +150,8 @@ export default {
   },
   data () {
     return {
+      wxfxis:false,
+      wxurl:'',
       artauthorurl:'/static/img/userurl.png',
       artauthornum:1,
       markis:true,
@@ -205,6 +215,12 @@ export default {
     this.reset();
   },
   methods:{
+  wxciew(){
+    this.wxfxis=true;
+  },
+  wxclose(){
+    this.wxfxis=false;
+  },
   qqzone(){  
          var _url = "http://toutiao.secjia.com";     
          var _showcount = 1;  
@@ -266,6 +282,8 @@ export default {
     var date={};
     date.id=this.id;
     vm.aurl=window.location.href;
+    vm.wxurl='http://toutiao.secjia.com/';
+    //vm.wxurl=vm.aurl;
     axios({
         method:'post',
         data:qs.stringify(date),
@@ -641,6 +659,7 @@ export default {
 }
 .btn{
   margin-left: 110px;
+  position: relative;
   margin-bottom: 40px;
 }
 .btn button{
@@ -841,5 +860,37 @@ export default {
    height: 30px;
    padding-top: 10px;
    padding-left: 10px;
+}
+.wxfx{
+  position: absolute;
+  width: 200px;
+  height: 193px;
+  box-shadow: 0 2px 10px #aaa;
+  background: #fff;
+  top: -200px;
+  left: 270px;
+}
+.wxfx h4{
+  font-weight: normal;
+    height: 26px;
+    line-height: 26px;
+    font-size: 12px;
+    background-color: #f3f3f3;
+    margin: 0;
+    padding: 0;
+    color: #777;
+    text-align: center;
+}
+ .wxfx img{
+  display: block;
+  margin: 10px 50px;
+  width: 100px;
+  height: 100px;
+}
+.wxfx p{
+  color: #333;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
 }
 </style>

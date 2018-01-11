@@ -54,7 +54,7 @@
       <button @click="mark" v-if="markis"><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
       <button @click="mark('ok')" v-else><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
       <button><img src="/static/img/awx.png">分享到微信</button>
-      <button><img src="/static/img/awb.png">分享到微博</button>
+      <button @click="xlwb"><img src="/static/img/awb.png">分享到微博</button>
       <button @click="qqzone"><img src="/static/img/aqq.png">分享到QQ</button>
     </div>
     <div class="tagzi">
@@ -147,6 +147,7 @@ export default {
       markis:true,
       likeis:true,
       combtnis:false,
+      sumary:'',
       offset:0,
       nowbig:'',
       nowbignum:0,
@@ -204,28 +205,33 @@ export default {
     this.reset();
   },
   methods:{
-    qqzone(){
-        alert(this.artitle)
-         var _url = this.aurl;   
-         var _showcount = 0;  
+  qqzone(){  
+         var _url = "http://toutiao.secjia.com";     
+         var _showcount = 1;  
          var _desc = this.artitle;  
-         var _summary = this.artitle;  
-         var _title = this.artitle;
-         var _site = this.artitle; 
+         var _summary = this.summary;  
+         var _title = this.artitle;  
+         var _site = this.artitle;  
          var _width = "600px";  
          var _height = "800px";  
-         var _summary = this.artitle; 
-         var _pic =this.nowbig ;  
+         var _pic = this.nowbig;  
          var _shareUrl = 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?';  
          _shareUrl += 'url=' + encodeURIComponent(_url||document.location);   //参数url设置分享的内容链接|默认当前页location  
          _shareUrl += '&showcount=' + _showcount||0;      //参数showcount是否显示分享总数,显示：'1'，不显示：'0'，默认不显示  
          _shareUrl += '&desc=' + encodeURIComponent(_desc||'分享的描述');    //参数desc设置分享的描述，可选参数  
-         _shareUrl += '&summary=' + encodeURIComponent(_summary||'分享摘要');    //参数summary设置分享摘要，可选参数  
+         //_shareUrl += '&summary=' + encodeURIComponent(_summary||'分享摘要');    //参数summary设置分享摘要，可选参数  
          _shareUrl += '&title=' + encodeURIComponent(_title||document.title);    //参数title设置分享标题，可选参数  
-         _shareUrl += '&site=' + encodeURIComponent(_site||'');   //参数site设置分享来源，可选参数  
+         //_shareUrl += '&site=' + encodeURIComponent(_site||'');   //参数site设置分享来源，可选参数  
          _shareUrl += '&pics=' + encodeURIComponent(_pic||'');   //参数pics设置分享图片的路径，多张图片以＂|＂隔开，可选参数  
+         _shareUrl += '&summary=' + encodeURIComponent(_summary||''); 
         window.open(_shareUrl,'width='+_width+',height='+_height+',top='+(screen.height-_height)/2+',left='+(screen.width-_width)/2+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');   
-     
+    },
+    xlwb(){
+      var url="http://toutiao.secjia.com";
+      var _width = "600px";  
+      var _height = "800px"; 
+      var sharesinastring='http://v.t.sina.com.cn/share/share.php?title='+this.artitle+'&url='+url+'&content=utf-8&sourceUrl='+url+'&pic='+this.nowbig;
+      window.open(sharesinastring,'width='+_width+',height='+_height+',top='+(screen.height-_height)/2+',left='+(screen.width-_width)/2+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
     },
     reset(){
     var vm=this;
@@ -275,6 +281,7 @@ export default {
           vm.arttime=obj.publish_time;
           vm.readnum=obj.read_count;
           vm.comnum=obj.comment_count;
+          vm.summary=obj.summary;
           vm.thirdtit=response.data.keywords[0];
           vm.tagdatanow(response.data.keywords[0])
           vm.article=response.data.doc;

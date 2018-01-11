@@ -283,7 +283,6 @@ export default {
     date.id=this.id;
     vm.aurl=window.location.href;
     vm.wxurl='http://toutiao.secjia.com/';
-    //vm.wxurl=vm.aurl;
     axios({
         method:'post',
         data:qs.stringify(date),

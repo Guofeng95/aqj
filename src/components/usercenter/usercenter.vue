@@ -154,4 +154,5 @@ export default {
   .content{
     padding: 10px;
   }
+  
 </style>

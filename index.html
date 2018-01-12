@@ -13,31 +13,45 @@
           // 浏览器支持onhashchange事件
           window.onhashchange = hashChangeFire;  // TODO，对应新的hash执行的操作函数
       } ;
-      hashChangeFire();
-      function hashChangeFire(){
-        var flag = IsPC();
-         var href=window.location.href;
-         if(!flag){
-          if(href.indexOf("/#/usercenter")=='-1'){
-            window.location.href=href.replace(/toutiao.secjia.com/,"m.secjia.com")
-          }
-         }
+      //hashChangeFire();
+      // function hashChangeFire(){
+      //   var flag = IsPC();
+      //    var href=window.location.href;
+      //    if(!flag){
+      //     if(href.indexOf("/#/usercenter")=='-1' ){
+      //       // && href.indexOf("/#/collection")=='-1' && href.indexOf("/#/subscripe")=='-1' && href.indexOf("/#/comment")=='-1' && href.indexOf("/#/download")=='-1' && href.indexOf("/#/level")=='-1' && href.indexOf("/#/reset")=='-1'
+      //       window.location.href=href.replace(/toutiao.secjia.com/,"m.secjia.com")
+      //     }
+      //    }
+      // }
+      // function IsPC() {
+      //     var userAgentInfo = navigator.userAgent;
+      //     var Agents = ["Android", "iPhone",
+      //                 "SymbianOS", "Windows Phone",
+      //                 "iPad", "iPod"];
+      //     var flag = true;
+      //     for (var v = 0; v < Agents.length; v++) {
+      //         if (userAgentInfo.indexOf(Agents[v]) > 0) {
+      //             flag = false;
+      //             break;
+      //         }
+      //     }
+      //     return flag;
+      // }
+      var _width = parseInt(window.screen.width);
+      var scale = _width/640;
+      var ua = navigator.userAgent.toLowerCase();
+      var result = /android (\d+\.\d+)/.exec(ua);
+      if (result){
+      var version = parseFloat(result[1]);
+      if(version>2.3){
+      document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">');
+      }else{
+      document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">');
       }
-      function IsPC() {
-          var userAgentInfo = navigator.userAgent;
-          var Agents = ["Android", "iPhone",
-                      "SymbianOS", "Windows Phone",
-                      "iPad", "iPod"];
-          var flag = true;
-          for (var v = 0; v < Agents.length; v++) {
-              if (userAgentInfo.indexOf(Agents[v]) > 0) {
-                  flag = false;
-                  break;
-              }
-          }
-          return flag;
+      } else {
+      document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">');
       }
-
     </script>
     <style type="text/css">
     	.indexbottom{

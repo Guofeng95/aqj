@@ -1,7 +1,7 @@
 <template>
   <div id="app" @click="munugo(1)">
     <div class="head">
-      <img class="logo" style="margin-top:14px;" src="/static/img/logo.png" title="logo">
+      <img class="logo"  src="/static/img/logo.png" title="logo">
       <span class="logofont">安全加</span>
       <span class="logobeat">beta</span>
       <span  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></span>
@@ -820,4 +820,5 @@ a{text-decoration: none; color: #333;}
     margin: 0;
     font-weight: normal;
   }
+  
 </style>

@@ -13,38 +13,6 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(Vuex);
 Vue.use(axios);
-router.beforeEach((to, from, next) => {
-     var flag = IsPC();
-     var href=window.location.href;
-     var href1='toutiao.secjia.com';
-     console.log()
-     if(!flag){
-     	if(href.indexOf("/#/usercenter")=='-1'){
-     		window.location.href=href.replace(/toutiao.secjia.com/,"m.secjia.com")
-     	}else{
-     		next();
-     	}
-     	
-     }else{
-     	next();
-     }
-
-     
-})
-function IsPC() {
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
-                "SymbianOS", "Windows Phone",
-                "iPad", "iPod"];
-    var flag = true;
-    for (var v = 0; v < Agents.length; v++) {
-        if (userAgentInfo.indexOf(Agents[v]) > 0) {
-            flag = false;
-            break;
-        }
-    }
-    return flag;
-}
  
 /* eslint-disable no-new */
 new Vue({

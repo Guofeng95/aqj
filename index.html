@@ -8,6 +8,37 @@
     <link rel="shortcut icon" href="/static/img/secjia.ico">
     <title>安全头条-安全加社区</title>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+      if( ('onhashchange' in window) && ((typeof document.documentMode==='undefined') || document.documentMode==8)) {
+          // 浏览器支持onhashchange事件
+          window.onhashchange = hashChangeFire;  // TODO，对应新的hash执行的操作函数
+      } ;
+      hashChangeFire();
+      function hashChangeFire(){
+        var flag = IsPC();
+         var href=window.location.href;
+         if(!flag){
+          if(href.indexOf("/#/usercenter")=='-1'){
+            window.location.href=href.replace(/toutiao.secjia.com/,"m.secjia.com")
+          }
+         }
+      }
+      function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone",
+                      "SymbianOS", "Windows Phone",
+                      "iPad", "iPod"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+              if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                  flag = false;
+                  break;
+              }
+          }
+          return flag;
+      }
+
+    </script>
     <style type="text/css">
     	.indexbottom{
 		  height: 60px;

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/components/index'
+import error from '@/components/show_error'
 import search from '@/components/search'
 import usercenter from "@/components/usercenter/usercenter"
 import collection from "@/components/usercenter/collection"
@@ -33,6 +34,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: search
+    },
+    {
+      path: '/show_error',
+      name: 'error',
+      component: error
     },
     {
       path: '/article',

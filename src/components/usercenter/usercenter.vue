@@ -55,6 +55,18 @@ export default {
     }
   },
   mounted(){
+    var vm=this;
+    axios({
+        method:'post',
+        url:vm.baseurl + '/user/ping',
+    }).then(function(response){
+        if(response.data.status==1){
+          vm.$store.state.loginis=true;
+        
+        }else{
+          window.location.href="#/"
+        }
+    });
   	// var href=window.location.href.split("/");
    //  var l=href.length;
    //  var hrefn=href[l-1]

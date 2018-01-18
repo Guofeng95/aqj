@@ -1,17 +1,19 @@
 <template>
   <div id="app" @click="munugo(1)">
     <div class="head">
-      <img class="logo"  src="/static/img/logo.png" title="logo">
-      <span class="logofont">安全加</span>
+      <img class="logo"  src="/static/img/logo.gif" title="logo">
+      <h1 class="logofont">安全加</h1>
       <span class="logobeat">beta</span>
-      <span  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></span>
-      <span  @click="hlight('inde')"><router-link id="inde" to="/">安全头条</router-link></span>
+      <h2  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></h2>
+      <h2  @click="hlight('inde')"><router-link id="inde" to="/">安全头条</router-link></h2>
       <!-- <span @click="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span> -->
       <div class="search">
         <el-input
           placeholder="搜索安全信息"
           suffix-icon="el-icon-search"
-          v-model="search">
+          v-model="search"
+          id="searchin"
+          @focus="serkey">
         </el-input>
         <span class="span1" @click="gosearch"></span>
       </div>
@@ -28,7 +30,7 @@
           </el-badge>
         </a>
         <div class="userimg" @click.stop="munugo(2)">
-          <img :src="baseurl+userurl">
+          <img :src="userurl">
         </div>
         <div class="userstatus">
           {{userstatus}}
@@ -235,6 +237,16 @@ export default {
 
   },
   methods:{
+    serkey(){
+      var vm=this;
+      var id=document.querySelector(".search input");
+      //console.log(id)
+      id.onkeydown=function(e){
+        if(e.keyCode==13){
+          vm.gosearch();
+        }
+      }
+    },
     gosearch(){
       sessionStorage.setItem("search",this.search)
       window.location.href="#/search?"+this.search;
@@ -508,7 +520,7 @@ a{text-decoration: none; color: #333;}
 .head .logo{
   display: block;
   float: left;
-  margin-top: 10px;
+  margin-top: 14px;
 }
 
 .head .logofont,.head .logobeat {

@@ -2,7 +2,7 @@
   <div class="comment">
     <h3>我的头像</h3>
     <div class="download" v-show="fix">
-      <img class="now" :src="baseurl+userurl">
+      <img class="now" :src="userurl">
       <el-upload
         name="imagefile"
         class="upload-demo"

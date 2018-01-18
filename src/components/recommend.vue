@@ -135,7 +135,7 @@
       <div class="aside" style="margin-top:20px;">
         <h4>行业分类</h4>
         <div class="diva" v-for="(item,index) in adata" :key="index">
-          <a :href="item.url">{{item.name}}</a>
+          <a style="cursor:pointer" @click="gosearch(item.name)" >{{item.name}}</a>
         </div>
       </div>
       <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px;">
@@ -205,13 +205,11 @@ export default {
   data () {
     return {
       adata:[
-           {"name":"安全知识","url":"http://zhishi.secjia.com"},
-          {"name":"黑客街","url":"http://www.hackjie.com"},
-          {"name":"东轩'sBLOG","url":"http://www.dxblog.cn"},
-          {"name":"即刻安全","url":"http://www.secist.com"},
-          {"name":"Luan's Blog ","url":"http://lu4n.com"},
-          {"name":"被黑站点统计","url":"http://www.hacked.com.cn"},
-          {"name":"指尖安全","url":"http://www.secfree.com"}
+          {"name":"政府"},
+          {"name":"金融"},
+          {"name":"运营商"},
+          {"name":"能源"},
+          {"name":"全行业"}
       ],
       activeurl:[
         {"url":"http://img1.imgtn.bdimg.com/it/u=2365282747,3105404302&fm=27&gp=0.jpg"},
@@ -279,6 +277,10 @@ export default {
     this.hotda();
   },
   methods:{
+      gosearch(search){
+        sessionStorage.setItem("search",search)
+        window.location.href="#/search?"+search;
+      },
       hotda(){
         var vm=this;
         vm.hotdata=[];

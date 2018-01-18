@@ -7,7 +7,7 @@
       <div class="news" v-for="(item,index) in indexdata" :key="index" >
         <div class="newsone" v-if="item.form==1">
           <img :src="item.url[0]" @click="article(item.id)">
-          <h4  @click="article(item.id)" >{{item.title}}</h4>
+          <h3  @click="article(item.id)" >{{item.title}}</h3>
           <p>{{item.content}}</p>
           <div class="icon">
             <span><i class="el-icon-time"></i>{{item.time}}</span>
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="newstwo" v-else-if="item.form==2">
-          <h4  @click="article(item.id)">{{item.title}}</h4>
+          <h3  @click="article(item.id)">{{item.title}}</h3>
           <div>
             <img  @click="article(item.id)" style="margin-left:0;" :src="item.url[0]">
             <img  @click="article(item.id)" :src="item.url[1]">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="newsthree" v-else-if="item.form==3">
-          <h4  @click="article(item.id)">{{item.title}}</h4>
+          <h3  @click="article(item.id)">{{item.title}}</h3>
           <p>{{item.content}}</p>
           <div class="icon">
             <span><i class="el-icon-time"></i>{{item.time}}</span>
@@ -92,9 +92,9 @@
         <qun></qun>
       </div>
       <div class="aside" style="margin-top:20px;">
-        <h4>友情链接</h4>
+        <h4>行业分类</h4>
         <div class="diva" v-for="(item,index) in adata" :key="index">
-          <a :href="item.url">{{item.name}}</a>
+          <a style="cursor:pointer" @click="gosearch(item.name)">{{item.name}}</a>
         </div>
       </div>
       <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px;">
@@ -178,13 +178,11 @@ export default {
       usernameis:false,
       passwordis:false,
       adata:[
-          {"name":"安全知识","url":"http://zhishi.secjia.com"},
-          {"name":"黑客街","url":"http://www.hackjie.com"},
-          {"name":"东轩'sBLOG","url":"http://www.dxblog.cn"},
-          {"name":"即刻安全","url":"http://www.secist.com"},
-          {"name":"Luan's Blog ","url":"http://lu4n.com"},
-          {"name":"被黑站点统计","url":"http://www.hacked.com.cn"},
-          {"name":"指尖安全","url":"http://www.secfree.com"}
+          {"name":"政府"},
+          {"name":"金融"},
+          {"name":"运营商"},
+          {"name":"能源"},
+          {"name":"全行业"}
       ],
       remail:'',
       rverify:'',
@@ -280,6 +278,10 @@ export default {
     
   },
   methods:{
+      gosearch(search){
+        sessionStorage.setItem("search",search)
+        window.location.href="#/search?"+search;
+      },
       hotda(){
         var vm=this;
         vm.hotdata=[];
@@ -567,7 +569,7 @@ export default {
   padding-bottom: 24px;
   position: relative;
 }
-.news h4{
+.news h3{
   width: 543px;
   font-size: 18px;
   cursor: pointer;
@@ -587,8 +589,8 @@ export default {
 }
 .newsone img{
   display: block;
-  width: 320px;
-  height: 200px;
+  width: 170px;
+  height: auto;
   float: left;
   margin-right:10px; 
   cursor: pointer;

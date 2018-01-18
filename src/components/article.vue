@@ -6,7 +6,7 @@
   		<a>{{thirdtit}}</a>
   	</div>
     <div class="sumary">
-      <h4>{{artitle}}</h4>
+      <h2>{{artitle}}</h2>
       <p>
         <span style="color:#0099CC;">{{artauthor}}</span>
         <span>{{'·'+arttime}}</span>
@@ -122,12 +122,14 @@
       </div>
      <el-button class="combtn" type="success" v-show="combtnis" @click="comment" plain :loading="false">查看更多评论</el-button>
     </div>
-    <div class="bigimg" v-show="bigimgis">
+    <div class="bigimg" v-show="bigimgis" @click="hdpout('no')">
       <div>
-        <img class="imges" :src="nowbig">
-        <span @click="bigchange('left')"><img src="/static/img/imgleft.png"></span>
-        <span style="left:820px;" @click="bigchange('right')"><img src="/static/img/imgright.png"></span>
-        <span class="imgno"  @click="hdpout('no')"><img src="/static/img/imgno.png"></span>
+        <img class="imges" :src="nowbig" >
+        <div style="position:absolute; top:40%;width:1200px;left:calc( 50vw - 610px );height:50px;">
+        <span @click.stop="bigchange('left')"><img src="/static/img/imgleft.png"></span>
+        <span style="right:0;" @click.stop="bigchange('right')"><img src="/static/img/imgright.png"></span>
+        </div>
+        <!-- <span class="imgno"  ><img src="/static/img/imgno.png"></span> -->
       </div>
     </div>
 
@@ -802,7 +804,7 @@ export default {
   margin:30px auto;
   margin-left: 400px;
 }
-.sumary h4{
+.sumary h2{
   font-size: 28px;
   font-weight: normal;
   margin-bottom: 20px;
@@ -822,23 +824,17 @@ export default {
   background: rgba(0,0,0,0.6);
   top: 0;
   left: 0;
+  z-index: 200;
 }
 .bigimg div{
-  width: 900px;
-  height: 474px;
-  position: absolute;
-  border:4px solid #fff;
-  border-radius: 8px;
-  top: 50%;
-  left: 50%;
-  margin-top: -237px;
-  margin-left: -450px;
+  position: relative;
+  margin-top:0 auto;
 }
 .bigimg .imges{
   display: block;
-  width: 900px;
-  height: 474px;
-  margin: 0 auto;
+  margin: 10px auto;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 .bigimg span{
   display: block;
@@ -849,8 +845,6 @@ export default {
   border-radius: 100%;
   background: #ccc;
   position: absolute;
-  left: 20px;
-  top: 220px;
 }
 .bigimg .imgno{
 	top: -40px;

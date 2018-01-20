@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>安全头条-安全加社区</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="安全头条,安全,头条,头条网,头条安全新闻,网络安全事件,信息网络安全"/>
+    <meta name="description" content="安全头条是安全加社区的资讯版块，追踪网络安全事件，打造信息网络安全的头条新闻；发布网络安全文章，呈现网络安全现状"/>
+    <link rel="shortcut icon" href="/static/img/secjia.ico">
+    <link rel="stylesheet" type="text/css" href="art.css">
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+    <style type="text/css">
+    	.indexbottom{
+		  height: 60px;
+		  line-height: 60px;
+		  border-top: 1px solid #d3d3d3;
+		  text-align: center;
+		  width: 100%;
+		  font-size: 14px;
+		  position: relative;
+		  margin-top: 20px;
+		}
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="head">
+      <img class="logo"  src="/static/img/logo.gif" title="logo" onclick="indexgo()">
+      <h1 class="logofont" onclick="indexgo()">安全加</h1>
+      <span class="logobeat" onclick="indexgo()">beta</span>
+      <h2  @click="hlight('recommend')"><a id="recommend" class="tj" href="/#/recommend">推荐</a></h2>
+      <h2  @click="hlight('inde')"><a id="inde" href="/#/">安全头条</a></h2>
+      <!-- <span onclick="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span> -->
+      <div class="search">
+        <el-input
+          placeholder="搜索安全信息"
+          suffix-icon="el-iconsearch"
+          v-model="search"
+          id="searchin"
+          onfocus="serkey">
+        </el-input>
+        <span class="span1" onclick="gosearch"></span>
+      </div>
+      <div v-on:loginnow="changelog" class="loginno" v-show="loginis==false">
+        <span onclick="login(1)" style="margin-right:16px;">登录</span>
+        <span onclick="reset(1)">注册</span>
+      </div>
+      <div class="loginno" v-show="loginis">
+        <a href="#/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
+        <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
+        <a style="margin-right:130px;" href="#/usercenter">
+          <el-badge :value="val" class="item">
+            <img src="/static/img/ding.png"/>
+          </el-badge>
+        </a>
+        <div class="userimg" onclick.stop="munugo(2)">
+          <img :src="userurl">
+        </div>
+        <div class="userstatus">
+          {{userstatus}}
+        </div>
+        <div class="munu1" v-show="munuis">
+          <div class="one">
+            <img style="margin-top:4px;margin-left:-4px;margin-right:2px" src=" /static/img/level.png">
+            <a  href="#/level">{{userstatus}}</a>
+          </div>
+          <div>
+            <img style="margin-top:2px" src=" /static/img/star.png">
+            <a   href="#/collection">我的收藏</a>
+          </div>
+          <div>
+            <img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
+            <a  href="#/subscripe">我的订阅</a>
+          </div>
+          <div>
+            <img style="margin-top:2px;" src=" /static/img/mail.png">
+            <a  id="mail" href="#/comment">我的评论</a>
+          </div>
+          <div class="one">
+            <img style="margin-top:6px;margin-left:2px;margin-right:2px" src=" /static/img/download.png">
+            <a  href="#/download">我上传的</a>
+          </div>
+
+          <div class="one">
+            <img style="margin-top:4px;margin-right:5px" src=" /static/img/shezhi.png">
+            <a href="#/reset">设置</a>
+          </div>
+          <div >
+            <img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
+            <a href="#" onclick="removein">退出登录</a>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div style="height:60px;width: 100%;background:#f5f5f5;border-bottom: 1px solid #e4e4e4"></div>
+    </div>
+    <div class="indexbottom">
+      © 2018 安全加 社区. All Rights Reserved.
+    </div>
+  </body>
+  <script type="text/javascript">
+    var id2 = document.getElementById('inde');
+     id2.style.color="#fda861";
+     //判断是否登录
+     axios({
+        method:'post',
+        url:vm.baseurl + '/user/ping',
+    }).then(function(response){
+        if(response.data.status==1){
+          vm.$store.state.loginis=true;
+          if(response.data.verified==1){
+            vm.$store.state.userstatus="未认证"
+          }else if(response.data.verified==2){
+            vm.$store.state.userstatus="待确认"
+          }else if(response.data.verified==3){
+            vm.$store.state.userstatus="已认证"
+          }
+          vm.$store.state.userurl=response.data.avatar;
+          vm.$store.state.userlevel=response.data.is_admin;
+        }else{
+          vm.$store.state.loginis=false;
+        }
+    });
+
+
+    function indexgo(){
+      window.location.href="/#/"
+    }
+  </script>
+</html>

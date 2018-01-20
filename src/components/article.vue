@@ -1,7 +1,7 @@
 <template>
   <div class="article">
   	<div class="top">
-  		<a>首页></a>
+  		<a href="#/">首页></a>
   		<a href="#/">{{secondtit+'>'}}</a>
   		<a>{{thirdtit}}</a>
   	</div>
@@ -35,6 +35,8 @@
       </div>
   	</div>
   	<div class="bottom">
+      <p class="pagr"><a @click="narticle(lasturl)">上一篇：{{lasttitle}}</a></p>
+      <p class="pagr"><a @click="narticle(nexturl)">下一篇：{{nexttitle}}</a></p>
       <p style="margin-top:10px; color:#a1a1a1;">*文章为作者独立观点，不代表安全加立场</p>
       <div class="downcontent">
         <p>本文由：安全加发布，版权归属于原作者。 如果转载，请注明出处及本文链接： </p>
@@ -115,7 +117,7 @@
      </div>
     <div class="comment">
       <div class="comt" v-for="(item,index) in comdata" :id="'c'+item.id">
-        <img :src="baseurl+item.url">
+        <img :src="item.url">
         <span class="comname">{{item.name}}<span class="comtime">{{"·"+item.time}}</span></span>
         
         <p class="comcontent">{{item.content}}</p>
@@ -152,6 +154,10 @@ export default {
   },
   data () {
     return {
+      lasturl:"#",
+      lasttitle:'',
+      nexttitle:'',
+      nexturl:'',
       wxfxis:false,
       wxurl:'',
       artauthorurl:'/static/img/userurl.png',
@@ -318,6 +324,10 @@ export default {
           vm.artauthor=response.data.author_data.name;
           vm.artauthornum=response.data.author_data.news_count;
           vm.artauthorurl=response.data.author_data.url;
+          vm.lasturl=response.data.related_data.older_news.id;
+          vm.lasttitle=response.data.related_data.older_news.title;
+          vm.nexturl=response.data.related_data.newer_news.id;
+          vm.nexttitle=response.data.related_data.newer_news.title;
         }else{
           vm.$message.error(response.data.msg)
         }
@@ -407,9 +417,12 @@ export default {
   	},
   	like(ab){
   		var vm=this;
-  		if(ab!="ok"){
-  			  
-		      var date={};
+  			  var date={};
+          if(ab=="ok"){
+            date.do_cancel=1
+          }else{
+            date.do_cancel=0
+          }
 		      date.news_id=this.id;
 			  axios({
 		        method:'post',
@@ -420,8 +433,14 @@ export default {
 		        }
 		   		 }).then(function(response){
 		        if(response.data.status==1){
-		        	vm.zannum=vm.zannum+1;
-		   	        vm.likeis=true;
+              if(ab=="ok"){
+                vm.zannum=vm.zannum-1;
+                vm.likeis=true;
+              }else{
+                vm.zannum=vm.zannum+1;
+                vm.likeis=false;
+              }
+		        	
 		        }else{
               if(vm.$store.state.loginis){
                 vm.$message.warning(response.data.msg)
@@ -431,9 +450,6 @@ export default {
 		          
 		        }
 			   });
-   		}else{
-   			vm.$message.warning("您已经点赞了哦！")
-   		}
   	  
   	},
   	mark(ab){
@@ -885,5 +901,14 @@ export default {
   font-size: 12px;
   line-height: 20px;
   text-align: center;
+}
+.pagr{
+  margin-top: 20px;
+  margin-left: 30px;
+  cursor: pointer;
+}
+.pagr a{
+  text-decoration: none;
+  color: #c3864d;
 }
 </style>

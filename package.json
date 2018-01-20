@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "element-ui": "^2.0.7",
+    "prerender-spa-plugin": "^2.1.0",
     "qs": "^6.5.1",
     "vue": "^2.5.2",
     "vue-hot-reload-api": "^2.2.4",

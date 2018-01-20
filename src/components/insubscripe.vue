@@ -2,7 +2,6 @@
   <div class="index">
     <div class="left">
       <h4 class="top">{{subscripe}}<span>{{'共'+tota+'篇文章'}}</span></h4>
-
       <div class="news tablenew" v-show="userlevel==1"> 
         <div class="demo-input-suffix">
           <label>Title:</label>
@@ -24,46 +23,51 @@
         </div>
         <el-button type="success" style="margin-left:30px;" @click="seogo" round>保存seo设置</el-button>
       </div>
-      <div class="news" v-for="(item,index) in indexdata" :key="index" >
-        <div class="newsone" v-if="item.form==1">
-          <img :src="item.url[0]" @click="article(item.id)">
-          <h4  @click="article(item.id)" >{{item.title}}</h4>
-          <p>{{item.content}}</p>
-          <div class="icon">
-            <span><i class="el-icon-time"></i>{{item.time}}</span>
-            <span>赞（{{item.good}}）</span>
-            <span>阅读（{{item.read}}）</span>
-            <span>评论（{{item.comment}}）</span>
+      <div v-if="indexdata.length>0">
+        <div class="news" v-for="(item,index) in indexdata" :key="index" >
+          <div class="newsone" v-if="item.form==1">
+            <img :src="item.url[0]" @click="article(item.id)">
+            <h4  @click="article(item.id)" >{{item.title}}</h4>
+            <p>{{item.content}}</p>
+            <div class="icon">
+              <span><i class="el-icon-time"></i>{{item.time}}</span>
+              <span>赞（{{item.good}}）</span>
+              <span>阅读（{{item.read}}）</span>
+              <span>评论（{{item.comment}}）</span>
+            </div>
+          </div>
+          <div class="newstwo" v-else-if="item.form==2">
+            <h4  @click="article(item.id)">{{item.title}}</h4>
+            <div>
+              <img  @click="article(item.id)" style="margin-left:0;" :src="item.url[0]">
+              <img  @click="article(item.id)" :src="item.url[1]">
+              <img  @click="article(item.id)" :src="item.url[2]">
+            </div>
+            <div class="icon">
+              <span><i class="el-icon-time"></i>{{item.time}}</span>
+              <span>赞（{{item.good}}）</span>
+              <span>阅读（{{item.read}}）</span>
+              <span>评论（{{item.comment}}）</span>
+            </div>
+          </div>
+          <div class="newsthree" v-else-if="item.form==3">
+            <h4  @click="article(item.id)">{{item.title}}</h4>
+            <p>{{item.content}}</p>
+            <div class="icon">
+              <span><i class="el-icon-time"></i>{{item.time}}</span>
+              <span>赞（{{item.good}}）</span>
+              <span>阅读（{{item.read}}）</span>
+              <span>评论（{{item.comment}}）</span>
+            </div>
           </div>
         </div>
-        <div class="newstwo" v-else-if="item.form==2">
-          <h4  @click="article(item.id)">{{item.title}}</h4>
-          <div>
-            <img  @click="article(item.id)" style="margin-left:0;" :src="item.url[0]">
-            <img  @click="article(item.id)" :src="item.url[1]">
-            <img  @click="article(item.id)" :src="item.url[2]">
-          </div>
-          <div class="icon">
-            <span><i class="el-icon-time"></i>{{item.time}}</span>
-            <span>赞（{{item.good}}）</span>
-            <span>阅读（{{item.read}}）</span>
-            <span>评论（{{item.comment}}）</span>
-          </div>
-        </div>
-        <div class="newsthree" v-else-if="item.form==3">
-          <h4  @click="article(item.id)">{{item.title}}</h4>
-          <p>{{item.content}}</p>
-          <div class="icon">
-            <span><i class="el-icon-time"></i>{{item.time}}</span>
-            <span>赞（{{item.good}}）</span>
-            <span>阅读（{{item.read}}）</span>
-            <span>评论（{{item.comment}}）</span>
-          </div>
+        <div class="dashline"></div>
+        <div class="conbot" v-show="conbotis" @click="indexdataget(10)">
+          查看更多 精彩文章
         </div>
       </div>
-      <div class="dashline"></div>
-      <div class="conbot" v-show="conbotis" @click="indexdataget(10)">
-        查看更多 精彩文章
+      <div v-else>
+         <div class="news" style="color:#666;">当前无相关文章</div>
       </div>
     </div>
     <div class="right">
@@ -113,7 +117,7 @@ export default {
   },
   data () {
     return {
-      tota:'',
+      tota:0,
       seokeywords:'',
       seodescription:'',
       seotitle:'',
@@ -496,8 +500,8 @@ export default {
 }
 .newsone img{
   display: block;
-  width: 320px;
-  height: 200px;
+  width: 170px;
+  height: auto;
   float: left;
   margin-right:10px; 
   cursor: pointer;
@@ -505,6 +509,7 @@ export default {
 .newsone p{
   margin-top: 20px;
   margin-bottom: 40px;
+  margin-left: 180px;
 }
 .icon{
   position: absolute;

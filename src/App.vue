@@ -1,9 +1,10 @@
 <template>
   <div id="app" @click="munugo(1)">
     <div class="head">
-      <img class="logo"  src="/static/img/logo.gif" title="logo">
-      <h1 class="logofont">安全加</h1>
-      <span class="logobeat">beta</span>
+
+      <img class="logo"  src="/static/img/logo.gif" title="logo" @click="indexgo">
+      <h1 class="logofont" @click="indexgo">安全加</h1>
+      <span class="logobeat" @click="indexgo">beta</span>
       <h2  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></h2>
       <h2  @click="hlight('inde')"><router-link id="inde" to="/">安全头条</router-link></h2>
       <!-- <span @click="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span> -->
@@ -237,6 +238,9 @@ export default {
 
   },
   methods:{
+    indexgo(){
+      window.location.href="#/"
+    },
     serkey(){
       var vm=this;
       var id=document.querySelector(".search input");
@@ -454,7 +458,7 @@ export default {
               }).then(function(response){
                   if(response.data.status==1){
                     vm.$message.success('注册成功');
-                    vm.login(2);
+                    window.location.href="#/"
                   }else{
                     vm.$message.error(response.data.msg);
                   }
@@ -521,11 +525,13 @@ a{text-decoration: none; color: #333;}
   display: block;
   float: left;
   margin-top: 14px;
+  cursor: pointer;
 }
 
 .head .logofont,.head .logobeat {
   display: block;
   float: left;
+  cursor: pointer;
 }
 .head .logofont{
   font-size: 28px;

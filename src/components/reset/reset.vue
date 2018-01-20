@@ -55,7 +55,8 @@
       </div> 
       <div class="demo-input-suffix">
         <span>邮箱</span>
-        <el-input class="input" v-model="email" ></el-input>
+        <el-input class="input" v-model="email" @change="checke"></el-input>
+        <a class="tj" v-show="remailis">请填写正确的邮箱格式</a>
       </div> 
       <span class="border"></span>
       <div class="demo-input-suffix">
@@ -128,6 +129,7 @@ export default {
   },
   data () {
     return {
+      remailis:false,
       baseurl:Url.baseurl,
       table:1,
     	nickname:'',
@@ -175,6 +177,14 @@ export default {
     this.getinfo();
   },
   methods:{
+    checke(){
+      var isok=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(this.email);
+        if(isok){
+          this.remailis=false;
+        }else{
+          this.remailis=true;
+        }
+    },
     getinfo(){
       var date=this;
         axios({
@@ -205,35 +215,40 @@ export default {
     },
     infonow(){
       var vm=this;
-      var date={};
-        date.nickname=vm.nickname;
-        date.sex=vm.female;
-        date.qq=vm.qq;
-        date.weixin=vm.wx;
-        date.weibo=vm.wb;
-        date.email=vm.email
-        date.industry=vm.area;
-        date.position=vm.job;
-        date.department=vm.door;
-        date.company=vm.company;
-        date.special_skills=vm.skill;
-        date.address=vm.adress;
-        date.phone_number=vm.phone;
-        date.real_name=vm.name;
-        axios({
-              method:'post',
-              data:qs.stringify(date),
-              url:vm.baseurl + '/user/push_user_info',
-             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          }).then(function(response){
-              if(response.data.status==1){
-                vm.$message.success("更新成功");
-              }else{
-                vm.$message.warning(response.data.msg);
+      if(this.remailis==false){
+          var date={};
+          date.nickname=vm.nickname;
+          date.sex=vm.female;
+          date.qq=vm.qq;
+          date.weixin=vm.wx;
+          date.weibo=vm.wb;
+          date.email=vm.email
+          date.industry=vm.area;
+          date.position=vm.job;
+          date.department=vm.door;
+          date.company=vm.company;
+          date.special_skills=vm.skill;
+          date.address=vm.adress;
+          date.phone_number=vm.phone;
+          date.real_name=vm.name;
+          axios({
+                method:'post',
+                data:qs.stringify(date),
+                url:vm.baseurl + '/user/push_user_info',
+               headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
               }
-          })
+            }).then(function(response){
+                if(response.data.status==1){
+                  vm.$message.success("更新成功");
+                }else{
+                  vm.$message.warning(response.data.msg);
+                }
+            })
+        }else{
+          vm.$message.warning("请核实信息是否正确！");
+        }
+      
     },
     article(id){
         window.location.href='#/article?topid='+id;
@@ -349,6 +364,11 @@ export default {
 }
 </script>
 <style scoped>
+  .tj{
+    color: red;
+    font-size: 14px;
+    margin-left: 30px;
+  }
   .levelcenter{
     width: 100%;
     position: relative;

@@ -7,12 +7,14 @@
         name="imagefile"
         class="upload-demo"
         with-credentials
+        :before-upload="beforeAvatarUpload"
         :limit="1"
         :file-list="fileList2"
         :action="baseurl+'/user/upload_avatar'"
         :on-success="handleChange">
         <el-button size="small" class="btnright" type="primary">修改头像</el-button>
       </el-upload>
+      <p style="color:#666;font-size:14px;margin-left:380px;margin-top:20px;">头像图片应是 JPG/PNG 格式</p>
     </div>
     <!-- <div class="download"  v-show="fix==false">
       <el-upload class="now userimg"
@@ -68,7 +70,18 @@ export default {
           this.$message.error(file.msg);
         }
         
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+         const ispng = file.type === 'image/png';
+
+        if (isJPG==false &&  ispng==false) {
+          this.$message.error('上传头像图片应是 JPG/PNG 格式!');
+          return false;
+        }
+        return true ;
       }
+
     }
 
 }

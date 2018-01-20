@@ -97,6 +97,12 @@
           <a style="cursor:pointer" @click="gosearch(item.name)">{{item.name}}</a>
         </div>
       </div>
+      <div class="aside" style="margin-top:20px;">
+        <h4>友情链接</h4>
+        <div class="diva" v-for="(item,index) in adatah" :key="index">
+          <a style="cursor:pointer" :href="item.url">{{item.name}}</a>
+        </div>
+      </div>
       <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px;">
         <img style="margin-top:20px" src="/static/img/bottom.png">
       </div>
@@ -177,6 +183,15 @@ export default {
       rverifyis:false,
       usernameis:false,
       passwordis:false,
+      adatah:[ 
+          {"name":"安全知识","url":"http://zhishi.secjia.com"},
+          {"name":"黑客街","url":"http://www.hackjie.com"},
+          {"name":"东轩'sBLOG","url":"http://www.dxblog.cn"},
+          {"name":"即刻安全","url":"http://www.secist.com"},
+          {"name":"Luan's Blog ","url":"http://lu4n.com"},
+          {"name":"被黑站点统计","url":"http://www.hacked.com.cn"},
+          {"name":"指尖安全","url":"http://www.secfree.com"}
+      ],
       adata:[
           {"name":"政府"},
           {"name":"金融"},
@@ -279,8 +294,8 @@ export default {
   },
   methods:{
       gosearch(search){
-        sessionStorage.setItem("search",search)
-        window.location.href="#/search?"+search;
+        sessionStorage.setItem("subscripe", search);
+        window.location.href="#/insubscripe"
       },
       hotda(){
         var vm=this;
@@ -306,7 +321,7 @@ export default {
           })
       },
       article(id){
-        window.location.href='#/article?topid='+id;
+        window.location.href='/static/article/article.html?topid='+id;
       },
       indexdataget(limit,times){
         var vm=this;
@@ -455,7 +470,7 @@ export default {
               }).then(function(response){
                   if(response.data.status==1){
                     vm.$message.success('注册成功');
-                    vm.login();
+                    window.location.href="#/"
                   }else{
                     vm.$message.error(response.data.msg);
                   }
@@ -598,6 +613,7 @@ export default {
 .newsone p{
   margin-top: 20px;
   margin-bottom: 40px;
+  margin-left: 180px;
 }
 .icon{
   position: absolute;

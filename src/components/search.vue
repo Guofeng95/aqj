@@ -196,8 +196,8 @@ export default {
   },
   methods:{
       gosearch(search){
-        sessionStorage.setItem("search",search)
-        window.location.href="#/search?"+search;
+        sessionStorage.setItem("subscripe", search);
+        window.location.href="#/insubscripe"
       },
       reset(){
         document.body.scrollTop = 0
@@ -368,7 +368,7 @@ export default {
               }).then(function(response){
                   if(response.data.status==1){
                     vm.$message.success('注册成功');
-                    vm.login();
+                    window.location.href="#/"
                   }else{
                     vm.$message.error(response.data.msg);
                   }

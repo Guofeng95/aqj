@@ -1,0 +1,363 @@
+.aside1 .inputcheck{
+  position: relative;
+  margin-bottom: 40px;
+}
+.aside1 .inputcheck span{
+  display: block;
+  font-size: 12px;
+  margin-left: 0px;
+  color: red;
+}
+*{padding: 0;margin: 0;font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;}
+html body{
+  width: 100%;
+  height: 100%;
+  color: #333;
+}
+li{list-style: none;};
+a{text-decoration: none; color: #333;}
+#app {
+  width: 1300px;
+  margin: 0 auto;
+  background: white;
+  overflow: auto;
+  min-height: calc( 100vh - 81px);
+}
+.indexbottom{
+  height: 60px;
+  line-height: 60px;
+  border-top: 1px solid #d3d3d3;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+  position: relative;
+  margin-top: 20px;
+}
+.head{
+  border-bottom: 1px solid #e4e4e4;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  width: 1300px;
+  z-index: 3;
+  left:calc(50% - 650px);
+  background: #f5f5f5;
+}
+.head .logo{
+  display: block;
+  float: left;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+.head .logofont,.head .logobeat {
+  display: block;
+  float: left;
+  cursor: pointer;
+}
+.head .logofont{
+  font-size: 28px;
+  color: #6fba2c;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.head .logobeat{
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 4px;
+}
+.head a{
+  display: block;
+  float: left;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 40px;
+  
+  /*color: #fda861;*/
+}
+.head .tj{
+  width: 44px;
+  height: 24px;
+  border: 1px solid #fda861;
+  text-align: center;
+  line-height: 24px;
+  border-radius: 4px;
+  color: #ababab;
+}
+.head .know{
+  color: #333;
+}
+.search{
+  width: 182px;
+  float: left;
+  height: 30px;
+  margin-top: 15px;
+  margin-left: 20px;
+  position: relative;
+}
+.search .span1{
+  position: absolute;
+  display: block;
+  width: 30px;
+  height: 30px;
+  right: 0;
+  top: 0;
+}
+.search input{
+  height: 30px;
+  background: #f2f2f2;
+}
+.search .el-input__suffix{
+  top: -4px;
+}
+.loginno{
+  display: block;
+  float: right;
+  position: relative;
+}
+.loginno span{
+  color: #6fba2c;
+  font-size: 16px;
+  margin-top: 20px;
+  display: block;
+  float: left;
+  cursor: pointer;
+}
+.head .loginno  a{
+  color: #6fba2c;
+}
+.head .loginno  .munu1 a{
+  color: #a1a1a1;
+}
+.line{
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e4e4e4;
+  top: 0px;
+  left: 0;
+  z-index: 1;
+}
+.loginno img{
+  display: block;
+  float: left;
+}
+.loginno a{
+  margin-left: 26px;
+}
+.userimg{
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+  border-radius: 100%;
+  overflow: hidden;
+  position: absolute;
+  right: 60px;
+  cursor: pointer;
+  top: 10px;
+}
+.userimg img{
+  width: 40px;
+  height: 40px;
+}
+.userstatus{
+  width: 40px;
+  height: 16px;
+  border: 1px solid #ffc57f;
+  color: #ffc57f;
+  border-radius: 4px;
+  position: absolute;
+  font-size: 12px;
+  text-align: center;
+  right: 10px;
+  top: 20px;
+}
+.aside1 h4{
+    margin-bottom: 30px;
+    margin-left: 10px;
+    font-size: 18px;
+  }
+.aside1{
+    width: 270px;
+    background:rgba(251, 251, 251, 1);
+    border:1px solid  rgba(242, 242, 242, 1);
+    border-radius: 4px;
+    padding:0 15px;
+    padding-top: 26px;
+    padding-right: 10px;
+    overflow: hidden;
+  }
+.aside1 div{
+    width: 290px;
+    height: 30px;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+  .aside1 div p{
+    width: 210px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+  }
+  .aside1 .form{
+    height: 34px;
+    width: 260px;
+    margin-top: 4px;
+  }
+  .aside1 .btn{
+    display: block;
+    height: 36px;
+    width: 260px;
+    border-radius: 4px;
+    background: #ff0000;
+    color: #fff;
+    line-height: 36px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .aside1 .btn img{
+    position: absolute;
+    left: 60px;
+    top: 4px;
+  }
+  .aside1 .btna a{
+    width: 80px;
+    height: 32px;
+    border-radius: 6px;
+    display: block;
+    float: left;
+    margin-top: 14px;
+    color: #fff;
+    line-height: 32px;
+  }
+  .aside1 div a img{
+    display: block;
+    float: left;
+  }
+  .aside1 div{
+    clear: both;
+  }
+  .aside1 div p{
+    width: 90px;
+    float: left;
+  }
+  .aside1 .ahref{
+    padding-top: 10px;
+  }
+  .aside1 .ahref a{
+    display: block;
+    float:left;
+    color: #3399d6;
+    font-size: 14px;
+    text-decoration: none;
+    line-height: 30px;
+    margin-left: 10px;
+  }
+  .aside1 .ahref .forgot{
+    margin-left: 70px;
+  }
+  .app{
+    display: block;
+    margin-bottom: 20px;
+  }
+  .more{
+    position: relative;
+  }
+  
+   .aside1 .diva{
+    width: 120px;
+    float: left;
+    clear: none;
+    margin-left: 10px;
+  }
+  .aside1 .diva a{
+    text-decoration: none;
+    color: #333;
+  }
+  #reset,#log{
+    position: absolute;
+    left: 50%;
+    top: 180px;
+    margin-left: -145px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 6;
+  }
+  .cha{
+    display: block;
+    position: absolute;
+    right: 26px;
+    cursor: pointer;
+    top: 26px;
+  }
+  .btn1{
+    width: 60px;
+    height: 38px;
+    text-align: center;
+    padding-left:0;
+    padding-right:0;
+  }
+ .aside1 .verify{
+    width: 196px;
+  }
+  .background .aside  .form{
+    margin-top: 20px;
+
+  }
+  .background .aside .btn{
+    margin-top: 20px;
+  }
+  .munu1{
+    float: left;
+    top: 54px;
+    right: 50px;
+    width: 130px;
+    border-radius: 4px;
+    box-shadow:2px 2px 7px #ccc;
+    padding-left: 3px;
+    padding-right: 3px;
+     position: absolute;
+     background: #fff;
+     z-index: 1000;
+  }
+  .munu1 div{
+    width: 120px;
+    margin:0 auto;
+    height: 28px;
+    line-height: 28px;
+    margin-top: 4px;
+  }
+  .munu1 div img{
+    display: block;
+    float: left;
+  }
+  .munu1 .one{
+    border-bottom:1px solid #f2f2f2; 
+  }
+  .munu1 div a{
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    margin: 0;
+    font-weight: normal;
+  }
+  

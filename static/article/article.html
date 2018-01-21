@@ -28,103 +28,364 @@
       <img class="logo"  src="/static/img/logo.gif" title="logo" onclick="indexgo()">
       <h1 class="logofont" onclick="indexgo()">安全加</h1>
       <span class="logobeat" onclick="indexgo()">beta</span>
-      <h2  @click="hlight('recommend')"><a id="recommend" class="tj" href="/#/recommend">推荐</a></h2>
-      <h2  @click="hlight('inde')"><a id="inde" href="/#/">安全头条</a></h2>
+      <h2  onclick="hlight('recommend')"><a id="recommend" class="tj" href="/#/recommend">推荐</a></h2>
+      <h2  onclick="hlight('inde')"><a id="inde" href="/#/">安全头条</a></h2>
       <!-- <span onclick="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span> -->
       <div class="search">
-        <el-input
+        <input
           placeholder="搜索安全信息"
           suffix-icon="el-iconsearch"
-          v-model="search"
           id="searchin"
-          onfocus="serkey">
-        </el-input>
-        <span class="span1" onclick="gosearch"></span>
+          onfocus="serkey()">
+        </input>
+        <span class="span1" onclick="gosearch()"></span>
       </div>
-      <div v-on:loginnow="changelog" class="loginno" v-show="loginis==false">
+      <div  class="loginno" id="loginisf">
         <span onclick="login(1)" style="margin-right:16px;">登录</span>
         <span onclick="reset(1)">注册</span>
       </div>
-      <div class="loginno" v-show="loginis">
-        <a href="#/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
-        <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
+      <div class="loginno" id="loginis">
+        <a href="/#/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
+        <a href="/#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
         <a style="margin-right:130px;" href="#/usercenter">
-          <el-badge :value="val" class="item">
             <img src="/static/img/ding.png"/>
-          </el-badge>
         </a>
-        <div class="userimg" onclick.stop="munugo(2)">
-          <img :src="userurl">
+        <div class="userimg" onclick="munugo(2)">
+          <img id="userurl">
         </div>
-        <div class="userstatus">
-          {{userstatus}}
+        <div class="userstatus" id="userstatus">
+          
         </div>
-        <div class="munu1" v-show="munuis">
+        <div class="munu1" id="munuis">
           <div class="one">
             <img style="margin-top:4px;margin-left:-4px;margin-right:2px" src=" /static/img/level.png">
-            <a  href="#/level">{{userstatus}}</a>
+            <a  href="/#/level" id="levels"></a>
           </div>
           <div>
             <img style="margin-top:2px" src=" /static/img/star.png">
-            <a   href="#/collection">我的收藏</a>
+            <a   href="/#/collection">我的收藏</a>
           </div>
           <div>
             <img style="margin-top:4px;margin-right:4px" src=" /static/img/wifi.png">
-            <a  href="#/subscripe">我的订阅</a>
+            <a  href="/#/subscripe">我的订阅</a>
           </div>
           <div>
             <img style="margin-top:2px;" src=" /static/img/mail.png">
-            <a  id="mail" href="#/comment">我的评论</a>
+            <a  id="mail" href="/#/comment">我的评论</a>
           </div>
           <div class="one">
             <img style="margin-top:6px;margin-left:2px;margin-right:2px" src=" /static/img/download.png">
-            <a  href="#/download">我上传的</a>
+            <a  href="/#/download">我上传的</a>
           </div>
 
           <div class="one">
             <img style="margin-top:4px;margin-right:5px" src=" /static/img/shezhi.png">
-            <a href="#/reset">设置</a>
+            <a href="/#/reset">设置</a>
           </div>
           <div >
             <img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
-            <a href="#" onclick="removein">退出登录</a>
+            <a style="cursor: pointer;" onclick="removein()">退出登录</a>
           </div> 
         </div>
       </div>
     </div>
-    <div style="height:60px;width: 100%;background:#f5f5f5;border-bottom: 1px solid #e4e4e4"></div>
+    <div style="height:60px;width: 100%;background:#f5f5f5;border-bottom: 1px solid #e4e4e4;position: fixed;top: 0" ></div>
     </div>
+    <div class="article" style="margin-top: 80px;">
+    <div class="top">
+      <a href="/#/">首页></a>
+      <a href="/#/">安全头条></a>
+      <a id="thirdtit"></a>
+    </div>
+    <div class="sumary">
+      <h2 id="artitle"></h2>
+      <p>
+        <span style="color:#0099CC;" id="artauthor"></span>
+        <span id="arttime"></span>
+        <span id="thirdtit1"></span>
+        <span style="position:absolute;right:0;">
+          <span id="readnum"></span>
+          <span id="comnum"></span>
+           <img style="cursor:pointer;" onclick='hdpout' src="/static/img/hdp.png">
+        </span>
+        
+      </p>
+    </div>
+    <div id="articleindex">
+    </div>
+    <!-- <div class="down" v-if="downloaddata.length!=0">
+      <h4 class="hf">文章附件</h4>
+      <div class="downcontent">
+          <div  style="position:relative" v-for="(item,index) in downloaddata" :key="index">
+            <img class="dimg" src="/static/img/flie.png">
+            <p>
+              <span class="dcon">{{item.content}}</span>
+              <span class="dlarge">{{item.large}}</span>
+              <spa6`n class="dnum">{{'下载（'+item.num+'）'}}</span>
+            </p>
+          </div>
+      </div>
+    </div> -->
+    <div class="bottom">
+      <p class="pagr"><a onclick="narticle('lasttitle')" id="lasttitle"></a></p>
+      <p class="pagr"><a onclick="narticle('nexttitle')" id="nexttitle"></a></p>
+      <p style="margin-top:10px; color:#a1a1a1;">*文章为作者独立观点，不代表安全加立场</p>
+      <div class="downcontent">
+        <p>本文由：安全加发布，版权归属于原作者。 如果转载，请注明出处及本文链接： </p>
+        <p id="aurl"></p>
+        <p>如果此文章侵权，请留言，我们进行删除。</p>
+      </div>
+    </div>
+    <div class="author">
+      <img id="artauthorurl" src="">
+      <span class="aur">作者</span>
+      <span class="aurname" id="artauthor1"></span>
+      <span class="aurnum" id="artauthornum"></span>
+    </div>
+    <div class="btn">
+      <button onclick="like" v-if="likeis"><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
+      <button onclick="like('ok')" v-else><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
+      <button onclick="mark" v-if="markis"><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
+      <button onclick="mark('ok')" v-else><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
+      <button style="position:relative;" onmouseenter="wxciew" onmouseleave="wxclose" >
+        <img src="/static/img/awx.png">分享到微信
+      </button>
+      <div class="wxfx" v-show="wxfxis" style="display: none;">
+          <h4>微信扫一扫：分享</h4>
+          <img :src="'http://s.jiathis.com/qrcode.php?url='+wxurl">
+          <p>微信里点“发现”，扫一下</p>
+          <p> 二维码便可将本文分享至朋友圈</p>
+        </div>
+      <button onclick="xlwb"><img src="/static/img/awb.png">分享到微博</button>
+      <button onclick="qqzone"><img src="/static/img/aqq.png">分享到QQ</button>
+    </div>
+    <div class="tagzi">
+      <p style="font-size:14px;color:#a1a1a1; margin-bottom:10px;">您可能对以下关键词感兴趣哟，请用鼠标滑过或点击关键词 :</p>
+      <ul>
+        <li v-for="(item,index) in tagdata" onmouseover.stop="tagover(item)" onmouseout.stop="tagout(item)">
+          <span style="color:#a1a1a1;" v-if="index!=0">/</span>
+          <img src="/static/img/uno.png">
+          <span onclick="scripe(item)">{{item}}</span>
+        </li>
+      </ul>
+    </div>
+    <h4 class="hf" id="tagh4">相关文章</h4>
+    <div class="articlecot">
+      <div class="left" id="tagleft" v-if="tagchangedata.length>0">
+        <p v-for="(item,index) in tagchangedata" v-if="(index%2)==0" onclick="narticle(item.id)"> 
+         {{'('+(index+1)+')'+item.title}}
+        </p>
+      </div>
+      <div class="left" id="tagleft" v-else>
+        <p> 
+          无数据
+        </p>
+      </div>
+      <div class="left" id="tagright" v-if="tagchangedata.length>0">
+        <p v-for="(item,index) in tagchangedata" v-if="(index%2)!=0"  onclick="narticle(item.id)"> 
+          {{'('+(index+1)+')'+item.title}}
+        </p>
+      </div>
+      <div class="left" id="tagright" v-else>
+        <p> 
+          无数据
+        </p>
+      </div>
+    </div>
+     <h4 class="hf" style="clear:both;padding-top:20px;margin-bottom:40px;">参与讨论</h4>
+     <div class="context">
+        <el-input
+        type="textarea"
+        :rows="6"
+        placeholder="请输入内容"
+        v-model="textarea"
+        resize="none"
+        class="text"
+        onchange="compleng">
+      </el-input>
+      <span class="num">{{conleng+"/300"}}</span>
+      <span class="tbtn"  onclick="newcomment">发表评论</span>
+      <span class="topt" onclick="gotop"><img src="/static/img/atopgo.png"></span>
+     </div>
+    <div class="comment">
+      <div class="comt" v-for="(item,index) in comdata" :id="'c'+item.id">
+        <img :src="item.url">
+        <span class="comname">{{item.name}}<span class="comtime">{{"·"+item.time}}</span></span>
+        
+        <p class="comcontent">{{item.content}}</p>
+      </div>
+     <el-button class="combtn" type="success" v-show="combtnis" onclick="comment" plain :loading="false">查看更多评论</el-button>
+    </div>
+    <div class="bigimg" id="bigimgis" style="display: none;" onclick="hdpout('no')">
+      <div>
+        <img class="imges" :src="nowbig" >
+        <div style="position:absolute; top:40%;width:1200px;left:calc( 50vw - 610px );height:50px;">
+        <span onclick.stop="bigchange('left')"><img src="/static/img/imgleft.png"></span>
+        <span style="right:0;" onclick.stop="bigchange('right')"><img src="/static/img/imgright.png"></span>
+        </div>
+        <!-- <span class="imgno"  ><img src="/static/img/imgno.png"></span> -->
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+    <div class="background" id="resetis">
+      <div class="aside1" id="reset" >
+        <h4>快速注册 <img class="cha" onclick="reset()" src="/static/img/cha.png"></h4>
+        <div class="demo-input-suffix" style="margin-bottom: 20px;">
+          <input  class="form verify" onchange="check('remail')" id="remail" placeholder="请填写邮箱地址"></input>
+           <button class="btn1" style="padding:0;"  type="success" onclick="emalicode()">验证码</button>
+           <span  id="remailis" style="margin-top:6px;font-size: 12px;color: red;">请填写正确的邮箱格式，不能为空</span>
+        </div>
+        <div class="inputcheck" style="padding-top:20px;">
+          <input class='form' onchange="check('rverify')" id="rverify" placeholder="请填写邮箱收到的验证码"></input>
+          <span id="rverifyis">请填写验证码</span>
+        </div>
+        <div class="inputcheck">
+          <input class='form' type="password" onchange="check('rpassword')" id="rpassword" placeholder="请设置密码,6-14位字符"></input>
+          <span  id="rpasswordis" >密码应为数字、字母、英文标点符号，长度为6-14位</span>
+        </div>
+        <div class="inputcheck" style="margin-bottom:10px;">
+           <input class='form' type="password" onchange="check('rtwopwd')" id="rtwopwd" placeholder="请再次输入刚才的密码"></input>
+           <span  id="rtwopwdis" >两次密码不统一</span>
+        </div>
+        <div style="clear:both"></div>
+        <a class="btn" onclick="resetgo()">立即注册</a>
+        <div class="btna">
+          <a style="background:#00cc33">
+            <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
+          </a>
+          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+            <img style="margin-left:6px;" src="/static/img/wb.png">微博
+          </a>
+          <a style="background:#00ccff;line-height:34px;">
+            <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
+          </a>
+        </div>
+        <div class="ahref">
+          <p>已有账号？</p>
+          <a href="#" onclick="login(2)">登录</a><a onclick="reset()" class="forgot" href="/#/forget">忘记密码</a>
+        </div>
+      </div>
+      </div>
+      <div class="background" id="logis">
+        <div class="aside1" id="log" >
+          <h4>快速登录 <img class="cha" onclick="login()" src="/static/img/cha.png"></h4>
+          <div class="inputcheck">
+            <input class='form' id="username" placeholder="请填写手机号或邮箱"></input>
+            <span  id="usernameis" >手机号或邮箱不存在</span>
+          </div>
+          <div class="inputcheck" style="margin-bottom:10px;">
+           <input class='form' type="password" id="password" placeholder="请输入密码"></input>
+           <span  id="passwordis" >密码错误请重新输入</span>
+          </div>
+          <div style="clear:both"></div>
+          <a class="btn" onclick="sublogin()"><img src="/static/img/btn.png" />立即登录</a>
+          <div class="btna">
+            <a style="background:#00cc33">
+              <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
+            </a>
+            <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+              <img style="margin-left:6px;" src="/static/img/wb.png">微博
+            </a>
+            <a style="background:#00ccff;line-height:34px;">
+              <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
+            </a>
+          </div>
+          <div class="ahref">
+            <p>还没有账号？</p>
+            <a href="#" onclick="reset(2)">注册</a><a onclick="login" class="forgot" href="/#/forget">忘记密码</a>
+          </div>
+      </div>
+       </div>
     <div class="indexbottom">
       © 2018 安全加 社区. All Rights Reserved.
     </div>
   </body>
+  <script type="text/javascript" src="nav.js"></script>
   <script type="text/javascript">
-    var id2 = document.getElementById('inde');
-     id2.style.color="#fda861";
-     //判断是否登录
-     axios({
+    var comis=window.location.href.indexOf("comid");
+    if(comis>-1){
+      var arr1=window.location.href.split('?')[1].split("&");
+      var arr=arr1[0].split("=");
+      vm.id=arr[1];
+      var arr2=arr1[1].split("=")[1];
+      vm.comid=arr2;
+      setTimeout(function() {
+        var com=document.getElementById('c'+vm.comid).offsetTop;
+        //console.log(com)
+        document.body.scrollTop = com;
+        document.documentElement.scrollTop = com;
+      }, 100);
+    }else{
+      var arr=window.location.href.split('?')[1].split("=");
+      vm.id=arr[1];
+    }
+
+    function getid(id){
+      var now=document.getElementById(id);
+      return now;
+    }
+
+    var date={};
+    date.id=vm.id;
+    getid('aurl').innerHTML=window.location.href;
+    $.ajax({
         method:'post',
-        url:vm.baseurl + '/user/ping',
+        data:date, 
+        url:vm.baseurl + '/article/news_content',
+       headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      xhrFields: {withCredentials: true},
+      crossDomain: true,
     }).then(function(response){
-        if(response.data.status==1){
-          vm.$store.state.loginis=true;
-          if(response.data.verified==1){
-            vm.$store.state.userstatus="未认证"
-          }else if(response.data.verified==2){
-            vm.$store.state.userstatus="待确认"
-          }else if(response.data.verified==3){
-            vm.$store.state.userstatus="已认证"
+        if(response.status==1){
+          var obj=response.news_data
+          getid('artitle').innerHTML=obj.title;
+          if(response.keywords[0]){
+            getid('thirdtit1').innerHTML='·'+response.keywords[0];
+            getid('thirdtit').innerHTML=response.keywords[0];
           }
-          vm.$store.state.userurl=response.data.avatar;
-          vm.$store.state.userlevel=response.data.is_admin;
+          
+          getid('artauthor').innerHTML=response.author_data.name;
+          getid('artauthor1').innerHTML=response.author_data.name;
+          getid('arttime').innerHTML='·'+obj.publish_time;
+          getid('readnum').innerHTML="阅读("+obj.read_count+")";
+          getid('comnum').innerHTML="评论("+obj.comment_count+")";
+          vm.summary=obj.summary;
+          
+          //vm.tagdatanow(response.keywords[0])
+          getid('articleindex').innerHTML=response.doc;
+          vm.zannum=obj.like_count;
+          vm.hdpurl=obj.images;
+          vm.nowbig=obj.images[0];
+          vm.scnum=response.extra_data.mark_count;
+          if(response.extra_data.liked==1){
+            vm.likeis=false;
+          }
+          if(response.extra_data.marked==1){
+            vm.markis=false;
+          }
+          vm.tagdata=response.keywords;
+          getid('artauthornum').innerHTML='为大家奉献了'+response.author_data.news_count+'篇文章';
+          getid('artauthorurl').src=response.author_data.url;
+          getid('lasttitle').setAttribute("url",response.related_data.older_news.id);
+          getid('lasttitle').innerHTML="上一篇："+response.related_data.older_news.title;
+          getid('nexttitle').setAttribute("url",response.related_data.newer_news.id);
+          getid('nexttitle').innerHTML="下一篇："+response.related_data.newer_news.title;
         }else{
-          vm.$store.state.loginis=false;
+          alert(response.msg)
         }
     });
-
-
-    function indexgo(){
-      window.location.href="/#/"
+    
+    function narticle(id){
+      var now=getid(id).attributes["url"].nodeValue;
+      window.location.href='/static/article/article.html?topid='+now;
     }
+
   </script>
 </html>

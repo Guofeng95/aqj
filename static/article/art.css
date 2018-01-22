@@ -575,6 +575,18 @@ a{text-decoration: none; color: #333;}
 }
 .text{
   width: 900px;
+  display: block;
+    
+    padding: 5px 15px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 14px;
+    color: #5a5e66;
+    background-color: #fff;
+    border: 1px solid #d8dce5;
+    border-radius: 4px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
 }
 .context .num{
   color: #a1a1a1;
@@ -648,7 +660,20 @@ a{text-decoration: none; color: #333;}
   color: #333;
 }
 .combtn{
+  display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: none;
+
+    font-weight: 500;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
   margin:30px auto;
+  color: #fff;
+  background: #67c23a;
   margin-left: 400px;
 }
 .sumary h2{

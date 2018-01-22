@@ -147,17 +147,17 @@
       <button onclick="like('ok')" id="likeisf"></button>
       <button onclick="mark()" id="markis"></button>
       <button onclick="mark('ok')" id="markisf"></button>
-      <button style="position:relative;" onmouseenter="wxciew" onmouseleave="wxclose" >
+      <button style="position:relative;" onmouseenter="wxciew()" onmouseleave="wxclose()" >
         <img src="/static/img/awx.png">分享到微信
       </button>
-      <div class="wxfx" v-show="wxfxis" style="display: none;">
+      <div class="wxfx" id="wxfxis" style="display: none;">
           <h4>微信扫一扫：分享</h4>
-          <img :src="'http://s.jiathis.com/qrcode.php?url='+wxurl">
+          <img id="wxurl" src="">
           <p>微信里点“发现”，扫一下</p>
           <p> 二维码便可将本文分享至朋友圈</p>
         </div>
-      <button onclick="xlwb"><img src="/static/img/awb.png">分享到微博</button>
-      <button onclick="qqzone"><img src="/static/img/aqq.png">分享到QQ</button>
+      <button onclick="xlwb()"><img src="/static/img/awb.png">分享到微博</button>
+      <button onclick="qqzone()"><img src="/static/img/aqq.png">分享到QQ</button>
     </div>
     <div class="tagzi" style="clear: both;padding-top: 30px;">
       <p style="font-size:14px;color:#a1a1a1; margin-bottom:10px;">您可能对以下关键词感兴趣哟，请用鼠标滑过或点击关键词 :</p>
@@ -166,41 +166,36 @@
     </div>
     <h4 class="hf" id="tagh4">相关文章</h4>
     <div class="articlecot">
-      <div class="left" id="tagleft" v-if="tagchangedata.length>0">
-        <p v-for="(item,index) in tagchangedata" v-if="(index%2)==0" onclick="narticle(item.id)"> 
-         {{'('+(index+1)+')'+item.title}}
-        </p>
+      <div class="left" id="tagleft" >
+          无相关文章
       </div>
-      <div class="left" id="tagright" v-if="tagchangedata.length>0">
-        <p v-for="(item,index) in tagchangedata" v-if="(index%2)!=0"  onclick="narticle(item.id)"> 
-          {{'('+(index+1)+')'+item.title}}
-        </p>
+      <div class="left" id="tagright" >
+        无相关文章
       </div>
     </div>
      <h4 class="hf" style="clear:both;padding-top:20px;margin-bottom:40px;">参与讨论</h4>
      <div class="context">
-        <el-input
-        type="textarea"
-        :rows="6"
-        placeholder="请输入内容"
-        v-model="textarea"
+        <textarea 
+        autocomplete="off"
+        validateevent="true"
+        rows="6"
         resize="none"
+        placeholder="请输入内容"
+        id="textarea1"
         class="text"
-        onchange="compleng">
-      </el-input>
-      <span class="num">{{conleng+"/300"}}</span>
-      <span class="tbtn"  onclick="newcomment">发表评论</span>
-      <span class="topt" onclick="gotop"><img src="/static/img/atopgo.png"></span>
+        onkeydown="compleng()"></textarea >
+      <span class="num" id="conleng">0/300</span>
+      <span class="tbtn"  onclick="newcomment()">发表评论</span>
+      <span class="topt" onclick="gotop()"><img src="/static/img/atopgo.png"></span>
      </div>
-    <div class="comment">
-      <div class="comt" v-for="(item,index) in comdata" :id="'c'+item.id">
-        <img :src="item.url">
-        <span class="comname">{{item.name}}<span class="comtime">{{"·"+item.time}}</span></span>
-        
-        <p class="comcontent">{{item.content}}</p>
+     <div class="comt" id="nocomis" style="margin-top: 20px;">
+        当前无评论
       </div>
-     <el-button class="combtn" type="success" v-show="combtnis" onclick="comment" plain :loading="false">查看更多评论</el-button>
+    <div class="comment" id="commentindex">
+      
+     
     </div>
+    <button class="combtn"  id="combtnis" onclick="comment()">查看更多评论</el-button>
     <div class="bigimg" id="bigimgis" style="display: none;" onclick="hdpout('no')">
       <div>
         <img class="imges" :src="nowbig" >
@@ -309,7 +304,7 @@
       var arr=window.location.href.split('?')[1].split("=");
       vm.id=arr[1];
     }
-
+    getid("wxurl").src='http://s.jiathis.com/qrcode.php?url='+'http/m.secjia.com/#/article?topid='+vm.id
     function getid(id){
       var now=document.getElementById(id);
       return now;
@@ -330,6 +325,7 @@
     }).then(function(response){
         if(response.status==1){
           var obj=response.news_data
+          vm.artitle=obj.title;
           getid('artitle').innerHTML=obj.title;
           if(response.keywords[0]){
             getid('thirdtit1').innerHTML='·'+response.keywords[0];
@@ -343,7 +339,7 @@
           getid('comnum').innerHTML="评论("+obj.comment_count+")";
           vm.summary=obj.summary;
           
-          //vm.tagdatanow(response.keywords[0])
+          tagdatanow(response.keywords[0])
           getid('articleindex').innerHTML=response.doc;
           vm.zannum=obj.like_count;
           vm.hdpurl=obj.images;
@@ -384,14 +380,37 @@
     
     function tagdata(index,item){
       var li=document.createElement('li');
+      getid('tagdata').appendChild(li);
       if(index==0){
-        li.innerHTML="<img src='/static/img/uno.png'><span style = 'margin-left:4px;' onclick='scripe("+item+")''>"+item+"</span>"
+        li.nu='a'
+        li.onmouseover= function(){
+            var h4=document.getElementById("tagh4");
+            var tl=document.getElementById("tagleft");
+            var tr=document.getElementById("tagright");
+            h4.style.color = 'rgb(0,153,0)';
+            tl.style.borderColor = 'rgb(0,153,0)';
+            tr.style.borderColor = 'rgb(0,153,0)'; 
+            tagdatanow(item);
+          };
+        li.onmouseout=tagout;
+        li.innerHTML="<img src='/static/img/uno.png'><span style = 'margin-left:4px;' onclick='scripe(\""+item+"\")''>"+item+"</span>"
       }else if(index=='no'){
         li.innerHTML="当前无关键词"
       }else{
-         li.innerHTML="<span style='color:#a1a1a1;'>/</span><img src='/static/img/uno.png'><span style = 'margin-left:4px;' onclick='scripe("+item+")''>"+item+"</span>"
+        li.onmouseover= function (){
+          vm.tagchangedata=[];
+          var h4=document.getElementById("tagh4");
+          var tl=document.getElementById("tagleft");
+          var tr=document.getElementById("tagright");
+          h4.style.color = 'rgb(0,153,0)';
+          tl.style.borderColor = 'rgb(0,153,0)';
+          tr.style.borderColor = 'rgb(0,153,0)'; 
+          tagdatanow(item);
+        };
+        li.onmouseout=tagout;
+         li.innerHTML="<span style='color:#a1a1a1;'>/</span><img src='/static/img/uno.png'><span style = 'margin-left:4px;' onclick='scripe(\""+item+"\")''>"+item+"</span>"
       }
-      getid('tagdata').appendChild(li);
+     
     }
     function narticle(id){
       var now=getid(id).attributes["url"].nodeValue;
@@ -479,6 +498,221 @@
         }
      });
     }
+    function scripe(name){
+      sessionStorage.setItem("subscripe", name);
+      window.location.href="/#/insubscripe"
+    }
 
+   
+    function tagout(name){
+      var h4=document.getElementById("tagh4");
+      var tl=document.getElementById("tagleft");
+      var tr=document.getElementById("tagright");
+      h4.style.color = '#a1a1a1';
+      tl.style.borderColor = '#d7d7d7';
+      tr.style.borderColor = '#d7d7d7' 
+    }
+    function compleng(){
+      var value=val("textarea1").length;
+      console.log(value)
+      getid('conleng').innerHTML=(value+1)+"/300"
+      
+    }
+    function gotop(){
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    }
+
+
+    vm.offset=0;
+    comment('newda')
+    function comment(ab){
+      var date={};
+      date.news_id=vm.id;
+      if(ab=="newda"){
+        vm.offset=0;
+      }
+      date.offset=vm.offset;
+      date.limit=10;
+      $.ajax({
+          method:'post',
+          data:date,
+          url:vm.baseurl + '/article/news_comments',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        xhrFields: {withCredentials: true},
+        crossDomain: true
+      }).then(function(response){
+          if(response.status==1){
+            
+              var arr = response.data;
+              if(arr.length<10){
+                docis('combtnis',2);
+
+              }else{
+                docis('combtnis',1)
+                vm.offset=vm.offset+1;
+              }
+              if(ab=='newda'){
+                if(arr.length>0){
+                  docis('nocomis',2);
+                }else{
+                  docis('nocomis',1);
+                }
+              }
+              arr.forEach( function(element, index) {
+                var div=document.createElement("div");
+                div.id="c"+element.comment_id;
+                div.className="comt";
+                div.innerHTML='<img src="'+element.user_url+'"> <span class="comname">'+element.user_name+'<span class="comtime">·'+element.comment_time+'</span></span><p class="comcontent">'+element.comment_content+'</p>';
+                getid("commentindex").appendChild(div);
+              });
+              
+
+          }else{
+            alert(response.msg)
+          }
+      });
+     }
+     function removeAllChild(coid){  
+          var div = coid;
+          while(div.hasChildNodes()) //当div下还存在子节点时 循环继续  
+          {  
+              div.removeChild(div.firstChild);  
+          }  
+      }  
+     function newcomment(){
+      
+      var date={};
+      date.news_id=vm.id;
+      date.content=val('textarea1');
+      if(vm.loginis){
+          if(date.content!="" && date.content.length<=300){
+            $.ajax({
+              method:'post',
+              data:date,
+              url:vm.baseurl + '/article/news_new_comment',
+             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            xhrFields: {withCredentials: true},
+            crossDomain: true
+          }).then(function(response){
+              if(response.status==1){
+                alert("发送成功！")
+                  getid("textarea1").value="";
+                  var coid= getid("commentindex")
+                  removeAllChild(coid)
+                  comment("newda");
+              }else{
+                alert(response.msg)
+              }
+          });
+        }else{
+            alert("请输入1-300个字！")
+        }
+      }else{
+        alert("您还未登录哦！")
+      }
+      
+      
+    }
+    function tagdatanow(name){
+      var date={};
+      date.limit=10;
+      date.notice='';
+      date.keyword=name;
+      $.ajax({
+          method:'post',
+          data:date,
+          url:vm.baseurl + '/article/news_list',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        xhrFields: {withCredentials: true},
+        crossDomain: true
+      }).then(function(response){
+        if(response.status==1){
+            if(response.data.length>0){
+              var arr1=[];
+              var arr2=[];
+              response.data.forEach( function(element, index) {
+                var obj={};
+                obj.id=element.id;
+                obj.title=element.summary;
+                if(index%2==0){
+                  arr1.push(obj)
+                }else{
+                  arr2.push(obj)
+                }
+                
+              });
+              if(arr1.length>0){
+                getid("tagleft").innerHTML="";
+                arr1.forEach( function(element, index) {
+                  var p=document.createElement("p");
+                  p.innerHTML='('+(index*2+1)+')'+element.title;
+                  p.onclick=function(){
+                    window.location.href='/static/article/article.html?topid='+element.id;
+                  }
+                  getid("tagleft").appendChild(p)
+                });
+              }
+             if(arr2.length>0){
+              getid("tagright").innerHTML="";
+              arr2.forEach( function(element, index) {
+                var p=document.createElement("p");
+                p.innerHTML='('+(index+1)*2+')'+element.title;
+                p.onclick=function(){
+                    window.location.href='/static/article/article.html?topid='+element.id;
+                  }
+                getid("tagright").appendChild(p)
+              });
+              }
+              //          <p v-for="(item,index) in tagchangedata" v-if="(index%2)!=0"  onclick="narticle(item.id)"> 
+              //   {{'('+(index+1)+')'+item.title}}
+              // </p>
+            }
+        }
+
+      })
+    };
+    function xlwb(){
+      var url=window.location.href;
+      var _width = "600px";  
+      var _height = "800px"; 
+      var sharesinastring='http://v.t.sina.com.cn/share/share.php?title='+vm.artitle+'&url='+url+'&content=utf-8&sourceUrl='+url+'&pic='+vm.nowbig;
+      window.open(sharesinastring,'width='+_width+',height='+_height+',top='+(screen.height-_height)/2+',left='+(screen.width-_width)/2+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
+    }
+
+    function qqzone(){ 
+        console.log(window.location.href)
+         var _url = window.location.href;     
+         var _showcount = 1;  
+         var _desc = vm.artitle;  
+         var _summary = vm.summary;  
+         var _title = vm.artitle;  
+         var _site = vm.artitle;  
+         var _width = "600px";  
+         var _height = "800px";  
+         var _pic = vm.nowbig;  
+         var _shareUrl = 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?';  
+         _shareUrl += 'url=' + encodeURIComponent(_url||document.location);   //参数url设置分享的内容链接|默认当前页location  
+         _shareUrl += '&showcount=' + _showcount||0;      //参数showcount是否显示分享总数,显示：'1'，不显示：'0'，默认不显示  
+         _shareUrl += '&desc=' + encodeURIComponent(_desc||'分享的描述');    //参数desc设置分享的描述，可选参数  
+         //_shareUrl += '&summary=' + encodeURIComponent(_summary||'分享摘要');    //参数summary设置分享摘要，可选参数  
+         _shareUrl += '&title=' + encodeURIComponent(_title||document.title);    //参数title设置分享标题，可选参数  
+         //_shareUrl += '&site=' + encodeURIComponent(_site||'');   //参数site设置分享来源，可选参数  
+         _shareUrl += '&pics=' + encodeURIComponent(_pic||'');   //参数pics设置分享图片的路径，多张图片以＂|＂隔开，可选参数  
+         _shareUrl += '&summary=' + encodeURIComponent(_summary||''); 
+        window.open(_shareUrl,'width='+_width+',height='+_height+',top='+(screen.height-_height)/2+',left='+(screen.width-_width)/2+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');   
+    }
+    function wxciew(){
+      docis('wxfxis',1)
+    }
+    function wxclose(){
+      docis('wxfxis',2)
+    }
   </script>
 </html>

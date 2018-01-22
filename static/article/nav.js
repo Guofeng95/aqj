@@ -24,10 +24,12 @@ var id2 = document.getElementById('inde');
             docis('userstatus',3,"已认证");
             docis('levels',3,"已认证");
           };
+          vm.loginis=true;
           var userurl = document.getElementById('userurl');
           userurl.src=response.avatar;
           vm.userlevel=response.is_admin;
         }else{
+           vm.loginis=false;
           docis('loginis',2);
           docis('loginisf',1);
         }

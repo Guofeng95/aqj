@@ -404,9 +404,7 @@ a{text-decoration: none; color: #333;}
     width: 100%;
     font-size: 14px;
   }
-  #logis,#resetis,#usernameis,#passwordis,#remailis,#rverifyis,#rpasswordis,#rtwopwdis{
-    display: none;
-  }
+  
   .article{
   width: 904px;
   margin:0 auto;
@@ -521,6 +519,8 @@ a{text-decoration: none; color: #333;}
   margin-left: 20px;
   font-size: 14px;
   cursor: pointer;
+  display: block;
+  float: left;
 }
 .btn button img{
   display: block;
@@ -742,3 +742,6 @@ a{text-decoration: none; color: #333;}
   text-decoration: none;
   color: #c3864d;
 }
+#logis,#resetis,#usernameis,#passwordis,#remailis,#rverifyis,#rpasswordis,#rtwopwdis,#likeis,#markis,#likeisf,#markisf{
+    display: none;
+  }

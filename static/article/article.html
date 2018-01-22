@@ -143,10 +143,10 @@
       <span class="aurnum" id="artauthornum"></span>
     </div>
     <div class="btn">
-      <button onclick="like" v-if="likeis"><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
-      <button onclick="like('ok')" v-else><img src="/static/img/aok.png">{{'赞（'+zannum+'）'}}</button>
-      <button onclick="mark" v-if="markis"><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
-      <button onclick="mark('ok')" v-else><img src="/static/img/astar.png">{{'收藏（'+scnum+'）'}}</button>
+      <button onclick="like()" id="likeis"></button>
+      <button onclick="like('ok')" id="likeisf"></button>
+      <button onclick="mark()" id="markis"></button>
+      <button onclick="mark('ok')" id="markisf"></button>
       <button style="position:relative;" onmouseenter="wxciew" onmouseleave="wxclose" >
         <img src="/static/img/awx.png">分享到微信
       </button>
@@ -159,14 +159,9 @@
       <button onclick="xlwb"><img src="/static/img/awb.png">分享到微博</button>
       <button onclick="qqzone"><img src="/static/img/aqq.png">分享到QQ</button>
     </div>
-    <div class="tagzi">
+    <div class="tagzi" style="clear: both;padding-top: 30px;">
       <p style="font-size:14px;color:#a1a1a1; margin-bottom:10px;">您可能对以下关键词感兴趣哟，请用鼠标滑过或点击关键词 :</p>
-      <ul>
-        <li v-for="(item,index) in tagdata" onmouseover.stop="tagover(item)" onmouseout.stop="tagout(item)">
-          <span style="color:#a1a1a1;" v-if="index!=0">/</span>
-          <img src="/static/img/uno.png">
-          <span onclick="scripe(item)">{{item}}</span>
-        </li>
+      <ul id="tagdata">
       </ul>
     </div>
     <h4 class="hf" id="tagh4">相关文章</h4>
@@ -176,19 +171,9 @@
          {{'('+(index+1)+')'+item.title}}
         </p>
       </div>
-      <div class="left" id="tagleft" v-else>
-        <p> 
-          无数据
-        </p>
-      </div>
       <div class="left" id="tagright" v-if="tagchangedata.length>0">
         <p v-for="(item,index) in tagchangedata" v-if="(index%2)!=0"  onclick="narticle(item.id)"> 
           {{'('+(index+1)+')'+item.title}}
-        </p>
-      </div>
-      <div class="left" id="tagright" v-else>
-        <p> 
-          无数据
         </p>
       </div>
     </div>
@@ -365,26 +350,134 @@
           vm.nowbig=obj.images[0];
           vm.scnum=response.extra_data.mark_count;
           if(response.extra_data.liked==1){
-            vm.likeis=false;
+            docis('likeisf',1);
+            getid('likeisf').innerHTML="<img src='/static/img/aok.png'>赞("+vm.zannum+")";
+          }else{
+            docis('likeis',1);
+            getid('likeis').innerHTML="<img src='/static/img/aok.png'>赞("+vm.zannum+")";
           }
           if(response.extra_data.marked==1){
-            vm.markis=false;
+             docis('markisf',1);
+             getid('markisf').innerHTML="<img src='/static/img/astar.png'>收藏("+vm.scnum+")";
+          }else{
+           docis('markis',1);
+           getid('markis').innerHTML="<img src='/static/img/astar.png'>收藏("+vm.scnum+")";
           }
-          vm.tagdata=response.keywords;
           getid('artauthornum').innerHTML='为大家奉献了'+response.author_data.news_count+'篇文章';
           getid('artauthorurl').src=response.author_data.url;
           getid('lasttitle').setAttribute("url",response.related_data.older_news.id);
           getid('lasttitle').innerHTML="上一篇："+response.related_data.older_news.title;
           getid('nexttitle').setAttribute("url",response.related_data.newer_news.id);
           getid('nexttitle').innerHTML="下一篇："+response.related_data.newer_news.title;
+          vm.tagdata=response.keywords;
+          if(vm.tagdata.length>0){
+            vm.tagdata.forEach( function(element, index) {
+              tagdata(index,element)
+            });
+          }else{
+            tagdata('no')
+          }
         }else{
           alert(response.msg)
         }
     });
     
+    function tagdata(index,item){
+      var li=document.createElement('li');
+      if(index==0){
+        li.innerHTML="<img src='/static/img/uno.png'><span style = 'margin-left:4px;' onclick='scripe("+item+")''>"+item+"</span>"
+      }else if(index=='no'){
+        li.innerHTML="当前无关键词"
+      }else{
+         li.innerHTML="<span style='color:#a1a1a1;'>/</span><img src='/static/img/uno.png'><span style = 'margin-left:4px;' onclick='scripe("+item+")''>"+item+"</span>"
+      }
+      getid('tagdata').appendChild(li);
+    }
     function narticle(id){
       var now=getid(id).attributes["url"].nodeValue;
       window.location.href='/static/article/article.html?topid='+now;
+    }
+    function like(ab){
+          var date={};
+          if(ab=="ok"){
+            date.do_cancel=1
+          }else{
+            date.do_cancel=0
+          }
+          date.news_id=vm.id;
+        $.ajax({
+            method:'post',
+            data:date,
+            url:vm.baseurl + '/article/news_like',
+           headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            xhrFields: {withCredentials: true},
+            crossDomain: true,
+           }).then(function(response){
+            if(response.status==1){
+              if(ab=="ok"){
+                vm.zannum=vm.zannum-1;
+                docis('likeis',1);
+                docis('likeisf',2);
+                getid('likeis').innerHTML="<img src='/static/img/aok.png'>赞("+vm.zannum+")";
+              }else{
+                vm.zannum=vm.zannum+1;
+                docis('likeis',2);
+                docis('likeisf',1);
+                getid('likeisf').innerHTML="<img src='/static/img/aok.png'>赞("+vm.zannum+")";
+              }
+              
+            }else{
+              if(vm.loginis){
+               alert(response.msg)
+              }else{
+                alert("您还未登录哦！")
+              }
+              
+            }
+         });
+      
+    }
+    function mark(ab){
+      var date={};
+      if(ab=="ok"){
+        date.do_cancel=1
+      }else{
+        date.do_cancel=0
+      }
+      date.news_id=vm.id;
+    $.ajax({
+        method:'post',
+        data:date,
+        url:vm.baseurl + '/article/news_mark',
+       headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        xhrFields: {withCredentials: true},
+        crossDomain: true
+       }).then(function(response){
+        if(response.status==1){
+          if(ab=="ok"){
+            vm.scnum=vm.scnum-1;
+            docis('markis',1);
+            docis('markisf',2);
+            getid('markis').innerHTML="<img src='/static/img/astar.png'>收藏("+vm.scnum+")";
+          }else{
+            vm.scnum=vm.scnum+1;
+            docis('markis',2);
+            docis('markisf',1);
+            getid('markisf').innerHTML="<img src='/static/img/astar.png'>收藏("+vm.scnum+")";
+          }
+          
+        }else{
+          if(vm.loginis){
+             alert(response.msg)
+          }else{
+            alert("您还未登录哦！")
+          }
+        }
+     });
     }
 
   </script>

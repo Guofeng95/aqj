@@ -309,7 +309,7 @@ export default {
         window.location.href="#/insubscripe"
       },
      article(id){
-        window.location.href='#/article?topid='+id;
+        window.location.href='/static/article/article.html?topid='+id;
       },
       userdataget(){
         var vm=this;

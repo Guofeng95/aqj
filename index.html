@@ -21,8 +21,8 @@
          
          if(!flag){
           if(iscenter!=2){
-            console.log("跳转")
-            window.location.href=href.replace(/toutiao.secjia.com/,"m.secjia.com")
+            window.location.href=href.replace('toutiao.secjia.com',"m.secjia.com")
+            
           }
          }else{
 
@@ -77,12 +77,12 @@
       var ua = navigator.userAgent.toLowerCase();
       var result = /android (\d+\.\d+)/.exec(ua);
       if (result){
-      var version = parseFloat(result[1]);
-      if(version>2.3){
-      document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">');
-      }else{
-      document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">');
-      }
+        var version = parseFloat(result[1]);
+        if(version>2.3){
+        document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">');
+        }else{
+        document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">');
+        }
       } else {
       document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">');
       }

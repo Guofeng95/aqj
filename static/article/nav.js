@@ -1,3 +1,41 @@
+var _width = parseInt(window.screen.width);
+      var scale = _width/1300;
+      var ua = navigator.userAgent.toLowerCase();
+      var result = /android (\d+\.\d+)/.exec(ua);
+      if (result){
+      var version = parseFloat(result[1]);
+      if(version>2.3){
+      document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">');
+      }else{
+      document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">');
+      }
+      } else {
+      document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">');
+      }
+ var flag = IsPC();
+ var href=window.location.href;
+
+  if(!flag){
+              
+    window.location.href=href.replace('toutiao.secjia.com/static/article/article.html',"m.secjia.com/#/article")
+  }
+
+function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone",
+                      "SymbianOS", "Windows Phone",
+                      "iPad", "iPod"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+              if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                  flag = false;
+                  break;
+              }
+          }
+          return flag;
+      };
+
+
 var id2 = document.getElementById('inde');
      id2.style.color="#fda861";
      var vm={};

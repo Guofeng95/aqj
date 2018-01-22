@@ -106,7 +106,7 @@
         <span style="position:absolute;right:0;">
           <span id="readnum"></span>
           <span id="comnum"></span>
-           <img style="cursor:pointer;" onclick='hdpout' src="/static/img/hdp.png">
+           <img style="cursor:pointer;" onclick='hdpout()' src="/static/img/hdp.png">
         </span>
         
       </p>
@@ -192,16 +192,14 @@
         当前无评论
       </div>
     <div class="comment" id="commentindex">
-      
-     
     </div>
-    <button class="combtn"  id="combtnis" onclick="comment()">查看更多评论</el-button>
-    <div class="bigimg" id="bigimgis" style="display: none;" onclick="hdpout('no')">
+    <button class="combtn"  id="combtnis" onclick="comment()">查看更多评论</button>
+    <div class="bigimg" id="bigimgis" style="display: none;"  onclick="hdpout('no')">
       <div>
-        <img class="imges" :src="nowbig" >
+        <img class="imges" id="nowbig"  >
         <div style="position:absolute; top:40%;width:1200px;left:calc( 50vw - 610px );height:50px;">
-        <span onclick.stop="bigchange('left')"><img src="/static/img/imgleft.png"></span>
-        <span style="right:0;" onclick.stop="bigchange('right')"><img src="/static/img/imgright.png"></span>
+        <span onclick="bigchange('left')"><img src="/static/img/imgleft.png"></span>
+        <span style="right:0;" onclick="bigchange('right')"><img src="/static/img/imgright.png"></span>
         </div>
         <!-- <span class="imgno"  ><img src="/static/img/imgno.png"></span> -->
       </div>
@@ -304,7 +302,7 @@
       var arr=window.location.href.split('?')[1].split("=");
       vm.id=arr[1];
     }
-    getid("wxurl").src='http://s.jiathis.com/qrcode.php?url='+'http/m.secjia.com/#/article?topid='+vm.id
+    getid("wxurl").src='http://s.jiathis.com/qrcode.php?url='+window.location.href;
     function getid(id){
       var now=document.getElementById(id);
       return now;
@@ -344,6 +342,7 @@
           vm.zannum=obj.like_count;
           vm.hdpurl=obj.images;
           vm.nowbig=obj.images[0];
+          getid("nowbig").src=vm.hdpurl[0];
           vm.scnum=response.extra_data.mark_count;
           if(response.extra_data.liked==1){
             docis('likeisf',1);
@@ -377,7 +376,37 @@
           alert(response.msg)
         }
     });
-    
+    vm.nowbignum=0;
+    function hdpout(no){
+
+      if(no=="no"){
+        docis("bigimgis",2)
+        vm.nowbignum=0;
+        getid("nowbig").src=vm.hdpurl[0];
+      }else{
+        docis("bigimgis",1)
+      }
+      
+    }
+
+    function bigchange(lr){
+      if(lr=='left'){
+        if(vm.nowbignum>0){
+          
+          vm.nowbignum=vm.nowbignum-1;
+          //alert(this.nowbignum)
+          getid("nowbig").src=vm.hdpurl[vm.nowbignum];
+        }
+      }else{
+        var l=vm.hdpurl.length-1;
+        if(vm.nowbignum<l){
+          vm.nowbignum=vm.nowbignum+1;
+          //alert(this.nowbignum)
+          getid("nowbig").src=vm.hdpurl[vm.nowbignum];
+        }
+      }
+      window.event? window.event.cancelBubble = true : e.stopPropagation();
+    }
     function tagdata(index,item){
       var li=document.createElement('li');
       getid('tagdata').appendChild(li);

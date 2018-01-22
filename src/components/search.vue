@@ -229,7 +229,7 @@ export default {
           })
       },
       article(id){
-        window.location.href='#/article?topid='+id;
+       window.location.href='/static/article/article.html?topid='+id;
       },
       handleCurrentChange(val){
         this.page=val;

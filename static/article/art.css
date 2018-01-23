@@ -245,6 +245,7 @@ a{text-decoration: none; color: #333;}
     position: relative;
     cursor: pointer;
     margin-top: 10px;
+    margin-left: 0;
     font-size: 14px;
   }
   .aside1 .btn img{
@@ -767,6 +768,6 @@ a{text-decoration: none; color: #333;}
   text-decoration: none;
   color: #c3864d;
 }
-#logis,#resetis,#usernameis,#passwordis,#remailis,#rverifyis,#rpasswordis,#rtwopwdis,#likeis,#markis,#likeisf,#markisf{
+#logis,#resetis,#usernameis,#passwordis,#remailis,#rverifyis,#rpasswordis,#rtwopwdis,#likeis,#markis,#likeisf,#markisf,#userlevel{
     display: none;
   }

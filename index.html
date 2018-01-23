@@ -1,110 +1,111 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="keywords" content="安全头条,安全,头条,头条网,头条安全新闻,网络安全事件,信息网络安全"/>
-    <meta name="description" content="安全头条是安全加社区的资讯版块，追踪网络安全事件，打造信息网络安全的头条新闻；发布网络安全文章，呈现网络安全现状"/>
-    <link rel="shortcut icon" href="/static/img/secjia.ico">
-    <title>安全头条-安全加社区</title>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript">
-      if( ('onhashchange' in window) && ((typeof document.documentMode==='undefined') || document.documentMode==8)) {
-          // 浏览器支持onhashchange事件
-          window.onhashchange = hashChangeFire;  // TODO，对应新的hash执行的操作函数
-      } ;
-      hashChangeFire();
-      function hashChangeFire(){
-        var flag = IsPC();
-         var href=window.location.href;
-         var iscenter=isuser();
-         
-         if(!flag){
-          if(iscenter!=2){
-            window.location.href=href.replace('toutiao.secjia.com',"m.secjia.com")
-            
-          }
-         }else{
-
-          console.log("不跳")
-         }
-      }
-      function IsPC() {
-          var userAgentInfo = navigator.userAgent;
-          var Agents = ["Android", "iPhone",
-                      "SymbianOS", "Windows Phone",
-                      "iPad", "iPod"];
-          var flag = true;
-          for (var v = 0; v < Agents.length; v++) {
-              if (userAgentInfo.indexOf(Agents[v]) > 0) {
-                  flag = false;
-                  break;
-              }
-          }
-          return flag;
-      };
-      function isuser(){
-        var a=1;
-        var href=window.location.href;
-        if(href.indexOf("/#/usercenter")>-1){
-          a=2;
-        };
-
-        if(href.indexOf("/#/collection")>-1){
-          a=2
-        }
-        if(href.indexOf("/#/subscripe")>-1){
-          a=2
-        }
-        if( href.indexOf("/#/comment")>-1){
-          a=2
-        }
-        if(href.indexOf("/#/download")>-1 ){
-          a=2
-        }
-        if(href.indexOf("/#/level")>-1){
-          a=2
-        }
-        if(href.indexOf("/#/reset")>-1){
-          a=2
-        }
-        return a;
-      }
-
-
-      var _width = parseInt(window.screen.width);
-      var scale = _width/1300;
-      var ua = navigator.userAgent.toLowerCase();
-      var result = /android (\d+\.\d+)/.exec(ua);
-      if (result){
-        var version = parseFloat(result[1]);
-        if(version>2.3){
-        document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">');
-        }else{
-        document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">');
-        }
-      } else {
-      document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">');
-      }
-    </script>
-    <style type="text/css">
-    	.indexbottom{
-		  height: 60px;
-		  line-height: 60px;
-		  border-top: 1px solid #d3d3d3;
-		  text-align: center;
-		  width: 100%;
-		  font-size: 14px;
-		  position: relative;
-		  margin-top: 20px;
-		}
-    </style>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-    <div class="indexbottom">
-      © 2018 安全加 社区. All Rights Reserved.
-    </div>
-  </body>
-</html>
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"> 
+    <meta name="keywords" content="安全头条,安全,头条,头条网,头条安全新闻,网络安全事件,信息网络安全"/> 
+    <meta name="description" content="安全头条是安全加社区的资讯版块，追踪网络安全事件，打造信息网络安全的头条新闻；发布网络安全文章，呈现网络安全现状"/> 
+    <link rel="shortcut icon" href="/static/img/secjia.ico"> 
++
+    <title>安全头条-安全加社区</title> 
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> 
+    <script type="text/javascript"> 
+      if( ('onhashchange' in window) && ((typeof document.documentMode==='undefined') || document.documentMode==8)) { 
+          // 浏览器支持onhashchange事件 
+          window.onhashchange = hashChangeFire;  // TODO，对应新的hash执行的操作函数 
+      } ; 
+      hashChangeFire(); 
+      function hashChangeFire(){ 
+        var flag = IsPC(); 
+         var href=window.location.href; 
+         var iscenter=isuser(); 
+          
+         if(!flag){ 
+          if(iscenter!=2){ 
+            window.location.href=href.replace('toutiao.secjia.com',"m.secjia.com") 
+             
+          } 
+         }else{ 
+ 
+          console.log("不跳") 
+         } 
+      } 
+      function IsPC() { 
+          var userAgentInfo = navigator.userAgent; 
+          var Agents = ["Android", "iPhone", 
+                      "SymbianOS", "Windows Phone", 
+                      "iPad", "iPod"]; 
+          var flag = true; 
+          for (var v = 0; v < Agents.length; v++) { 
+              if (userAgentInfo.indexOf(Agents[v]) > 0) { 
+                  flag = false; 
+                  break; 
+              } 
+          } 
+          return flag; 
+      }; 
+      function isuser(){ 
+        var a=1; 
+        var href=window.location.href; 
+        if(href.indexOf("/#/usercenter")>-1){ 
+          a=2; 
+        }; 
+ 
+        if(href.indexOf("/#/collection")>-1){ 
+          a=2 
+        } 
+        if(href.indexOf("/#/subscripe")>-1){ 
+          a=2 
+        } 
+        if( href.indexOf("/#/comment")>-1){ 
+          a=2 
+        } 
+        if(href.indexOf("/#/download")>-1 ){ 
+          a=2 
+        } 
+        if(href.indexOf("/#/level")>-1){ 
+          a=2 
+        } 
+        if(href.indexOf("/#/reset")>-1){ 
+          a=2 
+        } 
+        return a; 
+      } 
+ 
+ 
+      var _width = parseInt(window.screen.width); 
+      var scale = _width/1300; 
+      var ua = navigator.userAgent.toLowerCase(); 
+      var result = /android (\d+\.\d+)/.exec(ua); 
+      if (result){ 
+        var version = parseFloat(result[1]); 
+        if(version>2.3){ 
+        document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">'); 
+        }else{ 
+        document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">'); 
+        } 
+      } else { 
+      document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">'); 
+      } 
+    </script> 
+    <style type="text/css"> 
+      .indexbottom{ 
+      height: 60px; 
+      line-height: 60px; 
+      border-top: 1px solid #d3d3d3; 
+      text-align: center; 
+      width: 100%; 
+      font-size: 14px; 
+      position: relative; 
+      margin-top: 20px; 
+    } 
+    </style> 
+  </head> 
+  <body> 
+    <div id="app"></div> 
+    <!-- built files will be auto injected --> 
+    <div class="indexbottom"> 
+      © 2018 安全加 社区. All Rights Reserved. 
+    </div> 
+  </body> 
+</html> 

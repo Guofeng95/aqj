@@ -13,6 +13,8 @@ var _width = parseInt(window.screen.width);
       document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">');
       }
  var flag = IsPC();
+ var vm={};
+ vm.atricleurl='http://top.secjia.com/article/page?'
  var href=window.location.href;
 
   if(!flag){
@@ -38,7 +40,7 @@ function IsPC() {
 
 var id2 = document.getElementById('inde');
      id2.style.color="#fda861";
-     var vm={};
+     
      vm.userlevel='';
 
      vm.baseurl='http://211.159.148.43:8888';
@@ -259,6 +261,9 @@ var id2 = document.getElementById('inde');
                 var userurl = document.getElementById('userurl');
                 userurl.src=response.avatar;
                 vm.userlevel=response.is_admin;
+                if(vm.userlevel==1){
+                  docis("userlevel",1)
+                }
               }else{
                 alert("账号密码错误");
               }
@@ -396,7 +401,6 @@ var id2 = document.getElementById('inde');
           getid('readnum').innerHTML="阅读("+obj.read_count+")";
           getid('comnum').innerHTML="评论("+obj.comment_count+")";
           vm.summary=obj.summary;
-          
           tagdatanow(response.keywords[0])
           //getid('articleindex').innerHTML=response.doc;
           vm.zannum=obj.like_count;
@@ -420,10 +424,15 @@ var id2 = document.getElementById('inde');
           }
           getid('artauthornum').innerHTML='为大家奉献了'+response.author_data.news_count+'篇文章';
           getid('artauthorurl').src=response.author_data.url;
-          getid('lasttitle').setAttribute("url",response.related_data.older_news.id);
-          getid('lasttitle').innerHTML="上一篇："+response.related_data.older_news.title;
-          getid('nexttitle').setAttribute("url",response.related_data.newer_news.id);
-          getid('nexttitle').innerHTML="下一篇："+response.related_data.newer_news.title;
+          if(response.related_data.older_news.id!=0){
+            getid('lasttitle').setAttribute("url",response.related_data.older_news.id);
+            getid('lasttitle').innerHTML="上一篇："+response.related_data.older_news.title;
+          }
+          if(response.related_data.newer_news.id!=0){
+            getid('nexttitle').setAttribute("url",response.related_data.newer_news.id);
+            getid('nexttitle').innerHTML="下一篇："+response.related_data.newer_news.title;
+          }
+          
           vm.tagdata=response.keywords;
           if(vm.tagdata.length>0){
             vm.tagdata.forEach( function(element, index) {
@@ -503,7 +512,7 @@ var id2 = document.getElementById('inde');
     }
     function narticle(id){
       var now=getid(id).attributes["url"].nodeValue;
-      window.location.href='/static/article/article.html?topid='+now;
+      window.location.href=vm.atricleurl+'topid='+now;
     }
     function like(ab){
           var date={};
@@ -601,10 +610,16 @@ var id2 = document.getElementById('inde');
       tl.style.borderColor = '#d7d7d7';
       tr.style.borderColor = '#d7d7d7' 
     }
-    function compleng(){
-      var value=val("textarea1").length;
-      console.log(value)
-      getid('conleng').innerHTML=(value+1)+"/300"
+    function compleng(e){
+      var e=e || window.event;
+      var value=(val("textarea1")+'').length;
+      console.log(e.keyCode)
+      if(e.keyCode!=13 && e.keyCode!=8){
+        getid('conleng').innerHTML=(value+1)+"/300"
+      }else if(e.keyCode==8 && value!=0){
+        getid('conleng').innerHTML=(value-1)+"/300"
+      }
+      
       
     }
     function gotop(){

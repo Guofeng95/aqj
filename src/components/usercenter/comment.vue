@@ -22,6 +22,7 @@ import * as Url from '@/components/url.js'
 export default {
   data () {
     return {
+      atricleurl:Url.atricleurl,
       baseurl:Url.baseurl,
       notice:'',
       conbotis:false,
@@ -75,7 +76,7 @@ export default {
           });
     },
     article(id,name){
-      window.location.href='/static/article/article.html?topid='+id+'&comid='+name;
+      window.location.href=this.atricleurl+'topid='+id+'&comid='+name;
     }
   }
 

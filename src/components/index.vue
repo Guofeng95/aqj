@@ -171,6 +171,7 @@ export default {
   },
   data () {
     return {
+      atricleurl:Url.atricleurl,
       nextnotice:'',
       timer:'',
       conbotis:false,
@@ -321,7 +322,7 @@ export default {
           })
       },
       article(id){
-        window.location.href='/static/article/article.html?topid='+id;
+        window.location.href=this.atricleurl+'topid='+id;
       },
       indexdataget(limit,times){
         var vm=this;

@@ -256,6 +256,7 @@ export default {
             },
 
       ],
+      atricleurl:Url.atricleurl,
       baseurl:Url.baseurl,
       emalicodeis:false,
       rpasswordis:false,
@@ -309,7 +310,7 @@ export default {
         window.location.href="#/insubscripe"
       },
      article(id){
-        window.location.href='/static/article/article.html?topid='+id;
+        window.location.href=this.atricleurl+'topid='+id;
       },
       userdataget(){
         var vm=this;

@@ -38,6 +38,7 @@ export default {
   data () {
     return {
       baseurl:Url.baseurl,
+      atricleurl:Url.atricleurl,
       notice:'',
       conbotis:false,
       subtag:["关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2","关键词2"],
@@ -103,7 +104,7 @@ export default {
         });
     },
     article(id){
-        window.location.href='/static/article/article.html?topid='+id;
+        window.location.href=this.atricleurl+'topid='+id;
     },
     searchdata(){
         var vm=this;

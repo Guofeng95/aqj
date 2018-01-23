@@ -11,7 +11,6 @@
       <div class="search">
         <el-input
           placeholder="搜索安全信息"
-          suffix-icon="el-icon-search"
           v-model="search"
           id="searchin"
           @focus="serkey">
@@ -585,6 +584,7 @@ a{text-decoration: none; color: #333;}
   height: 30px;
   right: 0;
   top: 0;
+  background: url(/static/img/s.png) no-repeat center center;
 }
 .search input{
   height: 30px;

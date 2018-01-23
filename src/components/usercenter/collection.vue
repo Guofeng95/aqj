@@ -35,6 +35,7 @@ export default {
     return {
       conbotis:false,
       baseurl:Url.baseurl,
+      atricleurl:Url.atricleurl,
       notice:'',
     	collectdata:[
     		{
@@ -95,7 +96,7 @@ export default {
         });
     },
     article(id){
-        window.location.href='/static/article/article.html?topid='+id;
+        window.location.href=this.atricleurl+'topid='+id;
     },
     searchdata(){
         var vm=this;

@@ -23,6 +23,7 @@ export default {
   data () {
     return {
       baseurl:Url.baseurl,
+      atricleurl:Url.atricleurl,
       notice:'',
       conbotis:true,
       collectdata:[
@@ -68,7 +69,7 @@ export default {
           });
     },
     article(id,name){
-      window.location.href='/static/article/article.html?topid='+id+'comid='+name;
+      window.location.href=window.location.href=this.atricleurl+'topid='+id+'comid='+name;
     }
   }
 

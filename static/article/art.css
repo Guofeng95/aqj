@@ -107,7 +107,7 @@ a{text-decoration: none; color: #333;}
   height: 30px;
   right: 0px;
   top: 0;
-  border:1px solid #000;
+  background: url(/static/img/s.png) no-repeat center center;
 }
 .search input{
   height: 30px;

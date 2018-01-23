@@ -117,6 +117,7 @@ export default {
   },
   data () {
     return {
+      atricleurl:Url.atricleurl,
       tota:0,
       seokeywords:'',
       seodescription:'',
@@ -327,7 +328,7 @@ export default {
 
       },
       article(id){
-        window.location.href='/static/article/article.html?topid='+id;
+        window.location.href=this.atricleurl+'topid='+id;
       },
       indexdataget(limit,times){
         var vm=this;

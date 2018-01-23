@@ -151,6 +151,7 @@ export default {
       conbotis:false,
       notice:'',
       baseurl:Url.baseurl,
+      atricleurl:Url.atricleurl,
       emalicodeis:false,
       rpasswordis:false,
       rtwopwdis:false,
@@ -229,7 +230,7 @@ export default {
           })
       },
       article(id){
-       window.location.href='/static/article/article.html?topid='+id;
+       window.location.href=this.atricleurl+'topid='+id;
       },
       handleCurrentChange(val){
         this.page=val;

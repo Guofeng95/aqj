@@ -98,13 +98,13 @@
         <div style="clear:both"></div>
         <a class="btn" @click="resetgo">立即注册</a>
         <div class="btna">
-          <a style="background:#00cc33">
+          <a style="background:#00cc33" :href="baseurl+'/user/wxlog'">
             <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
           </a>
-          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+          <a style="background:#ff0000;margin-left:10px;margin-right:10px;" :href="baseurl+'/user/wblog'">
             <img style="margin-left:6px;" src="/static/img/wb.png">微博
           </a>
-          <a style="background:#00ccff;line-height:34px;">
+          <a style="background:#00ccff;line-height:34px;" :href="baseurl+'/user/qqlog'">
             <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
           </a>
         </div>
@@ -128,13 +128,13 @@
           <div style="clear:both"></div>
           <a class="btn" @click="sublogin"><img src="/static/img/btn.png" />立即登录</a>
           <div class="btna">
-            <a style="background:#00cc33">
+            <a style="background:#00cc33" :href="baseurl+'/user/wxlog'">
               <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
             </a>
-            <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+            <a style="background:#ff0000;margin-left:10px;margin-right:10px;" :href="baseurl+'/user/wblog'">
               <img style="margin-left:6px;" src="/static/img/wb.png">微博
             </a>
-            <a style="background:#00ccff;line-height:34px;">
+            <a style="background:#00ccff;line-height:34px;" :href="baseurl+'/user/qqlog'">
               <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
             </a>
           </div>
@@ -493,9 +493,9 @@ html body{
   color: #333;
 }
 li{list-style: none;};
-a{text-decoration: none; color: #333;}
+a{ text-decoration: none; color: #333;}
 #app {
-  width: 1300px;
+  width: 1200px;
   margin: 0 auto;
   background: white;
   overflow: auto;
@@ -516,9 +516,9 @@ a{text-decoration: none; color: #333;}
   height: 60px;
   position: fixed;
   top: 0;
-  width: 1300px;
+  width: 1200px;
   z-index: 3;
-  left:calc(50% - 650px);
+  left:calc(50% - 600px);
   background: #f5f5f5;
 }
 .head .logo{
@@ -721,6 +721,7 @@ a{text-decoration: none; color: #333;}
     margin-top: 14px;
     color: #fff;
     line-height: 32px;
+    text-decoration: none;
   }
   .aside1 div a img{
     display: block;

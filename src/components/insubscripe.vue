@@ -89,7 +89,6 @@
       <div class="more">
         <qun></qun>
       </div>
-      <img style="margin-top:20px" src="/static/img/bottom.png">
     </div>
     </div>
     
@@ -310,7 +309,8 @@ export default {
         }else{
           date.do_cancel=1;
         }
-        axios({
+        if(vm.$store.state.loginis){
+          axios({
               method:'post',
               data:qs.stringify(date),
               url:vm.baseurl + '/article/news_subscribe_keyword',
@@ -325,6 +325,10 @@ export default {
               }
 
           })
+        }else{
+          vm.$message.warning("请先登录哦！");
+        }
+        
 
       },
       article(id){
@@ -453,11 +457,11 @@ export default {
 }
 .index{
   margin-top: 20px;
-  width: 1300px;
+  width: 1200px;
   overflow: hidden;
 }
 .left{
-  width: 903px;
+  width: 803px;
   float: left;
   padding-right: 20px;
   margin-right:20px;
@@ -521,10 +525,10 @@ export default {
 }
 .newstwo img{
   display: block;
-  width: 288px;
-  height: 180px;
+  width: 248px;
+  height: 160px;
   float: left;
-  margin-left: 14px;
+  margin-left: 24px;
   margin-top: 12px;
   margin-bottom: 40px;
   cursor: pointer;

@@ -70,13 +70,13 @@
           <div style="clear:both"></div>
         <a class="btn" @click="sublogin"><img src="/static/img/btn.png" />立即登录</a>
         <div class="btna">
-          <a style="background:#00cc33">
+          <a style="background:#00cc33" :href="baseurl+'/user/wxlog'">
             <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
           </a>
-          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+          <a style="background:#ff0000;margin-left:10px;margin-right:10px;" :href="baseurl+'/user/wblog'">
             <img style="margin-left:6px;" src="/static/img/wb.png">微博
           </a>
-          <a style="background:#00ccff;line-height:34px;">
+          <a style="background:#00ccff;line-height:34px;" :href="baseurl+'/user/qqlog'">
             <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
           </a>
         </div>
@@ -132,13 +132,13 @@
         <div style="clear:both"></div>
         <a class="btn" @click="resetgo">立即注册</a>
         <div class="btna">
-          <a style="background:#00cc33">
+          <a style="background:#00cc33" :href="baseurl+'/user/wxlog'">
             <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
           </a>
-          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+          <a style="background:#ff0000;margin-left:10px;margin-right:10px;" :href="baseurl+'/user/wblog'">
             <img style="margin-left:6px;" src="/static/img/wb.png">微博
           </a>
-          <a style="background:#00ccff;line-height:34px;">
+          <a style="background:#00ccff;line-height:34px;" :href="baseurl+'/user/qqlog'">
             <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
           </a>
         </div>
@@ -554,11 +554,11 @@ export default {
 }
 .index{
   margin-top: 20px;
-  width: 1300px;
+  width: 1200px;
   overflow: hidden;
 }
 .left{
-  width: 903px;
+  width: 803px;
   float: left;
   padding-right: 20px;
   margin-right:20px;
@@ -566,7 +566,7 @@ export default {
 }
 .right{
   float: left;
-  width: 352px;
+  width: 332px;
 }
 .newcontent{
   width: 903px;
@@ -654,6 +654,7 @@ export default {
   background:rgba(111, 186, 44, 1);
   cursor: pointer;
 }
+a{ text-decoration: none;}
 .aside{
     width:312px;
     background:rgba(251, 251, 251, 1);
@@ -661,7 +662,7 @@ export default {
     border-radius: 0px;
     
     overflow: hidden;
-    padding: 0 20px;
+    padding: 0 0 0 40px;
     padding-top: 26px;
   }
   .aside h4{
@@ -787,6 +788,7 @@ export default {
     top: 180px;
     margin-left: -145px;
     width: 260px;
+    padding: 10px 20px;
     border-radius: 4px;
   }
   .background{
@@ -827,6 +829,6 @@ export default {
     background: #fff;
     font-size: 14px;
     top: 23px;
-    left: 44px
+    left: 64px
   }
 </style>

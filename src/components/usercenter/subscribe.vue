@@ -151,20 +151,20 @@ export default {
 </script>
 <style scoped>
   .sub{
-    width: 1080px;
+    width: 980px;
     min-height:calc( 100vh - 184px);
     position: relative;
     overflow: hidden;
   }
 	.collection{
-		width: 790px;
+		width: 690px;
     float: left;
     padding: 20px 10px;
      border-radius: 4px;
     box-shadow:2px 2px 7px #ccc;
 	}
 	.collect{
-		width: 790px;
+		width: 100%;
     overflow: hidden;
     padding: 10px 0;
     border-bottom: 1px dashed #d7d7d7;

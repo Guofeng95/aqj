@@ -111,13 +111,13 @@
           <div style="clear:both"></div>
         <a class="btn" @click="sublogin"><img src="/static/img/btn.png" />立即登录</a>
         <div class="btna">
-          <a style="background:#00cc33">
+          <a style="background:#00cc33" :href="baseurl+'/user/wxlog'">
             <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
           </a>
-          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+          <a style="background:#ff0000;margin-left:10px;margin-right:10px;" :href="baseurl+'/user/wblog'">
             <img style="margin-left:6px;" src="/static/img/wb.png">微博
           </a>
-          <a style="background:#00ccff;line-height:34px;">
+          <a style="background:#00ccff;line-height:34px;" :href="baseurl+'/user/qqlog'">
             <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
           </a>
         </div>
@@ -138,7 +138,8 @@
           <a style="cursor:pointer" @click="gosearch(item.name)" >{{item.name}}</a>
         </div>
       </div>
-      <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px;">
+      <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px; position:relative;">
+        <span id="year">2018</span>
         <img style="margin-top:20px" src="/static/img/bottom.png">
       </div>
       
@@ -166,13 +167,13 @@
         <div style="clear:both"></div>
         <a class="btn" @click="resetgo">立即注册</a>
         <div class="btna">
-          <a style="background:#00cc33">
+          <a style="background:#00cc33" :href="baseurl+'/user/wxlog'">
             <img style="margin-top:4px;margin-left:6px;margin-right:2px;" src="/static/img/wx.png">微信
           </a>
-          <a style="background:#ff0000;margin-left:10px;margin-right:10px;">
+          <a style="background:#ff0000;margin-left:10px;margin-right:10px;" :href="baseurl+'/user/wblog'">
             <img style="margin-left:6px;" src="/static/img/wb.png">微博
           </a>
-          <a style="background:#00ccff;line-height:34px;">
+          <a style="background:#00ccff;line-height:34px;" :href="baseurl+'/user/qqlog'">
             <img style="margin-left:8px;margin-top:2px;margin-right:3px;" src="/static/img/qq.png">QQ
           </a>
         </div>
@@ -512,6 +513,9 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+}
 .demonstration{
   position: absolute;
   background:rgba(255,118,0,0.8);
@@ -535,11 +539,11 @@ export default {
 }
 .index{
   margin-top: 20px;
-  width: 1300px;
+  width: 1200px;
   overflow: hidden;
 }
 .left{
-  width: 924px;
+  width: 824px;
   float: left;
   margin-right:22px;
   border-right: 1px solid #d7d7d7;
@@ -549,7 +553,7 @@ export default {
   width: 302px;
 }
 .leftcontent{
-  width: 900px;
+  width: 800px;
   border-radius: 3px;
   margin-bottom: 20px;
   border: 1px solid #ebebeb;
@@ -682,12 +686,12 @@ export default {
   cursor: pointer;
 }
 .aside{
-    width: 326px;
+    width: 296px;
     background:rgba(251, 251, 251, 1);
     border:1px solid  rgba(242, 242, 242, 1);
     padding:0 15px;
     padding-top: 26px;
-    padding-right: 10px;
+    padding-left: 40px;
     overflow: hidden;
   }
   .aside h4{
@@ -827,6 +831,7 @@ export default {
     position: absolute;
     left: 50%;
     top: 180px;
+    padding:20px;
     margin-left: -145px;
   }
   .background{
@@ -861,5 +866,12 @@ export default {
   }
   .background .aside .btn{
     margin-top: 20px;
+  }
+  #year{
+    position: absolute;
+    background: #fff;
+    font-size: 14px;
+    top: 23px;
+    left: 56px
   }
 </style>

@@ -449,7 +449,7 @@ export default {
     cursor: pointer;
   }
   .level{
-    width: 720px;
+    width: 620px;
     overflow: hidden;
     padding-bottom: 30px;
      border-radius: 4px;

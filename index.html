@@ -74,18 +74,18 @@
  
  
       var _width = parseInt(window.screen.width); 
-      var scale = _width/1300; 
+      var scale = _width/1200; 
       var ua = navigator.userAgent.toLowerCase(); 
       var result = /android (\d+\.\d+)/.exec(ua); 
       if (result){ 
         var version = parseFloat(result[1]); 
         if(version>2.3){ 
-        document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">'); 
+        document.write('<meta name="viewport" content="width=1200, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">'); 
         }else{ 
-        document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">'); 
+        document.write('<meta name="viewport" content="width=1200, target-densitydpi=device-dpi">'); 
         } 
       } else { 
-      document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">'); 
+      document.write('<meta name="viewport" content="width=1200, user-scalable=no, target-densitydpi=device-dpi">'); 
       } 
     </script> 
     <style type="text/css"> 

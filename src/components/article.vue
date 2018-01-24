@@ -154,7 +154,7 @@ export default {
   },
   data () {
     return {
-      lasturl:"#",
+      lasturl:"",
       lasttitle:'',
       nexttitle:'',
       nexturl:'',

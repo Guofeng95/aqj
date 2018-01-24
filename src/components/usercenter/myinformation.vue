@@ -32,7 +32,7 @@ export default {
   },
   mounted(){
     //this.collectdata=[];
-    this.searchdata()
+    this.searchdata();
   },
   methods:{
     searchdata(){

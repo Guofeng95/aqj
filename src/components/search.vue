@@ -358,6 +358,7 @@ export default {
       }
     },
     resetgo(){
+       var vm=this;
       if(this.rpasswordis==false && this.rverifyis==false && this.remailis==false && this.rtwopwdis==false){
         if(this.rpassword!="" && this.rverify!='' && this.remail!='' && this.rtwopwd!=''){
             if(this.emalicodeis==true){
@@ -369,7 +370,8 @@ export default {
               }).then(function(response){
                   if(response.data.status==1){
                     vm.$message.success('注册成功');
-                    window.location.href="#/"
+                    vm.login();
+                    window.location.reload();
                   }else{
                     vm.$message.error(response.data.msg);
                   }

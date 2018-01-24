@@ -103,7 +103,8 @@
           <a style="cursor:pointer" :href="item.url">{{item.name}}</a>
         </div>
       </div>
-      <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px;">
+      <div class="aside" style="padding-top:0px; text-align:center;margin-top:20px;position:relative;">
+        <span id="year">2018</span>
         <img style="margin-top:20px" src="/static/img/bottom.png">
       </div>
       
@@ -460,6 +461,7 @@ export default {
       }
     },
     resetgo(){
+      var vm=this;
       if(this.rpasswordis==false && this.rverifyis==false && this.remailis==false && this.rtwopwdis==false){
         if(this.rpassword!="" && this.rverify!='' && this.remail!='' && this.rtwopwd!=''){
             if(this.emalicodeis==true){
@@ -471,6 +473,7 @@ export default {
               }).then(function(response){
                   if(response.data.status==1){
                     vm.$message.success('注册成功');
+                    vm.login()
                     window.location.href="#/"
                   }else{
                     vm.$message.error(response.data.msg);
@@ -818,5 +821,12 @@ export default {
   }
   .background .aside .btn{
     margin-top: 20px;
+  }
+  #year{
+    position: absolute;
+    background: #fff;
+    font-size: 14px;
+    top: 23px;
+    left: 44px
   }
 </style>

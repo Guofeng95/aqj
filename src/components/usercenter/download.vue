@@ -14,7 +14,7 @@
         :on-success="handleChange">
         <el-button size="small" class="btnright" type="primary">修改头像</el-button>
       </el-upload>
-      <p style="color:#666;font-size:14px;margin-left:380px;margin-top:20px;">头像图片应是 JPG/PNG 格式</p>
+      <p style="color:#666;font-size:14px;margin-left:380px;margin-top:20px;">头像图片应是 JPG/PNG/JPEG 格式</p>
     </div>
     <!-- <div class="download"  v-show="fix==false">
       <el-upload class="now userimg"
@@ -76,7 +76,7 @@ export default {
          const ispng = file.type === 'image/png';
 
         if (isJPG==false &&  ispng==false) {
-          this.$message.error('上传头像图片应是 JPG/PNG 格式!');
+          this.$message.error('上传头像图片应是 JPG/PNG/JPEG 格式!');
           return false;
         }
         return true ;

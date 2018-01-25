@@ -7,7 +7,7 @@
       <span class="logobeat" @click="indexgo">beta</span>
       <h2  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></h2>
       <h2  @click="hlight('inde')"><router-link id="inde" to="/">安全头条</router-link></h2>
-      <!-- <span @click="hlight('know')"><router-link id="know"  class="know" to="/bar">安全知识</router-link></span> -->
+      <h2 @click="hlight('know')"><a id="know"  class="know" href="http://zhishi.secjia.com/">安全知识</a></h2>
       <div class="search">
         <el-input
           placeholder="搜索安全信息"
@@ -258,9 +258,9 @@ export default {
       var id1 = document.getElementById('recommend');
         id1.style.color="#ababab";
         var id2 = document.getElementById('inde');
-        id2.style.color="#333";
-        // var id3 = document.getElementById('know');
-        // id3.style.color="#333";
+        id2.style.color="#ababab";
+        var id3 = document.getElementById('know');
+         id3.style.color="#ababab";
         var id6 = document.getElementById(name);
         id6.style.color="#fda861";
     },
@@ -568,8 +568,11 @@ a{ text-decoration: none; color: #333;}
   color: #ababab;
 }
 .head .know{
-  color: #333;
+  color: #ababab;
 }
+/*.head h2 a{ 
+  color:#ababab;
+}*/
 .search{
   width: 182px;
   float: left;

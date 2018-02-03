@@ -566,6 +566,7 @@ a{ text-decoration: none; color: #333;}
   line-height: 24px;
   border-radius: 4px;
   color: #ababab;
+  margin-top: 18px;
 }
 .head .know{
   color: #ababab;
@@ -770,10 +771,19 @@ a{ text-decoration: none; color: #333;}
     text-decoration: none;
     color: #333;
   }
-  #reset,#log{
+ #reset
+  { 
     position: absolute;
     left: 50%;
-    top: 180px;
+    top: 50%;
+    margin-top: -247px;
+    margin-left: -145px;
+  }
+  #log{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -202px;
     margin-left: -145px;
   }
   .background{

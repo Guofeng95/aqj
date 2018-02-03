@@ -827,12 +827,13 @@ a{
     color: #333;
   }
   #reset{
-    width: 270px;
     position: absolute;
     left: 50%;
-    top: 180px;
-    padding:20px;
+    top: 50%;
     margin-left: -145px;
+    width: 260px;
+    padding: 10px 20px;
+    border-radius: 4px;
   }
   .background{
     width: 100%;

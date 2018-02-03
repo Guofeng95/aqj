@@ -1,3 +1,10 @@
+var vm={};
+vm.atricleurl='http://top.sunliangliang.com/article/page?'
+vm.baseurl='http://211.159.148.43:8888';
+vm.mobileurl='m.secjia.com/#/article?'
+
+
+
 var _width = parseInt(window.screen.width);
       var scale = _width/1300;
       var ua = navigator.userAgent.toLowerCase();
@@ -13,13 +20,13 @@ var _width = parseInt(window.screen.width);
       document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">');
       }
  var flag = IsPC();
- var vm={};
- vm.atricleurl='http://top.secjia.com/article/page?'
+ 
+ 
  var href=window.location.href;
 
   if(!flag){
               
-    window.location.href=href.replace('top.secjia.com/article/page',"m.secjia.com/#/article")
+    window.location.href=href.replace(vm.atricleurl,vm.mobileurl)
   }
 
 function IsPC() {
@@ -38,12 +45,40 @@ function IsPC() {
       };
 
 
+$("#reset a").click(function(){
+ // console.log($(this))
+  if($(this)['context'].childNodes[2]){
+    var text=$(this)['context'].childNodes[2].data;
+      if(text.indexOf("微信")>-1){
+        window.location.href=vm.baseurl+'/user/wxlog'
+      }else if(text.indexOf("微博")>-1){
+        window.location.href=vm.baseurl+'/user/wblog'
+      }else if(text.indexOf("QQ")>-1){
+        window.location.href=vm.baseurl+'/user/qqlog'
+      }
+  }
+})
+$("#log a").click(function(){
+ // console.log($(this))
+  if($(this)['context'].childNodes[2]){
+    var text=$(this)['context'].childNodes[2].data;
+      if(text.indexOf("微信")>-1){
+        window.location.href=vm.baseurl+'/user/wxlog'
+      }else if(text.indexOf("微博")>-1){
+        window.location.href=vm.baseurl+'/user/wblog'
+      }else if(text.indexOf("QQ")>-1){
+        window.location.href=vm.baseurl+'/user/qqlog'
+      }
+  }
+})
+
+
 var id2 = document.getElementById('inde');
      id2.style.color="#fda861";
      
      vm.userlevel='';
 
-     vm.baseurl='http://211.159.148.43:8888';
+     
      //判断是否登录
      $.ajax({
         method:'post',
@@ -549,7 +584,8 @@ var id2 = document.getElementById('inde');
               if(vm.loginis){
                alert(response.msg)
               }else{
-                alert("您还未登录哦！")
+                alert("您还未登录哦！");
+                login('1');
               }
               
             }
@@ -591,7 +627,8 @@ var id2 = document.getElementById('inde');
           if(vm.loginis){
              alert(response.msg)
           }else{
-            alert("您还未登录哦！")
+            alert("您还未登录哦！");
+            login('1');
           }
         }
      });
@@ -717,7 +754,8 @@ var id2 = document.getElementById('inde');
             alert("请输入1-300个字！")
         }
       }else{
-        alert("您还未登录哦！")
+        alert("您还未登录哦！");
+        login('1');
       }
       
       
@@ -794,10 +832,10 @@ var id2 = document.getElementById('inde');
         console.log(window.location.href)
          var _url = window.location.href;     
          var _showcount = 1;  
-         var _desc = vm.artitle;  
+         var _desc = vm.summary;  
          var _summary = vm.summary;  
          var _title = vm.artitle;  
-         var _site = vm.artitle;  
+         var _site = vm.summary;  
          var _width = "600px";  
          var _height = "800px";  
          var _pic = vm.nowbig;  
@@ -810,7 +848,7 @@ var id2 = document.getElementById('inde');
          //_shareUrl += '&site=' + encodeURIComponent(_site||'');   //参数site设置分享来源，可选参数  
          _shareUrl += '&pics=' + encodeURIComponent(_pic||'');   //参数pics设置分享图片的路径，多张图片以＂|＂隔开，可选参数  
          _shareUrl += '&summary=' + encodeURIComponent(_summary||''); 
-        window.open(_shareUrl,'width='+_width+',height='+_height+',top='+(screen.height-_height)/2+',left='+(screen.width-_width)/2+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');   
+        window.open(_shareUrl);   
     }
     function wxciew(){
       docis('wxfxis',1)

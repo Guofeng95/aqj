@@ -40,7 +40,7 @@ a{text-decoration: none; color: #333;}
   top: 0;
   width: 1200px;
   z-index: 3;
-  left:calc(50% - 650px);
+  left:calc(50% - 600px);
   background: #f5f5f5;
 }
 .head .logo{
@@ -88,9 +88,10 @@ a{text-decoration: none; color: #333;}
   line-height: 24px;
   border-radius: 4px;
   color: #ababab;
+  margin-top: 18px;
 }
 .head .know{
-  color: #333;
+  color: #ababab;
 }
 .search{
   width: 182px;
@@ -262,6 +263,7 @@ a{text-decoration: none; color: #333;}
     margin-top: 14px;
     color: #fff;
     line-height: 32px;
+    cursor: pointer;
   }
   .aside1 div a img{
     display: block;
@@ -306,11 +308,21 @@ a{text-decoration: none; color: #333;}
   .aside1 .diva a{
     text-decoration: none;
     color: #333;
+
   }
-  #reset,#log{
+  #reset
+  { height: 510px;
     position: absolute;
     left: 50%;
-    top: 180px;
+    top: 50%;
+    margin-top: -269px;
+    margin-left: -145px;
+  }
+  #log{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -202px;
     margin-left: -145px;
   }
   .background{
@@ -677,7 +689,7 @@ a{text-decoration: none; color: #333;}
   background: #67c23a;
   margin-left: 400px;
 }
-.sumary h2{
+.sumary h1{
   font-size: 28px;
   font-weight: normal;
   margin-bottom: 20px;

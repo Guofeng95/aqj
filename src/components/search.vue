@@ -705,10 +705,10 @@ a{
   #reset{
     position: absolute;
     left: 50%;
-    top: 180px;
+    top: 50%;
     margin-left: -145px;
     width: 260px;
-    padding:26px 20px;
+    padding:10px 20px;
     border-radius: 4px;
   }
   .background{

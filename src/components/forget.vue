@@ -1,9 +1,9 @@
 <template>
   <div class="level">
-  	<h4>重置密码</h4>
+  	<h4>找回密码</h4>
     <div v-show="status">
       <el-input class="input" v-model="email" placeholder="请输入注册时填写的邮箱地址"></el-input>
-      <p class="input" style="color:red;height:20px;font-size：14px;">{{error}}</p>
+      <p class="input" style="color:red;height:20px;font-size:14px;">{{error}}</p>
       <el-button class="input" type="success" @click="eamilgo">发送邮件</el-button>
     </div>
     <div v-show="status==false">
@@ -60,6 +60,7 @@ export default {
                       }).then(function(response){
                           if(response.data.status==1){
                             vm.staus=false;
+                            vm.$message.success("已发送邮件！")
                           }else{
                             vm.$message.success(response.data.msg)
                           }

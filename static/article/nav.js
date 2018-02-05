@@ -481,6 +481,17 @@ var id2 = document.getElementById('inde');
         }
     });
     vm.nowbignum=0;
+    $("#articleindex img").click(function(){
+      var src=$(this).get(0).src;
+      vm.hdpurl.forEach( function(element, index) {
+         if(element==src){
+            vm.nowbignum=index;
+            getid("nowbig").src=vm.hdpurl[index];
+         }
+      }); 
+      hdpout();
+
+    })
     function hdpout(no){
 
       if(no=="no"){

@@ -296,8 +296,7 @@ export default {
   },
   methods:{
       gosearch(search){
-        sessionStorage.setItem("subscripe", search);
-        window.location.href="#/insubscripe"
+        window.location.href="#/insubscripe?"+encodeURIComponent(search)
       },
       hotda(){
         var vm=this;
@@ -361,10 +360,10 @@ export default {
                     var l=element.images.length;
                     if(l==0){
                       obj.form=3
-                    }else if(l==1){
-                      obj.form=1;
-                    }else{
+                    }else if(l==3){
                       obj.form=2;
+                    }else{
+                      obj.form=1;
                     };
                     vm.indexdata.push(obj);
                   });
@@ -628,7 +627,7 @@ export default {
 }
 .newstwo img{
   display: block;
-  width: 288px;
+  width: 256px;
   height: 180px;
   float: left;
   margin-left: 14px;

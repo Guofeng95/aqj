@@ -184,7 +184,8 @@ export default {
     var vm=this;
     this.indexdata=[];
     vm.hotda();
-    this.subscripe=sessionStorage.getItem("subscripe");
+    this.subscripe=decodeURIComponent(window.location.href.split("insubscripe?")[1],"utf8");
+    console.log(this.subscripe)
     this.indexdataget(10,"first");
     var date={};
     date.keyword=this.subscripe;

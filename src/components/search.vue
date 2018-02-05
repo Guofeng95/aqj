@@ -198,8 +198,7 @@ export default {
   },
   methods:{
       gosearch(search){
-        sessionStorage.setItem("subscripe", search);
-        window.location.href="#/insubscripe"
+        window.location.href="#/insubscripe?"+encodeURIComponent(search)
       },
       reset(){
         document.body.scrollTop = 0

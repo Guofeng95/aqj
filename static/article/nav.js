@@ -824,7 +824,7 @@ var id2 = document.getElementById('inde');
       var url=window.location.href;
       var _width = "600px";  
       var _height = "800px"; 
-      var sharesinastring='http://v.t.sina.com.cn/share/share.php?title='+vm.artitle+'&url='+url+'&content=utf-8&sourceUrl='+url+'&pic='+vm.nowbig;
+      var sharesinastring='http://v.t.sina.com.cn/share/share.php?title='+vm.artitle+'--安全头条-安全加'+'&url='+url+'&content=utf-8&sourceUrl='+url+'&pic='+vm.nowbig;
       window.open(sharesinastring,'width='+_width+',height='+_height+',top='+(screen.height-_height)/2+',left='+(screen.width-_width)/2+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
     }
 

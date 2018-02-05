@@ -280,8 +280,8 @@ export default {
   },
   methods:{
       gosearch(search){
-        sessionStorage.setItem("subscripe", search);
-        window.location.href="#/insubscripe"
+        //sessionStorage.setItem("subscripe", search);
+        window.location.href="#/insubscripe?"+encodeURIComponent(search);
       },
       hotda(){
         var vm=this;
@@ -307,8 +307,9 @@ export default {
           })
       },
       scripe(name){
-        sessionStorage.setItem("subscripe", name);
-        window.location.href="#/insubscripe"
+        //sessionStorage.setItem("subscripe", name);
+        
+        window.location.href="#/insubscripe?"+encodeURIComponent(name);
       },
      article(id){
         window.location.href=this.atricleurl+'topid='+id;

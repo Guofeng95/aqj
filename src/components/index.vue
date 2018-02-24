@@ -151,7 +151,6 @@
     
   </div>
 </template>
-
 <script>
 import qun from '@/components/common/qun'
 import {mapGetters} from "vuex"

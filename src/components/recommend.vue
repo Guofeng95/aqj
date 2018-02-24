@@ -271,7 +271,8 @@ export default {
       tag3:'',
       tag4:'',
       tag5:'',
-      activeis:false
+      activeis:false,
+      insurl:Url.insubscripeurl
     }
   },
   mounted(){
@@ -309,7 +310,7 @@ export default {
       scripe(name){
         //sessionStorage.setItem("subscripe", name);
         
-        window.location.href="#/insubscripe?"+encodeURIComponent(name);
+        window.location.href=this.insurl+encodeURIComponent(name);
       },
      article(id){
         window.location.href=this.atricleurl+'topid='+id;

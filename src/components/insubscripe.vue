@@ -135,15 +135,7 @@ export default {
       rverifyis:false,
       usernameis:false,
       passwordis:false,
-      adata:[
-          {"name":"勒索病毒","url":"www.baidu.com"},
-          {"name":"勒索病毒","url":"www.baidu.com"},
-          {"name":"美国科学家将恶","url":"www.baidu.com"},
-          {"name":"美国科学家将恶","url":"www.baidu.com"},
-          {"name":"美国科学家将恶","url":"www.baidu.com"},
-          {"name":"转移战场的","url":"www.baidu.com"},
-          {"name":"转移战场的","url":"www.baidu.com"}
-      ],
+      adata:[],
       remail:'',
       rverify:'',
       rpassword:'',
@@ -153,30 +145,7 @@ export default {
       password:'',
       newcontentis:false,
       indexdata:[],
-      hotdata:[
-            {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣"
-            },
-             {
-              "content":"转移战场”的暗网市场继续繁荣市场继续繁荣"
-            },
-
-      ]
+      hotdata:[]
 
     }
   },

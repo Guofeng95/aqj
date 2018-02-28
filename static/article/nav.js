@@ -1,8 +1,8 @@
 var vm={};
 vm.atricleurl='http://top.sunliangliang.com/article/page?'
 vm.baseurl='http://211.159.148.43:8888';
-vm.mobileurl='http://m.sunliangliang.com/#/article?'
-vm.insubscripeurl="http://top.sunliangliang.com/article/keyword?kw="
+vm.mobileurl='http://m.sunliangliang.com/#/article?';
+vm.insubscripeurl="http://top.sunliangliang.com/article/keyword?kw=";
 
 
 var _width = parseInt(window.screen.width);

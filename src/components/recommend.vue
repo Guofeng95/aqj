@@ -282,7 +282,7 @@ export default {
   methods:{
       gosearch(search){
         //sessionStorage.setItem("subscripe", search);
-        window.location.href="#/insubscripe?"+encodeURIComponent(search);
+        window.location.href=this.insurl+encodeURIComponent(search);
       },
       hotda(){
         var vm=this;

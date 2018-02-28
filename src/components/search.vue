@@ -182,6 +182,7 @@ export default {
             }
 
       ],
+      insubscripeurl:Url.insubscripeurl,
       href:''
 
     }
@@ -198,7 +199,7 @@ export default {
   },
   methods:{
       gosearch(search){
-        window.location.href="#/insubscripe?"+encodeURIComponent(search)
+         window.location.href=this.insubscripeurl+encodeURIComponent(search);
       },
       reset(){
         document.body.scrollTop = 0

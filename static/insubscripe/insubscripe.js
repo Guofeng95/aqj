@@ -1,7 +1,7 @@
 
 var vm={};
  vm.atricleurl='http://top.sunliangliang.com/article/keyword?kw='
- vm.mobileurl='m.sunliangliang.com/#/insubcripe?'
+ vm.mobileurl='http://m.sunliangliang.com/#/insubcripe?'
 
 
 

@@ -357,7 +357,7 @@ function IsPC() {
                     vm.indexdata.push(obj);
                   });
               }else{
-                vm.$message.warning('拉取失败!');
+                vm.$message.warning(response.data.msg);
               }
           });
       },

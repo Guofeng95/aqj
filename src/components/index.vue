@@ -172,6 +172,7 @@ export default {
   data () {
     return {
       atricleurl:Url.atricleurl,
+      insubscripeurl:Url.insubscripeurl,
       nextnotice:'',
       timer:'',
       conbotis:false,
@@ -295,7 +296,7 @@ export default {
   },
   methods:{
       gosearch(search){
-        window.location.href="#/insubscripe?"+encodeURIComponent(search)
+        window.location.href=this.insubscripeurl+encodeURIComponent(search);
       },
       hotda(){
         var vm=this;

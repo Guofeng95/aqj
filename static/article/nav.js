@@ -2,7 +2,7 @@ var vm={};
 vm.atricleurl='http://top.sunliangliang.com/article/page?'
 vm.baseurl='http://211.159.148.43:8888';
 vm.mobileurl='m.sunliangliang.com/#/article?'
-
+vm.insubscripeurl="http://top.sunliangliang.com/article/keyword?kw="
 
 
 var _width = parseInt(window.screen.width);
@@ -646,7 +646,7 @@ var id2 = document.getElementById('inde');
     }
     function scripe(name){
       sessionStorage.setItem("subscripe", name);
-      window.location.href="/#/insubscripe"
+      window.location.href=vm.insubscripeurl+name;
     }
 
    

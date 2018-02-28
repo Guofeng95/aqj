@@ -4,3 +4,4 @@
 var Url={};
 Url.baseurl='http://211.159.148.43:8888';
 Url.atricleurl='http://top.sunliangliang.com/article/page?';
+Url.insubscripeurl="http://top.sunliangliang.com/article/keyword?kw="

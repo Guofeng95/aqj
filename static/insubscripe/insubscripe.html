@@ -285,6 +285,52 @@
   </body>
   <script type="text/javascript" src="/static/article/url.js"></script>
   <script type="text/javascript">
+
+  var vm={};
+ vm.atricleurl='http://top.sunliangliang.com/article/keyword?kw='
+ vm.mobileurl='m.sunliangliang.com/#/insubcripe?'
+
+
+
+var _width = parseInt(window.screen.width);
+      var scale = _width/1300;
+      var ua = navigator.userAgent.toLowerCase();
+      var result = /android (\d+\.\d+)/.exec(ua);
+      if (result){
+      var version = parseFloat(result[1]);
+      if(version>2.3){
+      document.write('<meta name="viewport" content="width=1300, minimum-scale = '+scale+', maximum-scale = '+scale+', target-densitydpi=device-dpi">');
+      }else{
+      document.write('<meta name="viewport" content="width=1300, target-densitydpi=device-dpi">');
+      }
+      } else {
+      document.write('<meta name="viewport" content="width=1300, user-scalable=no, target-densitydpi=device-dpi">');
+      }
+ var flag = IsPC();
+ 
+ 
+ var href=window.location.href;
+
+  if(!flag){
+              
+    window.location.href=href.replace(vm.atricleurl,vm.mobileurl)
+  }
+
+function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone",
+                      "SymbianOS", "Windows Phone",
+                      "iPad", "iPod"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+              if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                  flag = false;
+                  break;
+              }
+          }
+          return flag;
+      };
+
   var qs={};
   qs.stringify=function(data){
     var obj=JSON.stringify(data).split('}')[0].split('{')[1];
@@ -387,7 +433,7 @@
     },60000)
     this.indexdata=[];
     vm.hotda();
-    this.subscripe=decodeURIComponent(window.location.href.split("insubscripe.html?")[1],"utf8");
+    this.subscripe=decodeURIComponent(window.location.href.split("keyword?kw=")[1],"utf8");
     console.log(this.subscripe)
     this.indexdataget(10,"first");
     var date={};

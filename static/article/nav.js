@@ -1,7 +1,7 @@
 var vm={};
 vm.atricleurl='http://top.sunliangliang.com/article/page?'
 vm.baseurl='http://211.159.148.43:8888';
-vm.mobileurl='m.secjia.com/#/article?'
+vm.mobileurl='m.sunliangliang.com/#/article?'
 
 
 

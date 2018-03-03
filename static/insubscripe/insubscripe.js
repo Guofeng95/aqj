@@ -1,7 +1,7 @@
 
 var vm={};
  vm.atricleurl='http://top.sunliangliang.com/article/keyword?kw='
- vm.mobileurl='http://m.sunliangliang.com/#/insubcripe?'
+ vm.mobileurl='http://m.sunliangliang.com/#/keyword?'
 
 
 
@@ -281,7 +281,7 @@ function IsPC() {
         }else{
           date.do_cancel=1;
         }
-        if(vm.$store.state.loginis){
+        if(vm.loginis){
           axios({
               method:'post',
               data:qs.stringify(date),
@@ -602,3 +602,13 @@ function IsPC() {
     }
   }
   })
+var oTest=document.getElementsByTagName("body")[0];
+var appid=document.getElementById("app");
+var divnode=document.createElement("div");
+divnode.innerHTML='© 2018 安全加 社区. All Rights Reserved. ';
+divnode.style = 'height: 60px;line-height: 60px;border-top: 1px solid #d3d3d3;text-align: center;width: 100%;font-size: 14px;position: relative;margin-top: 20px;';
+oTest.insertBefore(divnode,appid.nextSibling);
+
+var dybt=document.getElementsByClassName("dybtn");
+//console.log(dybt[1]);
+dybt[1].style.marginLeft = 'auto';

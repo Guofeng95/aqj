@@ -32,7 +32,7 @@
         </div>
         <div class="newsthree" v-else-if="item.form==3">
           <h3  @click="article(item.id)">{{item.title}}</h3>
-          <p>{{item.content}}</p>
+          <p style="margin-top:20px;">{{item.content}}</p>
           <div class="icon">
             <span><i class="el-icon-time"></i>{{item.time}}</span>
             <span>赞（{{item.good}}）</span>
@@ -91,12 +91,12 @@
       <div class="more">
         <qun></qun>
       </div>
-      <div class="aside" style="margin-top:20px;">
+      <!-- <div class="aside" style="margin-top:20px;">
         <h4>行业分类</h4>
         <div class="diva" v-for="(item,index) in adata" :key="index">
           <a style="cursor:pointer" @click="gosearch(item.name)">{{item.name}}</a>
         </div>
-      </div>
+      </div> -->
       <div class="aside" style="margin-top:20px;">
         <h4>友情链接</h4>
         <div class="diva" v-for="(item,index) in adatah" :key="index">
@@ -360,7 +360,7 @@ export default {
                     var l=element.images.length;
                     if(l==0){
                       obj.form=3
-                    }else if(l==3){
+                    }else if(l>=3){
                       obj.form=2;
                     }else{
                       obj.form=1;
@@ -561,7 +561,7 @@ export default {
   float: left;
   padding-right: 20px;
   margin-right:20px;
-  border-right: 1px solid #d3d3d3;
+  border-right: 1px  solid  #f2f2f2;
 }
 .right{
   float: left;
@@ -581,7 +581,7 @@ export default {
   cursor: pointer;
 }
 .news {
-  border-top: 1px dashed #d3d3d3;
+  border-top: 1px  solid  #f2f2f2;
   overflow: hidden;
   padding-top: 24px;
   padding-bottom: 24px;
@@ -608,7 +608,7 @@ export default {
 .newsone img{
   display: block;
   width: 170px;
-  height: auto;
+  height: 130px;
   float: left;
   margin-right:10px; 
   cursor: pointer;

@@ -548,7 +548,7 @@ a{
   width: 824px;
   float: left;
   margin-right:22px;
-  border-right: 1px solid #d7d7d7;
+  border-right: 1px  solid  #f2f2f2;
 }
 .right{
   float: left;
@@ -592,7 +592,7 @@ a{
 .out1,.out2{
   width: 100%;
   height: 130px;
-  border-bottom: 1px dashed #ccc;
+  border-bottom: 1px  solid  #f2f2f2;
   position: relative;
 }
 .out2{

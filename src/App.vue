@@ -2,7 +2,7 @@
   <div id="app" @click="munugo(1)">
     <div class="head">
 
-      <img class="logo"  src="/static/img/logo.gif" title="logo" @click="indexgo">
+      <img class="logo"  src="/static/img/logo.gif" title="安全加" @click="indexgo">
       <h1 class="logofont" @click="indexgo">安全加</h1>
       <span class="logobeat" @click="indexgo">beta</span>
       <h2  @click="hlight('recommend')"><router-link id="recommend" class="tj" to="/recommend">推荐</router-link></h2>

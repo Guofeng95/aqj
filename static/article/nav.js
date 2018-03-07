@@ -781,7 +781,7 @@ var id2 = document.getElementById('inde');
               response.data.forEach( function(element, index) {
                 var obj={};
                 obj.id=element.id;
-                obj.title=element.summary;
+                obj.title=element.title;
                 if(index%2==0){
                   arr1.push(obj)
                 }else{
@@ -795,7 +795,7 @@ var id2 = document.getElementById('inde');
                   var p=document.createElement("p");
                   p.innerHTML='('+(index*2+1)+')'+element.title;
                   p.onclick=function(){
-                    window.location.href='/static/article/article.html?topid='+element.id;
+                    window.location.href=vm.atricleurl+'topid='+element.id;
                   }
                   getid("tagleft").appendChild(p)
                 });
@@ -806,7 +806,7 @@ var id2 = document.getElementById('inde');
                 var p=document.createElement("p");
                 p.innerHTML='('+(index+1)*2+')'+element.title;
                 p.onclick=function(){
-                    window.location.href='/static/article/article.html?topid='+element.id;
+                    window.location.href=vm.atricleurl+'topid='+element.id;
                   }
                 getid("tagright").appendChild(p)
               });

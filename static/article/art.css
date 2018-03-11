@@ -690,7 +690,7 @@ a{text-decoration: none; color: #333;}
   margin-left: 400px;
 }
 .sumary h1{
-  font-size: 28px;
+  font-size: 20px;
   font-weight: normal;
   margin-bottom: 20px;
 }
@@ -783,3 +783,28 @@ a{text-decoration: none; color: #333;}
 #logis,#resetis,#usernameis,#passwordis,#remailis,#rverifyis,#rpasswordis,#rtwopwdis,#likeis,#markis,#likeisf,#markisf,#userlevel{
     display: none;
   }
+.alert{
+  position: fixed;
+  top: 10px;
+  left: calc( 50vw - 150px);
+  width: 300px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #67c23a;
+  background:#f0f9eb;
+  border-color: #e1f3d8;
+  font-size: 14px;
+}
+#articleindex p{
+  font-size:12px; 
+  line-height: 22px;
+  color: #868686;
+}
+#articleindex h2{
+  font-size: 14px;
+  line-height: 40px;
+  color: #868686;
+}

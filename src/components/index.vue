@@ -47,13 +47,13 @@
       </div>
     </div>
     <div class="right">
-      <div class="aside" v-show="loginis">
+      <div class="aside asidep" v-show="loginis">
           <h4>热门推荐</h4>
           <div v-for="(item,index) in hotdata" :key='index' @click="article(item.id)" style="cursor:pointer">
             <span class="span" style="background:#3a9e00;"  v-if="index==0">{{index+1}}</span>
             <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
             <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
-            <span class="span" v-else>{{index}}</span>
+            <span class="span" v-else>{{index+1}}</span>
             <p class="hotp">{{item.content}}</p>
           </div>
       </div>
@@ -661,7 +661,7 @@ a{ text-decoration: none;}
     border-radius: 0px;
     
     overflow: hidden;
-    padding: 0 0 0 40px;
+    padding: 0 0 20px 40px;
     padding-top: 26px;
   }
   .aside h4{
@@ -702,6 +702,9 @@ a{ text-decoration: none;}
   }
   .aside div .hotp{
     width: 240px;
+    height: auto;
+    /*text-overflow: */
+    white-space:pre-wrap;
   }
   .aside .form{
     height: 34px;
@@ -829,5 +832,11 @@ a{ text-decoration: none;}
     font-size: 14px;
     top: 23px;
     left: 64px
+  }
+  .asidep{
+    width:301px;
+    border-radius: 0px;
+    overflow: hidden;
+    padding: 25px;
   }
 </style>

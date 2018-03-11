@@ -232,8 +232,16 @@ export default {
       });
 
     },60000)
+    document.onkeydown=function(event){
+      var e = event || window.event || arguments.callee.caller.arguments[0];
+       if(e && e.keyCode==13){ // enter 键
+              if(vm.$store.state.loginis==false  && vm.logis==true){
+                vm.sublogin();
+              }
+        }
+    }
 
-  
+    
 
   },
   methods:{

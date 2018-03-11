@@ -6,8 +6,8 @@
         <span style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
         <span style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
         <span style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
-        <span v-else>{{index}}</span>
-        <p>{{item.content}}</p>
+        <span v-else>{{index+1}}</span>
+        <p class="hotp">{{item.content}}</p>
       </div>
     </div>
     <h2>设置</h2>
@@ -18,7 +18,7 @@
       </div>
       <div>
         <img style="margin-top:4px;margin-right:6px" src=" /static/img/ok.png">
-        <a @click="light('ok')" id="ok">安全设置</a>
+        <a @click="light('ok')" id="ok">修改密码</a>
       </div>
       <div>
         <img style="margin-top:6px;margin-right:2px" src=" /static/img/out.png">
@@ -407,14 +407,14 @@ export default {
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 20px;
+    clear: both;
   }
   .aside div p{
     width: 210px;
-    height: 30px;
     line-height: 30px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /*text-overflow: ellipsis;
+    white-space: nowrap;*/
     float: left;
   }
   h2{
@@ -508,5 +508,11 @@ export default {
     width: 790px;
     display: block;
     margin-top: 10px;
+  }
+  .asidep{
+    width:301px;
+    border-radius: 0px;
+    overflow: hidden;
+    padding: 25px;
   }
 </style>

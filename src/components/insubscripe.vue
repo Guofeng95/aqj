@@ -82,7 +82,7 @@
             <span class="span" style="background:#3a9e00;" v-if="index==0">{{index+1}}</span>
             <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
             <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
-            <span class="span" v-else>{{index}}</span>
+            <span class="span" v-else>{{index+1}}</span>
             <p class="hotp">{{item.content}}</p>
           </div>
       </div>

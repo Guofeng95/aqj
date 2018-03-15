@@ -47,16 +47,7 @@
       </div>
     </div>
     <div class="right">
-      <div class="aside asidep" v-show="loginis">
-          <h4>热门推荐</h4>
-          <div v-for="(item,index) in hotdata" :key='index' @click="article(item.id)" style="cursor:pointer">
-            <span class="span" style="background:#3a9e00;"  v-if="index==0">{{index+1}}</span>
-            <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
-            <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
-            <span class="span" v-else>{{index+1}}</span>
-            <p class="hotp">{{item.content}}</p>
-          </div>
-      </div>
+     
       <div class="aside" v-show="loginis==false">
         <h4>快速登录</h4>
         <div class="inputcheck">
@@ -84,6 +75,16 @@
           <p>还没有账号？</p>
           <a href="#" @click="login(1)">注册</a><a class="forgot" href="#/forget">忘记密码</a>
         </div>
+      </div>
+       <div class="aside asidep">
+          <h4>热门推荐</h4>
+          <div v-for="(item,index) in hotdata" :key='index' @click="article(item.id)" style="cursor:pointer">
+            <span class="span" style="background:#3a9e00;"  v-if="index==0">{{index+1}}</span>
+            <span class="span" style="background:#ff9933;" v-else-if="index==1">{{index+1}}</span>
+            <span class="span" style="background:#ff0000;" v-else-if="index==2">{{index+1}}</span>
+            <span class="span" v-else>{{index+1}}</span>
+            <p class="hotp">{{item.content}}</p>
+          </div>
       </div>
       <div class="aside">
         <img class="app" src="/static/img/app.png">
@@ -292,6 +293,14 @@ export default {
             }
       　　}
       };
+      document.onkeydown=function(event){
+      var e = event || window.event || arguments.callee.caller.arguments[0];
+       if(e && e.keyCode==13){ // enter 键
+              if(vm.$store.state.loginis==false){
+                vm.sublogin();
+              }
+        }
+    }
     
   },
   methods:{
@@ -591,7 +600,7 @@ export default {
   width: 543px;
   font-size: 18px;
   cursor: pointer;
-  height: 50px;
+  max-height: 50px;
   overflow: hidden;
   word-break: break-all;
   text-overflow: ellipsis;

@@ -296,7 +296,7 @@ export default {
       document.onkeydown=function(event){
       var e = event || window.event || arguments.callee.caller.arguments[0];
        if(e && e.keyCode==13){ // enter 键
-              if(vm.$store.state.loginis==false){
+              if(vm.$store.state.loginis==false ){
                 vm.sublogin();
               }
         }
@@ -311,7 +311,7 @@ export default {
         var vm=this;
         vm.hotdata=[];
         var date={};
-        date.limit=6;
+        date.limit=5;
         axios({
               method:'post',
               data:qs.stringify(date),
@@ -429,8 +429,6 @@ export default {
           })
           
 
-      }else{
-        this.$message.error('请填写信息');
       }
       
     },

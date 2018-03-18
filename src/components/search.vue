@@ -220,7 +220,7 @@ export default {
         var vm=this;
         vm.hotdata=[];
         var date={};
-        date.limit=6;
+        date.limit=5;
         axios({
               method:'post',
               data:qs.stringify(date),
@@ -250,6 +250,7 @@ export default {
       },
       indexdataget(){
         var vm=this;
+        this.indexdata=[];
         var date={};
           date.query=this.href;
           date.page=this.page;
@@ -328,9 +329,10 @@ export default {
           })
           
 
-      }else{
-        this.$message.error('请填写信息');
       }
+      // else{
+      //   this.$message.error('请填写信息');
+      // }
       
     },
     check(style){

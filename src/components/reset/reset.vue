@@ -257,7 +257,7 @@ export default {
         var vm=this;
         vm.hotdata=[];
         var date={};
-        date.limit=6;
+        date.limit=5;
         axios({
               method:'post',
               data:qs.stringify(date),

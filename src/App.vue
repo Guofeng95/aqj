@@ -23,7 +23,7 @@
       </div>
       <div class="loginno" v-show="loginis">
         <a href="#/manenger" v-if="userlevel==1"><img style="margin-top:4px;margin-right:2px;" src="/static/img/messenger.png"/>管理</a>
-        <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a>
+        <!-- <a href="#/usercenter"><img style="margin-right:4px;" src="/static/img/user.png"/>用户中心</a> -->
         <a style="margin-right:130px;" href="#/usercenter">
           <el-badge :value="val" class="item">
             <img src="/static/img/ding.png"/>

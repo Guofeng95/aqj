@@ -167,14 +167,6 @@ function IsPC() {
         // else{
         //   vm.$message.warning(response.data.msg);
         // }
-      document.onkeydown=function(event){
-      var e = event || window.event || arguments.callee.caller.arguments[0];
-       if(e && e.keyCode==13){ // enter 键
-              if(vm.loginis==false  && vm.logis==true){
-                vm.sublogin();
-              }
-        }
-    }
 
     });
     function getScrollTop(){
@@ -620,27 +612,3 @@ oTest.insertBefore(divnode,appid.nextSibling);
 var dybt=document.getElementsByClassName("dybtn");
 //console.log(dybt[1]);
 dybt[1].style.marginLeft = 'auto';
-
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?846d3187b2ffcba57419a9c3f904e9b4";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?3c677a8c1731b5e0ec4b90680ff088e3";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?9160fbef5be9220763890e6d313df9ef";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();

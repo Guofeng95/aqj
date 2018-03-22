@@ -13,9 +13,15 @@
           placeholder="搜索安全信息"
           v-model="search"
           id="searchin"
-          @focus="serkey">
+          @focus="serkey"
+          @blur="blursearch">
         </el-input>
         <span class="span1" @click="gosearch"></span>
+        <div class="searchmind" v-show="mindis">
+          <p v-for="(item,index) in mind" :key="index" @click="mindsearch(item)">
+            {{item}}
+          </p>
+        </div>
       </div>
       <div v-on:loginnow="changelog" class="loginno" v-show="loginis==false">
         <span @click="login(1)" style="margin-right:16px;">登录</span>
@@ -185,7 +191,9 @@ export default {
       rverifyis:false,
       usernameis:false,
       passwordis:false,
-      timeer:''
+      timeer:'',
+      mind:[],
+      mindis:false,
     }
   },
   mounted(){
@@ -248,6 +256,17 @@ export default {
     indexgo(){
       window.location.href="#/"
     },
+    blursearch(){
+      console.log(this.search)
+      if(this.search==''){
+        this.mindis=false;
+      }
+    },
+     mindsearch(item){
+      this.search=item;
+      this.mindis=false;
+      this.gosearch();
+     },
     serkey(){
       var vm=this;
       var id=document.querySelector(".search input");
@@ -256,9 +275,40 @@ export default {
         if(e.keyCode==13){
           vm.gosearch();
         }
+        
       }
+      id.onkeyup=function(e){
+        if(e.keyCode!=13 && vm.search!=''){
+          var date={};
+          date.query=vm.search;
+          axios({
+            method:'post',
+            data:qs.stringify(date),
+            url:vm.baseurl+'/article/list_autocomplete',
+        }).then(function(response){
+            if(response.data.status==1){
+              //console.log(response.data.suggestions)
+              if(response.data.suggestions.length>0){
+                vm.mind=[];
+                vm.mind=response.data.suggestions;
+                // response.data.suggestions.forEach( function(element, index) {
+                //   vm.mindarr.push(element);
+                // });
+                vm.mindis=true;
+              }else{
+                vm.mind=[];
+                vm.mindis=false;
+              }
+              
+            }
+          })
+        }
+      }
+
+
     },
     gosearch(){
+      this.mindis=false;
       sessionStorage.setItem("search",this.search)
       window.location.href="#/search?"+this.search;
     },
@@ -861,5 +911,27 @@ a{ text-decoration: none; color: #333;}
     margin: 0;
     font-weight: normal;
   }
-  
+  .searchmind{
+  width: 180px;
+  max-height:200px;
+  background: #fff;
+  position: absolute;
+  border:1px solid #ccc;
+  right: 0px;
+  top: 38px; 
+  border-radius: 4px;
+}
+.searchmind p{
+  height: 30px;
+  line-height: 30px;
+  width: 160px;
+  padding:0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.searchmind p:hover{
+  background: #f8f8f8;
+}
 </style>

@@ -397,7 +397,7 @@ a{text-decoration: none; color: #333;}
     font-weight: normal;
   }
   #searchin{
-    height: 30px;
+    height: 32px;
     background: #f2f2f2;
     
     -webkit-appearance: none;
@@ -799,31 +799,43 @@ a{text-decoration: none; color: #333;}
   font-size: 14px;
 }
 #articleindex p{
-  font-size:12px; 
-  line-height: 22px;
-  color: #868686;
+  font-size:16px; 
+  line-height: 30px;
+  color: #3d464d;
+  margin-bottom: 20px;
 }
 #articleindex h2{
-  font-size: 14px;
+  font-size: 18px;
   line-height: 40px;
-  color: #868686;
+  color: #3d464d;
 }
 #articleindex ul {
     list-style: none;
 }
 #articleindex ul li{
   list-style: disc;
-  padding-left: 30px;
-  color: #868686;
-  font-size: 12px;
+  margin-left: 20px;
+  padding-left: 20px;
+  color: ##3d464d;
+  font-size: 16px;
   line-height: 22px;
+  margin-bottom: 16px;
 }
 #articleindex a{
   text-decoration: none;
-  font-size: 12px;
-  color: #737373;
+  font-size: 16px;
+  color: #3d464d;
   outline: 0px;
+  border-style: solid;
+  border-width: 0 0 1px;
+  border-color: #999;
+  padding: 0 0 1px;
+  word-wrap: break-word;
 
+}
+#articleindex a:hover{
+  color: #4285f4;
+  border-color: #4285f4;
 }
 .general_content p {
     color: #4c4c4c;
@@ -831,7 +843,7 @@ a{text-decoration: none; color: #333;}
 }
 #articleindex h3{
   line-height: 50px;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: bold;
 }
 #articleindex table{
@@ -866,4 +878,28 @@ blockquote {
     color: #999999;
     font-style: italic;
     line-height: 18px;
+}
+ .searchmind{
+  display: none;
+  width: 180px;
+  max-height:200px;
+  background: #fff;
+  position: absolute;
+  border:1px solid #ccc;
+  right: 0px;
+  top: 38px; 
+  border-radius: 4px;
+}
+.searchmind p{
+  height: 30px;
+  line-height: 30px;
+  width: 160px;
+  padding:0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.searchmind p:hover{
+  background: #f8f8f8;
 }

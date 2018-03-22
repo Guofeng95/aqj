@@ -1,7 +1,9 @@
 
 var vm={};
- vm.atricleurl='http://top.sunliangliang.com/article/keyword?kw='
- vm.mobileurl='http://m.sunliangliang.com/#/keyword?'
+vm.ymurl="top.sunliangliang.com"
+vm.mymurl="m.sunliangliang.com"
+vm.atricleurl='//'+vm.ymurl+'/article/keyword?kw='
+vm.mobileurl='//'+vm.ymurl+'/#/keyword?'
 
 
 
@@ -98,7 +100,9 @@ function IsPC() {
       newcontentis:false,
       indexdata:[],
       hotdata:[],
-      qqmoreis:false
+      qqmoreis:false,
+      mind:[],
+      mindis:false,
       },
       mounted(){
      var id2 = document.getElementById('inde');
@@ -369,6 +373,17 @@ function IsPC() {
     indexgo(){
       window.location.href="#/"
     },
+    blursearch(){
+      console.log(this.search)
+      if(this.search==''){
+        this.mindis=false;
+      }
+    },
+     mindsearch(item){
+      this.search=item;
+      this.mindis=false;
+      this.gosearch();
+     },
     serkey(){
       var vm=this;
       var id=document.querySelector(".search input");
@@ -378,10 +393,38 @@ function IsPC() {
           vm.gosearch();
         }
       }
+      id.onkeyup=function(e){
+        if(e.keyCode!=13 && vm.search!=''){
+          var date={};
+          date.query=vm.search;
+          axios({
+            method:'post',
+            data:qs.stringify(date),
+            url:vm.baseurl+'/article/list_autocomplete',
+        }).then(function(response){
+            if(response.data.status==1){
+              //console.log(response.data.suggestions)
+              if(response.data.suggestions.length>0){
+                vm.mind=[];
+                vm.mind=response.data.suggestions;
+                // response.data.suggestions.forEach( function(element, index) {
+                //   vm.mindarr.push(element);
+                // });
+                vm.mindis=true;
+              }else{
+                vm.mind=[];
+                vm.mindis=false;
+              }
+              
+            }
+          })
+        }
+      }
+
     },
     gosearch(){
       sessionStorage.setItem("search",this.search)
-      window.location.href="#/search?"+this.search;
+      window.location.href="//"+vm.ymurl+"/#/search?"+this.search;
     },
     hlight(name){
       var id1 = document.getElementById('recommend');

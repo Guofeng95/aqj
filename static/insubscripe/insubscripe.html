@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link  rel="stylesheet" href="/static/insubscripe/kw.css">
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     </head>
   <body>
@@ -26,9 +27,15 @@
           placeholder="搜索安全信息"
           v-model="search"
           id="searchin"
-          @focus="serkey">
+          @focus="serkey"
+          @blur="blursearch">
         </el-input>
         <span class="span1" @click="gosearch"></span>
+        <div class="searchmind" v-show="mindis">
+          <p v-for="(item,index) in mind" :key="index" @click="mindsearch(item)">
+            {{item}}
+          </p>
+        </div>
       </div>
       <div v-on:loginnow="changelog" class="loginno" v-show="loginis==false">
         <span @click="login(1)" style="margin-right:16px;">登录</span>

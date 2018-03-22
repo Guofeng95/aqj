@@ -42,6 +42,10 @@
       </div>
       <span class="border"></span>
       <div class="demo-input-suffix">
+        <span>微信</span>
+        <el-input class="input" v-model="wx" ></el-input>
+      </div> 
+      <div class="demo-input-suffix">
         <span>QQ:</span>
         <el-input class="input" v-model="qq" ></el-input>
       </div>
@@ -50,48 +54,47 @@
         <el-input class="input" v-model="wb"></el-input>
       </div>
       <div class="demo-input-suffix">
-        <span>微信号</span>
-        <el-input class="input" v-model="wx" ></el-input>
-      </div> 
-      <div class="demo-input-suffix">
         <span>邮箱</span>
         <el-input class="input" v-model="email" @change="checke"></el-input>
         <a class="tj" v-show="remailis">请填写正确的邮箱格式</a>
       </div> 
       <span class="border"></span>
-      <div class="demo-input-suffix">
-        <span>所在行业</span>
-        <el-input class="input" v-model="area" ></el-input>
-      </el-select>
+       <div class="demo-input-suffix">
+        <span>姓名</span>
+        <el-input class="input" v-model="name" ></el-input>
       </div>
-      <div class="demo-input-suffix">
-        <span>公司</span>
-        <el-input class="input" v-model="company" ></el-input>
-      </div>
-      <div class="demo-input-suffix">
-        <span>部门</span>
-        <el-input class="input" v-model="door" ></el-input>
-      </div>
-      <div class="demo-input-suffix">
+       <div class="demo-input-suffix">
         <span>职务</span>
         <el-input class="input" v-model="job" ></el-input>
-      </div>
-      <div class="demo-input-suffix">
-        <span>擅长职能</span>
-        <el-input class="input" v-model="skill" ></el-input>
-      </div>
-      <div class="demo-input-suffix">
-        <span>地址</span>
-        <el-input class="input" v-model="adress" ></el-input>
       </div>
       <div class="demo-input-suffix">
         <span>手机</span>
         <el-input class="input" v-model="phone" ></el-input>
       </div>
       <div class="demo-input-suffix">
-        <span>姓名</span>
-        <el-input class="input" v-model="name" ></el-input>
+        <span>部门</span>
+        <el-input class="input" v-model="door" ></el-input>
       </div>
+      <div class="demo-input-suffix">
+        <span>公司</span>
+        <el-input class="input" v-model="company" ></el-input>
+      </div>
+       <div class="demo-input-suffix">
+        <span>地址</span>
+        <el-input class="input" v-model="adress" ></el-input>
+      </div>
+      <div class="demo-input-suffix">
+        <span>所在行业</span>
+        <el-input class="input" v-model="area" ></el-input>
+      </el-select>
+      </div>
+      <div class="demo-input-suffix">
+        <span>擅长职能</span>
+        <el-input class="input" v-model="skill" ></el-input>
+      </div>
+     
+      
+     
 
       <el-button class="submit" type="success" @click="infonow">更新信息</el-button>
     </div>

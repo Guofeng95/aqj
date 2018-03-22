@@ -264,7 +264,15 @@ var id2 = document.getElementById('inde');
 
     }
 
-
+     document.onkeydown=function(event){ 
+      var e = event || window.event || arguments.callee.caller.arguments[0]; 
+       if(e && e.keyCode==13){ // enter 键 
+              if(vm.loginis==false && getid("logis").style.display=="block"){ 
+                //console.log(getid("logis").style.display) 
+                sublogin(); 
+              } 
+        } 
+    } 
 
 
     function sublogin(){
@@ -337,13 +345,53 @@ var id2 = document.getElementById('inde');
          docis('logis',2);
       }
     }
+    function blursearch(){
+      if($("#searchin").val()==''){
+        docis("searchmind",2)
+      }
+    }
+    function  mindsearch(item){
+      $("#searchin").val(item)
+      docis("searchmind",2)
+      gosearch();
+    }
     function serkey(){
-      var vm=vm;
+      //var vm=vm;
       var id=document.querySelector(".search input");
       //console.log(id)
       id.onkeydown=function(e){
         if(e.keyCode==13){
           gosearch();
+        }
+      }
+      id.onkeyup=function(e){
+        if(e.keyCode!=13 && $("#searchin").val()!=''){
+          var date={};
+          date.query=$("#searchin").val();
+           $.ajax({
+            method:'post',
+            data:date,
+            url:vm.baseurl+'/article/list_autocomplete',
+        }).then(function(response){
+            if(response.status==1){
+              var mindid=getid("searchmind");
+              mindid.innerHTML='';
+              if(response.suggestions.length>0){
+
+                response.suggestions.forEach( function(element, index) {
+                  
+                  mindid.innerHTML=mindid.innerHTML+'<p onclick="mindsearch(\''+element+'\')">'+element+'</p>';
+                  
+                });
+                docis("searchmind",1)
+              }else{
+                var mindid=getid("searchmind");
+                mindid.innerHTML='';
+                docis("searchmind",2)
+              }
+              
+            }
+          })
         }
       }
     }
@@ -898,6 +946,29 @@ var id2 = document.getElementById('inde');
         hdpout();
 
       })
+
+
+
+      var article=document.getElementById("articleindex") 
+      var pdfarr=article.getElementsByTagName('a'); 
+      var l1=pdfarr.length; 
+      for(var i=0;i<l1;i++){ 
+        if(pdfarr[i].href.indexOf(".pdf")>-1){ 
+          pdfarr[i].style.display = 'none'; 
+          var div=document.createElement("div"); 
+          div.style ='position:relative;cursor:pointer'; 
+          // div.onclick=function(){ 
+          //   window.location.href= 
+          // } 
+          div.innerHTML="<a href="+pdfarr[i].href+" target='_blank'><img class='dimg' src='/static/img/flie.png'><p><span class='dcon'>文章附件"+i+"</span><span class='dlarge'>1M</span><span class='dnum'>下载（1）</span></p></a>" 
+          if(getid("downcontent").innerHTML=="文章无附件"){ 
+            getid("downcontent").innerHTML=""; 
+          } 
+          getid("downcontent").append(div); 
+ 
+        } 
+         
+      } 
       
     }, 100)
     //弹出框
@@ -911,3 +982,28 @@ var id2 = document.getElementById('inde');
       $('body').get(0).removeChild(div)
      },2000)
     }
+
+     //统计 
+    var _hmt = _hmt || []; 
+    (function() { 
+      var hm = document.createElement("script"); 
+      hm.src = "https://hm.baidu.com/hm.js?846d3187b2ffcba57419a9c3f904e9b4"; 
+      var s = document.getElementsByTagName("script")[0];  
+      s.parentNode.insertBefore(hm, s); 
+    })(); 
+ 
+    var _hmt = _hmt || []; 
+    (function() { 
+      var hm = document.createElement("script"); 
+      hm.src = "https://hm.baidu.com/hm.js?3c677a8c1731b5e0ec4b90680ff088e3"; 
+      var s = document.getElementsByTagName("script")[0];  
+      s.parentNode.insertBefore(hm, s); 
+    })(); 
+ 
+    var _hmt = _hmt || []; 
+    (function() { 
+      var hm = document.createElement("script"); 
+      hm.src = "https://hm.baidu.com/hm.js?9160fbef5be9220763890e6d313df9ef"; 
+      var s = document.getElementsByTagName("script")[0];  
+      s.parentNode.insertBefore(hm, s); 
+    })();

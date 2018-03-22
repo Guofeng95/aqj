@@ -1,0 +1,23 @@
+  .searchmind{
+  width: 180px;
+  max-height:200px;
+  background: #fff;
+  position: absolute;
+  border:1px solid #ccc;
+  right: 0px;
+  top: 38px; 
+  border-radius: 4px;
+}
+.searchmind p{
+  height: 30px;
+  line-height: 30px;
+  width: 160px;
+  padding:0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.searchmind p:hover{
+  background: #f8f8f8;
+}

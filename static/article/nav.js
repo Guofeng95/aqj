@@ -759,7 +759,12 @@ var id2 = document.getElementById('inde');
                 var div=document.createElement("div");
                 div.id="c"+element.comment_id;
                 div.className="comt";
-                div.innerHTML='<img src="'+element.user_url+'"> <span class="comname">'+element.user_name+'<span class="comtime">·'+element.comment_time+'</span></span><p class="comcontent">'+element.comment_content+'</p>';
+                div.innerHTML='<img src="'+element.user_url+'"> <span class="comname">'+element.user_name+'<span class="comtime">·'+element.comment_time+'</span></span>';
+      
+                var p=document.createElement("p");
+                p.className="comcontent";
+                p.innerText=element.comment_content;
+                div.appendChild(p)
                 getid("commentindex").appendChild(div);
               });
               
@@ -957,14 +962,16 @@ var id2 = document.getElementById('inde');
           pdfarr[i].style.display = 'none'; 
           var div=document.createElement("div"); 
           div.style ='position:relative;cursor:pointer'; 
-          // div.onclick=function(){ 
-          //   window.location.href= 
-          // } 
           div.innerHTML="<a href="+pdfarr[i].href+" target='_blank'><img class='dimg' src='/static/img/flie.png'><p><span class='dcon'>文章附件"+i+"</span><span class='dlarge'>1M</span><span class='dnum'>下载（1）</span></p></a>" 
-          if(getid("downcontent").innerHTML=="文章无附件"){ 
+          console.log(getid("downcontent").innerHTML)
+          if(getid("downcontent").innerHTML.indexOf("文章无附件")>-1){ 
             getid("downcontent").innerHTML=""; 
-          } 
-          getid("downcontent").append(div); 
+            getid("downcontent").append(div); 
+          }else{
+            getid("downcontent").append(div); 
+          }
+          
+          
  
         } 
          

@@ -197,7 +197,7 @@ export default {
     }
   },
   mounted(){
-    //cnm
+    //cnmd
      var id2 = document.getElementById('inde');
      id2.style.color="#fda861";
     this.$store.state.loginis=false;

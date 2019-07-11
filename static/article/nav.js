@@ -1,11 +1,17 @@
 var vm={};
+//pc端域名
 vm.yuming='top.sunliangliang.com'
+//pc端文章详情页面url
 vm.atricleurl='http://top.sunliangliang.com/article/page?'
+//接口url
 vm.baseurl='http://211.159.148.43:8888';
+//移动端文章详情页面url
 vm.mobileurl='http://m.sunliangliang.com/#/article?';
+//pc端关键词页面url
 vm.insubscripeurl="http://top.sunliangliang.com/article/keyword?kw=";
-vm.loginis=false;
 
+
+vm.loginis=false;
 var _width = parseInt(window.screen.width);
       var scale = _width/1300;
       var ua = navigator.userAgent.toLowerCase();
@@ -763,7 +769,12 @@ var id2 = document.getElementById('inde');
       
                 var p=document.createElement("p");
                 p.className="comcontent";
-                p.innerText=element.comment_content;
+                var comcont=element.comment_content;
+                comcont=comcont.replace(/&amp;/g, '&');
+                comcont=comcont.replace(/&gt;/g, '>');
+                comcont=comcont.replace(/&lt;/g, '<');
+                comcont=comcont.replace(/&quot;/g, '"');
+                p.innerText=comcont;
                 div.appendChild(p)
                 getid("commentindex").appendChild(div);
               });

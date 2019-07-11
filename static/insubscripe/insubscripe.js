@@ -1,9 +1,14 @@
 
 var vm={};
+//pc端域名
 vm.ymurl="top.sunliangliang.com"
+//移动端域名
 vm.mymurl="m.sunliangliang.com"
+//pc端关键词页面url
 vm.atricleurl='//'+vm.ymurl+'/article/keyword?kw='
+//移动端关键词页面url
 vm.mobileurl='//'+vm.ymurl+'/#/keyword?'
+
 
 
 
